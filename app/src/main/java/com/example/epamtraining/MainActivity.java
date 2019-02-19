@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toast.makeText(this, "Toast for conflict", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "Final toast after conflict", Toast.LENGTH_SHORT)
                 .show();
     }
 }
