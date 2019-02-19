@@ -13,5 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Merged conflict of feature_1 and feature_2 to master", Toast.LENGTH_SHORT)
                 .show();
+
+        Toast.makeText(this, "And one more toast for cherry pick", Toast.LENGTH_SHORT).show();
     }
 }
