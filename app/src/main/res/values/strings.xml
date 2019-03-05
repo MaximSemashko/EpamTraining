@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EpamTraining</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_text_button">Change</string>
 </resources>
