@@ -11,4 +11,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarkVk</item>
     </style>
 
+    <style name="AppThemeGoogle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimaryGoogle</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkGoogle</item>
+    </style>
+
 </resources>

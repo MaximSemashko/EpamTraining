@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GoogleNewEpisodesFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="0.5dp"
+            card_view:cardElevation="2dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/second_friend" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="154: Developer Growth"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="2 days ago · 19 min" />
+
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_play_circle_outline" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="0.5dp"
+            android:layout_marginBottom="0.5dp"
+            android:paddingTop="64dp"
+            card_view:cardElevation="2dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/second_friend" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="Выпуск 89. Adnroid in a car"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68dp"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="2 days ago · 67 min"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_play_circle_outline" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="0.5dp"
+            android:layout_marginBottom="0.5dp"
+            android:paddingTop="128dp"
+            card_view:cardElevation="2dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/second_friend" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="68dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="Podlodka #101 - Базы данных"
+                android:textColor="@color/colorBlack"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68dp"
+
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="3 days ago · 155 min" />
+
+            <ImageButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_play_circle_outline" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="0.5dp"
+            android:paddingTop="192dp"
+            card_view:cardElevation="2dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_keyboard_backspace_google" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="68dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/raleway_light"
+                android:text="All new episodes"
+                android:textColor="@color/vkTextColor"
+                android:textSize="18sp" />
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

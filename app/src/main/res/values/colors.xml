@@ -12,4 +12,8 @@
     <color name="vkTextColor">#5288CC</color>
     <color name="textInProfile">#71757A</color>
     <color name="colorBlack">#000</color>
+
+    <color name="colorPrimaryGoogle">#FFFFFF</color>
+    <color name="colorPrimaryDarkGoogle">#FFFFFF</color>
+    <color name="googleBlueColor">#4c8bf5</color>
 </resources>
