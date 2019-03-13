@@ -15,8 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+            android:background="?attr/colorPrimaryDark" />
 
     </FrameLayout>
 
@@ -27,6 +26,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header"
+        app:itemTextColor="@color/colorBlack"
         app:menu="@menu/drawer_view" />
 
 </android.support.v4.widget.DrawerLayout>

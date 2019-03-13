@@ -2,4 +2,6 @@
     <string name="app_name">EpamTraining</string>
     <string name="first_fragment_text">First Fragment</string>
     <string name="second_fragment_text">Second Fragment</string>
+    <string name="user_name">Maxim Semashko</string>
+    <string name="user_email">maxim.semashko98@gmail.com</string>
 </resources>
