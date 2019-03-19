@@ -13,6 +13,7 @@ import com.example.epamtraining.base.BaseViewHolder;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -78,6 +79,29 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void addItems(final List<Student> result) {
         students.addAll(result);
         notifyDataSetChanged();
+    }
+
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(students, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(students, i, i - 1);
+            }
+        }
+
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    public void deleteByIndex(int i) {
+        students.remove(i);
+        notifyItemRemoved(i);
+    }
+
+    public void onItemDismiss(int adapterPosition) {
+        deleteByIndex(adapterPosition);
     }
 
     @IntDef({ViewType.STUDENT, ViewType.LOADING})

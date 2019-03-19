@@ -3,8 +3,11 @@ package com.example.epamtraining;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.example.epamtraining.entities.Student;
 import com.example.epamtraining.backend.IWebService;
@@ -17,7 +20,7 @@ import java.util.List;
 public class StudentsActivity extends AppCompatActivity {
 
     public static final int PAGE_SIZE = 10;
-    public static final int MAX_VISIBLE_ITEMS = 100;
+    public static final int MAX_VISIBLE_ITEMS = 40;
 
     private boolean isLoading = false;
     private StudentsAdapter adapter;
@@ -36,6 +39,16 @@ public class StudentsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new StudentsAdapter(this);
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator(){
+            @Override
+            public boolean animateMove(RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
+                return super.animateMove(holder, fromX, fromY, toX, toY);
+            }
+        });
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        new ItemTouchHelper(new ItemTouchCallback(recyclerView, adapter)).attachToRecyclerView(recyclerView);
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
