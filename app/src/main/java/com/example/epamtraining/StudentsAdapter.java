@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.example.epamtraining.entities.Student;
+import com.example.epamtraining.backend.IWebService;
+import com.example.epamtraining.backend.StudentsWebService;
 import com.example.epamtraining.base.BaseViewHolder;
+import com.example.epamtraining.entities.Student;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -22,6 +24,8 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private final LayoutInflater inflater;
     private final List<Student> students = new ArrayList<>();
+    private final IWebService<Student> webService = new StudentsWebService();
+
 
     public StudentsAdapter(final Context context) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -96,6 +100,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public void deleteByIndex(int i) {
+        webService.removeEntity((long) i);
         students.remove(i);
         notifyItemRemoved(i);
     }

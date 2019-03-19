@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.example.epamtraining.base.CompoundRelativeLayout;
-import com.example.epamtraining.entities.Student;
 
 public class StudentItemView extends CompoundRelativeLayout {
 
@@ -26,7 +25,7 @@ public class StudentItemView extends CompoundRelativeLayout {
     public StudentItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        parseAttributes(context,attrs);
+        parseAttributes(context, attrs);
     }
 
     private void parseAttributes(Context context, AttributeSet attrs) {
@@ -47,7 +46,7 @@ public class StudentItemView extends CompoundRelativeLayout {
     public StudentItemView(Context context, AttributeSet attrs, int defAttrs) {
         super(context, attrs, defAttrs);
 
-        parseAttributes(context,attrs);
+        parseAttributes(context, attrs);
     }
 
     @Override

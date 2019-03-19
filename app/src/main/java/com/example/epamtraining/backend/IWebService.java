@@ -3,7 +3,6 @@ package com.example.epamtraining.backend;
 import com.example.epamtraining.util.ICallback;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface IWebService<T> {
 
@@ -13,5 +12,5 @@ public interface IWebService<T> {
                      final int endRange,
                      final ICallback<List<T>> callback);
 
-    void removeEntity(final UUID id);
+    void removeEntity(final Long id);
 }

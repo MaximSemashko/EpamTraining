@@ -9,9 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
-import com.example.epamtraining.entities.Student;
 import com.example.epamtraining.backend.IWebService;
 import com.example.epamtraining.backend.StudentsWebService;
+import com.example.epamtraining.entities.Student;
 import com.example.epamtraining.util.ICallback;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 public class StudentsActivity extends AppCompatActivity {
 
     public static final int PAGE_SIZE = 10;
-    public static final int MAX_VISIBLE_ITEMS = 40;
+    public static final int MAX_VISIBLE_ITEMS = 20;
 
     private boolean isLoading = false;
     private StudentsAdapter adapter;
@@ -39,7 +39,7 @@ public class StudentsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new StudentsAdapter(this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator(){
+        recyclerView.setItemAnimator(new DefaultItemAnimator() {
             @Override
             public boolean animateMove(RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
                 return super.animateMove(holder, fromX, fromY, toX, toY);
@@ -89,8 +89,8 @@ public class StudentsActivity extends AppCompatActivity {
         webService.getEntities(startPosition, endPosition, new ICallback<List<Student>>() {
 
             @Override
-            public void onResult(List<Student> pResult) {
-                adapter.addItems(pResult);
+            public void onResult(List<Student> result) {
+                adapter.addItems(result);
                 isLoading = false;
             }
         });

@@ -1,5 +1,6 @@
 package com.example.epamtraining.backend;
 
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -9,7 +10,6 @@ import com.example.epamtraining.util.ICallback;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 public class StudentsWebService implements IWebService<Student> {
 
@@ -18,8 +18,9 @@ public class StudentsWebService implements IWebService<Student> {
     private Handler handler = new Handler(Looper.getMainLooper());
 
     {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 30; i++) {
             Student student = new Student();
+            student.setId((long) i);
             student.setHwCounter(1 + random.nextInt(5));
             student.setName(String.valueOf(i));
             students.add(student);
@@ -44,7 +45,9 @@ public class StudentsWebService implements IWebService<Student> {
     }
 
     @Override
-    public void removeEntity(UUID id) {
-
+    public void removeEntity(final Long id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            students.removeIf(student -> student.getId().equals(id));
+        }
     }
 }

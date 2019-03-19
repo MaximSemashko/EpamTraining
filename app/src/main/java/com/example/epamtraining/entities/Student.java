@@ -1,17 +1,16 @@
 package com.example.epamtraining.entities;
 
-import java.util.UUID;
 
 public class Student {
-    private UUID id;
+    private Long id;
     private String name;
     private int hwCounter;
 
-    public Student() {
-       id = UUID.randomUUID();
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
