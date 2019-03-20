@@ -54,4 +54,10 @@ public class StudentsWebService implements IWebService<Student> {
     public void addEntity(final Student student) {
         students.add(student);
     }
+
+    @Override
+    public void editEntity(int position, String name, int counter) {
+        students.get(position).setName(name);
+        students.get(position).setHwCounter(counter);
+    }
 }

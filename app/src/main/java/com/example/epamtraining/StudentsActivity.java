@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.epamtraining.backend.IWebService;
 import com.example.epamtraining.backend.StudentsWebService;
@@ -133,10 +134,12 @@ public class StudentsActivity extends AppCompatActivity {
     private void showAddStudentDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_add_student, null);
+        View dialogView = inflater.inflate(R.layout.dialog_student, null);
 
         EditText studentNameText = dialogView.findViewById(R.id.student_name_edit_text);
         EditText studentHomeworksText = dialogView.findViewById(R.id.student_homeworks_edit_text);
+        TextView changeStudentView = dialogView.findViewById(R.id.alertTitle);
+        changeStudentView.setText(R.string.add_student_title);
 
         builder.setView(dialogView)
                 .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {

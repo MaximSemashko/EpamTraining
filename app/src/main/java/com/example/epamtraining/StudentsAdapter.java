@@ -1,11 +1,16 @@
 package com.example.epamtraining;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.epamtraining.backend.IWebService;
 import com.example.epamtraining.backend.StudentsWebService;
@@ -50,8 +55,52 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((StudentItemView) viewHolder.itemView)
                     .setName(student.getName())
                     .setHwCounter(String.valueOf(student.getHwCounter()));
+
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showChangeDialog(v, position);
+                }
+            });
         }
     }
+
+    private void showChangeDialog(View v, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        View dialogView = inflater.inflate(R.layout.dialog_student, null);
+
+        EditText studentNameText = dialogView.findViewById(R.id.student_name_edit_text);
+        EditText studentHomeworksText = dialogView.findViewById(R.id.student_homeworks_edit_text);
+        TextView changeStudentView = dialogView.findViewById(R.id.alertTitle);
+        changeStudentView.setText(R.string.change_student_title);
+
+        builder.setView(dialogView)
+                .setPositiveButton(R.string.change_student, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String name = studentNameText.getText().toString();
+                        int homeworks = Integer.parseInt(studentHomeworksText.getText().toString());
+
+                        changeStudent(name, homeworks, position);
+                    }
+                })
+
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.show();
+    }
+
+    private void changeStudent(String name, int homeworks, int position) {
+        students.get(position).setName(name);
+        students.get(position).setHwCounter(homeworks);
+        webService.editEntity(position, name, homeworks);
+        notifyItemChanged(position);
+    }
+
 
     @ViewType
     @Override
@@ -62,7 +111,6 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return ViewType.LOADING;
         }
     }
-
 
     @Override
     public int getItemCount() {
@@ -85,7 +133,7 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    public void addStudent(final Student student){
+    public void addStudent(final Student student) {
         webService.addEntity(student);
         students.add(student);
         notifyDataSetChanged();

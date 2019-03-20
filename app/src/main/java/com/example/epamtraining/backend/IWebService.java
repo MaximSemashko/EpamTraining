@@ -16,4 +16,6 @@ public interface IWebService<T> {
     void removeEntity(final Long id);
 
     void addEntity(final Student student);
+
+    void editEntity(int position, String name, int counter);
 }

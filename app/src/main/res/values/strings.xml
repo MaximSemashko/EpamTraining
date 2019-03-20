@@ -6,4 +6,6 @@
     <string name="student_homeworks">Homeworks</string>
     <string name="cancel">Cancel</string>
     <string name="add">Add</string>
+    <string name="change_student">Change</string>
+    <string name="change_student_title">Change student</string>
 </resources>
