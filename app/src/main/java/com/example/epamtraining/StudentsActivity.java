@@ -1,13 +1,22 @@
 package com.example.epamtraining;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.example.epamtraining.backend.IWebService;
 import com.example.epamtraining.backend.StudentsWebService;
@@ -21,7 +30,9 @@ public class StudentsActivity extends AppCompatActivity {
 
     public static final int PAGE_SIZE = 10;
     public static final int MAX_VISIBLE_ITEMS = 20;
+    public static final String DIALOG_FRAGMENT_TAG = "addStudentDialogFragment";
 
+    private DialogFragment addStudentDialogFragment;
     private boolean isLoading = false;
     private StudentsAdapter adapter;
     private LinearLayoutManager layoutManager;
@@ -32,6 +43,9 @@ public class StudentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_students);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         final RecyclerView recyclerView = findViewById(R.id.students_list);
 
@@ -94,5 +108,53 @@ public class StudentsActivity extends AppCompatActivity {
                 isLoading = false;
             }
         });
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.add_student) {
+            showAddStudentDialog();
+            return true;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showAddStudentDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_student, null);
+
+        EditText studentNameText = dialogView.findViewById(R.id.student_name_edit_text);
+        EditText studentHomeworksText = dialogView.findViewById(R.id.student_homeworks_edit_text);
+
+        builder.setView(dialogView)
+                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String name = studentNameText.getText().toString();
+                        int homeworks = Integer.parseInt(String.valueOf(studentHomeworksText.getText()));
+                        adapter.addStudent(new Student(name, homeworks));
+                    }
+                })
+
+
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builder.show();
     }
 }

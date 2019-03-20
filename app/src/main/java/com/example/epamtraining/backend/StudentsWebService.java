@@ -20,7 +20,6 @@ public class StudentsWebService implements IWebService<Student> {
     {
         for (int i = 0; i < 30; i++) {
             Student student = new Student();
-            student.setId((long) i);
             student.setHwCounter(1 + random.nextInt(5));
             student.setName(String.valueOf(i));
             students.add(student);
@@ -49,5 +48,10 @@ public class StudentsWebService implements IWebService<Student> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             students.removeIf(student -> student.getId().equals(id));
         }
+    }
+
+    @Override
+    public void addEntity(final Student student) {
+        students.add(student);
     }
 }

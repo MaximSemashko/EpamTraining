@@ -2,12 +2,19 @@ package com.example.epamtraining.entities;
 
 
 public class Student {
+    private static int count = 0;
     private Long id;
     private String name;
     private int hwCounter;
 
-    public void setId(Long id) {
-        this.id = id;
+    public Student() {
+        this.id = (long) ++count;
+    }
+
+    public Student(String name, int hwCounter) {
+        this.id = (long) ++count;
+        this.name = name;
+        this.hwCounter = hwCounter;
     }
 
     public Long getId() {

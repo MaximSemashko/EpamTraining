@@ -85,6 +85,12 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
+    public void addStudent(final Student student){
+        webService.addEntity(student);
+        students.add(student);
+        notifyDataSetChanged();
+    }
+
     public void onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
