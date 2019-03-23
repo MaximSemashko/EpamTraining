@@ -128,7 +128,6 @@
         android:layout_width="105dp"
         android:layout_height="105dp"
         android:layout_below="@id/first_image_podcast"
-        android:layout_marginLeft=""
         android:src="@drawable/third_friend" />
 
     <TextView

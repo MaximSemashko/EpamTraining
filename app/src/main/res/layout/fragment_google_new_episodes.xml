@@ -64,7 +64,7 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/second_friend" />
+                android:src="@drawable/second_image" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,12 +106,11 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/second_friend" />
+                android:src="@drawable/profile" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginLeft="68dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/raleway_light"
