@@ -3,4 +3,17 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorPrimaryVk">#7DACD4</color>
+    <color name="colorPrimaryDarkVk">#7DACD4</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGray">#FAFAFA</color>
+    <color name="backgroundColor">#EBEDF0</color>
+    <color name="vkTextColor">#5288CC</color>
+    <color name="textInProfile">#71757A</color>
+    <color name="colorBlack">#000</color>
+
+    <color name="colorPrimaryGoogle">#FFFFFF</color>
+    <color name="colorPrimaryDarkGoogle">#FFFFFF</color>
+    <color name="googleBlueColor">#4c8bf5</color>
 </resources>

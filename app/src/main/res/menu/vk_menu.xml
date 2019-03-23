@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/action_copy"
+        android:icon="@drawable/ic_content_copy"
+        android:orderInCategory="250"
+        android:title="@string/copy_title"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_more_vert"
+        android:orderInCategory="300"
+        android:title="@string/more_information"
+        app:showAsAction="ifRoom" />
+</menu>

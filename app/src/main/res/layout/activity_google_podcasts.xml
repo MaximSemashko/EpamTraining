@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".GooglePodcastsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/google_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/google_search_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_search" />
+
+            <ImageView
+                android:layout_width="128dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="92dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/google_logo" />
+
+            <Button
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="102dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/ic_more_vert_google" />
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/first_image_podcast"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_below="@id/google_toolbar"
+        android:src="@drawable/second_friend" />
+
+    <TextView
+        android:id="@+id/text_for_first_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/first_image_podcast"
+        android:layout_alignTop="@+id/first_image_podcast"
+        android:layout_alignRight="@+id/first_image_podcast"
+        android:layout_alignBottom="@+id/first_image_podcast"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginRight="25dp"
+        android:background="@color/googleBlueColor"
+        android:gravity="center|bottom"
+        android:text="@string/new_podcast"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/second_image_podcast"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_below="@id/google_toolbar"
+        android:layout_toRightOf="@id/first_image_podcast"
+        android:src="@drawable/second_image" />
+
+    <TextView
+        android:id="@+id/text_for_second_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/second_image_podcast"
+        android:layout_alignTop="@+id/second_image_podcast"
+        android:layout_alignRight="@+id/second_image_podcast"
+        android:layout_alignBottom="@+id/second_image_podcast"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginRight="25dp"
+        android:background="@color/googleBlueColor"
+        android:gravity="center|bottom"
+        android:text="@string/new_podcast"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+
+    <ImageView
+        android:id="@+id/third_image_podcast"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_below="@id/google_toolbar"
+        android:layout_toRightOf="@id/second_image_podcast"
+        android:src="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/text_for_third_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/third_image_podcast"
+        android:layout_alignTop="@+id/third_image_podcast"
+        android:layout_alignRight="@+id/third_image_podcast"
+        android:layout_alignBottom="@+id/third_image_podcast"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginRight="25dp"
+        android:background="@color/googleBlueColor"
+        android:gravity="center|bottom"
+        android:text="@string/new_podcast"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/fourth_image_podcast"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_below="@id/google_toolbar"
+        android:layout_toRightOf="@+id/third_image_podcast"
+        android:src="@drawable/fourth_image" />
+
+    <ImageView
+        android:id="@+id/fives_image_podcast"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:layout_below="@id/first_image_podcast"
+        android:src="@drawable/third_friend" />
+
+    <TextView
+        android:id="@+id/text_for_fives_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fives_image_podcast"
+        android:layout_alignTop="@+id/fives_image_podcast"
+        android:layout_alignRight="@+id/fives_image_podcast"
+        android:layout_alignBottom="@+id/fives_image_podcast"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="82dp"
+        android:layout_marginRight="25dp"
+        android:background="@color/googleBlueColor"
+        android:gravity="center|bottom"
+        android:text="@string/new_podcast"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp" />
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fives_image_podcast"
+        android:layout_margin="16dp"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardElevation="2dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/for_you"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                app:fontFamily="@font/raleway_light" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/googleBlueColor"
+                app:tabIndicatorHeight="4dp"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/googleBlueColor"
+                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:tabTextColor="@color/textInProfile">
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/first_tab_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/googleBlueColor"
+                    android:text="@string/first_item" />
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/second_tab_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/second_item" />
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/third_tab_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/third_item" />
+
+            </android.support.design.widget.TabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+            </android.support.v4.view.ViewPager>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

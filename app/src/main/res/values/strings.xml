@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">EpamTraining</string>
+    <string name="copy_title">copy_title</string>
+    <string name="more_information">More Information</string>
+    <string name="vk_profile_name">Some Body</string>
+    <string name="onlinePhone">online📱</string>
+    <string name="edit_button">Edit</string>
+    <string name="status">Per aspera ad astra</string>
+    <string name="place_of_residence">Lives in Grodno</string>
+    <string name="show_info">Show Info</string>
+    <string name="what_is_new_hint">What\'s new?</string>
+    <string name="albums">Photos</string>
+    <string name="number_of_photos">199</string>
+    <string name="number_of_friends">166 Friends</string>
+    <string name="news">news</string>
+    <string name="search_news">search_news</string>
+    <string name="notifications">notifications</string>
+    <string name="page">Page</string>
+    <string name="new_podcast">New</string>
+    <string name="first_item">New episodes</string>
+    <string name="second_item">In progress</string>
+    <string name="third_item">Downloads</string>
+    <string name="for_you">For you</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
