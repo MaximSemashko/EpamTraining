@@ -3,8 +3,9 @@ package com.example.epamtraining;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import static com.example.epamtraining.FirstService.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String FRAGMENT_TAG = "firstFragment";
     private static final String TAG = "MainActivity";
     private static final String BROADCAST_ACTION = "com.example.epamtraining.CUSTOM_ACTION";
 
@@ -24,23 +26,35 @@ public class MainActivity extends AppCompatActivity {
     private String messageFromService;
 
     private FirstReceiver firstReceiver;
+    private Fragment firstFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState == null) {
+            firstFragment = new FirstFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, firstFragment, FRAGMENT_TAG)
+                    .commit();
+        } else {
+            firstFragment = getSupportFragmentManager()
+                    .findFragmentByTag(FRAGMENT_TAG);
+        }
+
         startServiceButton = findViewById(R.id.start_button);
         stopServiceButton = findViewById(R.id.stop_button);
         messageTextView = findViewById(R.id.message_text_view);
 
-        firstReceiver = new FirstReceiver(){
+        firstReceiver = new FirstReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 super.onReceive(context, intent);
 
                 Bundle bundle = intent.getExtras();
-                if(bundle!=null) {
+                if (bundle != null) {
                     messageFromService = bundle.getString(EXTRA_MESSAGE);
                     messageTextView.setText(messageFromService);
                 }
@@ -54,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, getString(R.string.service_start));
-                Intent intent = new Intent(MainActivity.this,FirstService.class);
+                Intent intent = new Intent(MainActivity.this, FirstService.class);
                 startService(intent);
             }
         });
@@ -63,13 +77,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, getString(R.string.service_stop));
-                Intent intent = new Intent(MainActivity.this,FirstService.class);
+                Intent intent = new Intent(MainActivity.this, FirstService.class);
                 stopService(intent);
             }
         });
-
-       getSupportFragmentManager().beginTransaction()
-               .add(R.id.fragment_container, new FirstFragment())
-               .commit();
     }
 }
