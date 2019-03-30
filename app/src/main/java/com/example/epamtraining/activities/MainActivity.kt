@@ -1,8 +1,9 @@
-package com.example.epamtraining
+package com.example.epamtraining.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.example.epamtraining.R
 
 class MainActivity : AppCompatActivity() {
 
