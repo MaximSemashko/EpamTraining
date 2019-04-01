@@ -33,13 +33,4 @@
             android:text="@string/stop_button" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/message_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        tools:text="Something"
-        android:layout_gravity="center_horizontal"
-        android:textSize="24sp"/>
-
 </LinearLayout>

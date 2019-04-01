@@ -1,6 +1,5 @@
 package com.example.epamtraining;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -9,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import static com.example.epamtraining.FirstService.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,9 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button startServiceButton;
     private Button stopServiceButton;
-    private TextView messageTextView;
-
-    private String messageFromService;
 
     private FirstReceiver firstReceiver;
     private Fragment firstFragment;
@@ -32,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firstReceiver = new FirstReceiver();
 
         if (savedInstanceState == null) {
             firstFragment = new FirstFragment();
@@ -46,23 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         startServiceButton = findViewById(R.id.start_button);
         stopServiceButton = findViewById(R.id.stop_button);
-        messageTextView = findViewById(R.id.message_text_view);
-
-        firstReceiver = new FirstReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                super.onReceive(context, intent);
-
-                Bundle bundle = intent.getExtras();
-                if (bundle != null) {
-                    messageFromService = bundle.getString(EXTRA_MESSAGE);
-                    messageTextView.setText(messageFromService);
-                }
-            }
-        };
-
-        IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
-        registerReceiver(firstReceiver, intentFilter);
 
         startServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,5 +60,22 @@ public class MainActivity extends AppCompatActivity {
                 stopService(intent);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        
+        Log.i(TAG, "onStart: registered receiver");
+        IntentFilter intentFilter = new IntentFilter(BROADCAST_ACTION);
+        registerReceiver(firstReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.i(TAG, "onStop: unregistered receiver");
+        unregisterReceiver(firstReceiver);
     }
 }
