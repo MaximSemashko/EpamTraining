@@ -22,7 +22,7 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Trai
     @Override
     public TrainingsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.exercise_item,viewGroup,false);
+                .inflate(R.layout.exercise_item, viewGroup, false);
         return new TrainingsViewHolder(view);
     }
 
@@ -41,7 +41,17 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Trai
         notifyDataSetChanged();
     }
 
-    class TrainingsViewHolder extends RecyclerView.ViewHolder{
+    public void setItem(Exercises exercise) {
+        exercisesList.add(exercise);
+        notifyDataSetChanged();
+    }
+
+    public void deleteItem(int position) {
+        exercisesList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    class TrainingsViewHolder extends RecyclerView.ViewHolder {
         private TextView exerciseNameTextView;
         private TextView exerciseSetsTextView;
 
@@ -51,7 +61,7 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Trai
             exerciseSetsTextView = itemView.findViewById(R.id.sets);
         }
 
-        public void bind(Exercises exercises){
+        public void bind(Exercises exercises) {
             exerciseNameTextView.setText(exercises.getName());
             exerciseSetsTextView.setText(String.valueOf(exercises.getSets()));
         }
