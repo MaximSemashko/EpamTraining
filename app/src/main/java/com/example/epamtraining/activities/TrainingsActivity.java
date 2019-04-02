@@ -3,6 +3,8 @@ package com.example.epamtraining.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -10,7 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.example.epamtraining.Callbacks.SwipeToDeleteExerciseCallback;
+import com.example.epamtraining.Callbacks.ExerciseTouchCallback;
 import com.example.epamtraining.R;
 import com.example.epamtraining.adapters.TrainingsAdapter;
 import com.example.epamtraining.models.Exercises;
@@ -38,8 +40,15 @@ public class TrainingsActivity extends AppCompatActivity {
         trainingsAdapter = new TrainingsAdapter();
         recyclerView.setAdapter(trainingsAdapter);
         ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new SwipeToDeleteExerciseCallback(trainingsAdapter));
+                ItemTouchHelper(new ExerciseTouchCallback(trainingsAdapter));
         itemTouchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setItemAnimator(new DefaultItemAnimator() {
+            @Override
+            public boolean animateMove(RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
+                return super.animateMove(holder, fromX, fromY, toX, toY);
+            }
+        });
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         addExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override

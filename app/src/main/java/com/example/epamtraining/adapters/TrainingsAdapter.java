@@ -8,13 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.epamtraining.R;
+import com.example.epamtraining.interfaces.ItemTouchHelperAdapter;
 import com.example.epamtraining.models.Exercises;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHolder> {
+public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHolder> implements ItemTouchHelperAdapter {
 
     private final List<Exercises> exercisesList = new ArrayList<>();
 
@@ -46,7 +48,23 @@ public class TrainingsAdapter extends RecyclerView.Adapter<TrainingsAdapter.Trai
         notifyDataSetChanged();
     }
 
-    public void deleteItem(int position) {
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(exercisesList, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(exercisesList, i, i - 1);
+            }
+        }
+
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
         exercisesList.remove(position);
         notifyItemRemoved(position);
     }
