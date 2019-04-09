@@ -4,10 +4,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.epamtraining.R
 import com.example.epamtraining.interfaces.ItemTouchHelperAdapter
 import com.example.epamtraining.models.Exercises
+import kotlinx.android.synthetic.main.exercise_item.view.*
 import java.util.*
 
 class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHolder>(), ItemTouchHelperAdapter {
@@ -58,17 +58,9 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHold
     }
 
     inner class TrainingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val exerciseNameTextView: TextView
-        private val exerciseSetsTextView: TextView
-
-        init {
-            exerciseNameTextView = itemView.findViewById(R.id.name)
-            exerciseSetsTextView = itemView.findViewById(R.id.sets)
-        }
-
         fun bind(exercises: Exercises) {
-            exerciseNameTextView.text = exercises.name
-            exerciseSetsTextView.text = exercises.repeats.toString()
+            itemView.exerciseNameTextView.text = exercises.name
+            itemView.exerciseSetsTextView.text = exercises.repeats.toString()
         }
     }
 }

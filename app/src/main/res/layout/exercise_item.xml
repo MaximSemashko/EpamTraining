@@ -33,7 +33,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/exerciseNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/exercise_number_view"
@@ -47,15 +47,15 @@
             android:id="@+id/sets_name_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/exerciseNameTextView"
             android:text="Sets"
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/sets"
+            android:id="@+id/exerciseSetsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name"
+            android:layout_below="@+id/exerciseNameTextView"
             android:layout_marginLeft="4dp"
             android:layout_toRightOf="@id/exercise_name_view"
             android:textColor="@color/colorBlack"
