@@ -19,13 +19,13 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         sign_in_button.setOnClickListener {
-            val exercises = Exercises("some", 5)
+            val exercises = Exercises("some", 5, 1.0)
             val exercisesList = arrayListOf<Exercises>()
             exercisesList.add(exercises)
 
-            Log.i("Exercises",exercises.toString())
+            Log.i("Exercises",exercises.id.toString())
 
-            val trainings = Trainings(UUID.randomUUID(), "MaxTrain", 5, exercisesList)
+            val trainings = Trainings(UUID.randomUUID(), "MaxTrain", 5.0, exercisesList)
             val trainingsList = arrayListOf<Trainings>()
             trainingsList.add(trainings)
 
@@ -39,6 +39,8 @@ class LoginActivity : AppCompatActivity() {
 
             Toast.makeText(this, user.toString(), Toast.LENGTH_LONG).show()
             Log.i("User", user.toString())
+
+
         }
     }
 }
