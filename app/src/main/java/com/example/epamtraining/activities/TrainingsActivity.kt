@@ -32,7 +32,7 @@ class TrainingsActivity : AppCompatActivity() {
                 return super.animateMove(holder, fromX, fromY, toX, toY)
             }
         }
-        exercisesRecyclerView!!.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        exercisesRecyclerView?.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         addExerciseButton?.setOnClickListener {
             val name = exerciseNameText?.text.toString()
