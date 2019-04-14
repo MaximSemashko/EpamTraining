@@ -8,13 +8,10 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 public class HeaderView extends LinearLayout {
 
-    private TextView userNameView;
-    private TextView userEmailView;
     private ImageView userIconView;
 
     public HeaderView(Context context) {
@@ -46,9 +43,6 @@ public class HeaderView extends LinearLayout {
         setOrientation(VERTICAL);
 
         inflate(getContext(), R.layout.header_compound_view, this);
-
-        userNameView = findViewById(R.id.user_name_view);
-        userEmailView = findViewById(R.id.email_view);
         userIconView = findViewById(R.id.profile_image_view);
     }
 
