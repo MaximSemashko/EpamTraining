@@ -5,6 +5,8 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.epamtraining.R
+import com.example.epamtraining.fragments.ProfileFragment
+import com.example.epamtraining.fragments.TrainingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,13 +14,13 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.news_item-> {
-                val fragment = FragmentHome.Companion.newInstance()
+                val fragment = ProfileFragment.Companion.newInstance()
                 addFragment(fragment)
 
                 return@OnNavigationItemSelectedListener true
             }
             R.id.search_item -> {
-                val fragment = FragmentDashboard()
+                val fragment = TrainingsFragment()
                 addFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
