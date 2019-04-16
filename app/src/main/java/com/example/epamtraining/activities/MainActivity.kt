@@ -1,52 +1,67 @@
 package com.example.epamtraining.activities
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.epamtraining.R
 import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
+import com.example.epamtraining.fragments.UsersFragment
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private var currentState: Int = 0
+
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.news_item-> {
-                val fragment = ProfileFragment.Companion.newInstance()
-                addFragment(fragment)
+            R.id.users_list_item -> {
+                addFragment(UsersFragment())
 
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.search_item -> {
-                val fragment = TrainingsFragment()
-                addFragment(fragment)
+            R.id.trainings_list_item -> {
+                addFragment(TrainingsFragment())
+
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.profile_item -> {
+                addFragment(ProfileFragment())
+
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        main_bottom_navigation_view.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        if (savedInstanceState != null) mainBottomNavigationView.setSelectedItemId(currentState)
 
-        val fragment = FragmentHome.Companion.newInstance()
-        addFragment(fragment)
+        mainBottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        mainBottomNavigationView.setSelectedItemId(R.id.trainings_list_item)
     }
 
-    /**
-     * add/replace fragment in container [FrameLayout]
-     */
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        currentState = mainBottomNavigationView.getSelectedItemId();
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainBottomNavigationView.setSelectedItemId(currentState)
+    }
+
     private fun addFragment(fragment: Fragment) {
         supportFragmentManager
                 .beginTransaction()
                 .setCustomAnimations(R.anim.design_bottom_sheet_slide_in, R.anim.design_bottom_sheet_slide_out)
-                .replace(R.id.content, fragment, fragment.javaClass.simpleName)
+                .replace(R.id.container_layout, fragment)
                 .commit()
     }
 }

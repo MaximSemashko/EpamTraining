@@ -37,7 +37,7 @@ class TrainingsActivity : AppCompatActivity() {
         addExerciseButton?.setOnClickListener {
             val name = exerciseNameText?.text.toString()
             val sets = Integer.parseInt(exerciseSetsText?.text.toString())
-            trainingsAdapter?.setItem(Exercises(UUID.randomUUID(), name, sets, 1.0))
+            trainingsAdapter.setItem(Exercises(UUID.randomUUID(), name, sets, 1.0))
             exerciseNameText?.setText(null)
             exerciseSetsText?.setText(null)
         }
