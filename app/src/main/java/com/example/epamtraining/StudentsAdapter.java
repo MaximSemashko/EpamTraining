@@ -41,7 +41,15 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent,
                                                       @ViewType final int viewType) {
         if (viewType == ViewType.STUDENT) {
-            return new BaseViewHolder<>(new StudentItemView(parent.getContext()));
+            BaseViewHolder<StudentItemView> studentItemViewBaseViewHolder = new BaseViewHolder<>(new StudentItemView(parent.getContext()));
+            studentItemViewBaseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = studentItemViewBaseViewHolder.getAdapterPosition();
+                    showChangeDialog(v, position);
+                }
+            });
+            return studentItemViewBaseViewHolder;
         } else {
             return new BaseViewHolder<>(inflater.inflate(R.layout.layout_progress, parent, false));
         }
@@ -55,13 +63,6 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((StudentItemView) viewHolder.itemView)
                     .setName(student.getName())
                     .setHwCounter(String.valueOf(student.getHwCounter()));
-
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showChangeDialog(v, position);
-                }
-            });
         }
     }
 

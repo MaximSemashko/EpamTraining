@@ -3,7 +3,6 @@ package com.example.epamtraining;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,9 +30,7 @@ public class StudentsActivity extends AppCompatActivity {
 
     public static final int PAGE_SIZE = 10;
     public static final int MAX_VISIBLE_ITEMS = 20;
-    public static final String DIALOG_FRAGMENT_TAG = "addStudentDialogFragment";
 
-    private DialogFragment addStudentDialogFragment;
     private boolean isLoading = false;
     private StudentsAdapter adapter;
     private LinearLayoutManager layoutManager;
