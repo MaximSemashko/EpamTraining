@@ -42,18 +42,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         mainBottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        if (savedInstanceState != null) mainBottomNavigationView.setSelectedItemId(currentState)
-       // mainBottomNavigationView.setSelectedItemId(R.id.trainings_list_item)
+
+        if (savedInstanceState != null) mainBottomNavigationView.setSelectedItemId(currentState) else mainBottomNavigationView.selectedItemId = R.id.trainings_list_item
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
         super.onSaveInstanceState(outState, outPersistentState)
-        currentState = mainBottomNavigationView.getSelectedItemId();
+        currentState = mainBottomNavigationView.selectedItemId;
     }
 
     override fun onResume() {
         super.onResume()
-        mainBottomNavigationView.setSelectedItemId(currentState)
+        mainBottomNavigationView.selectedItemId = currentState
     }
 
     private fun addFragment(fragment: Fragment) {
