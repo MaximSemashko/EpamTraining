@@ -41,10 +41,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState != null) mainBottomNavigationView.setSelectedItemId(currentState)
-
         mainBottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-        mainBottomNavigationView.setSelectedItemId(R.id.trainings_list_item)
+        if (savedInstanceState != null) mainBottomNavigationView.setSelectedItemId(currentState)
+       // mainBottomNavigationView.setSelectedItemId(R.id.trainings_list_item)
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
