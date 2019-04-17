@@ -26,12 +26,13 @@ import com.example.epamtraining.util.ICallback;
 import java.util.List;
 
 
-public class StudentsActivity extends AppCompatActivity {
+public class StudentsActivity extends AppCompatActivity implements StudentsAdapter.OnItemClickListener, ChangeStudentDialogFragment.ChangeStudentDialogListener {
 
     public static final int PAGE_SIZE = 10;
     public static final int MAX_VISIBLE_ITEMS = 20;
 
     private boolean isLoading = false;
+    private StudentsAdapter.OnItemClickListener onItemClickListener;
     private StudentsAdapter adapter;
     private LinearLayoutManager layoutManager;
     private final IWebService<Student> webService = new StudentsWebService();
@@ -49,7 +50,8 @@ public class StudentsActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new StudentsAdapter(this);
+        onItemClickListener = this;
+        adapter = new StudentsAdapter(this, onItemClickListener);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator() {
             @Override
@@ -108,7 +110,6 @@ public class StudentsActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
@@ -124,11 +125,10 @@ public class StudentsActivity extends AppCompatActivity {
             return true;
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
-    private void showAddStudentDialog() {
+    public void showAddStudentDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_student, null);
@@ -156,5 +156,16 @@ public class StudentsActivity extends AppCompatActivity {
                 });
 
         builder.show();
+    }
+
+    @Override
+    public void onItemClicked(View v) {
+        ChangeStudentDialogFragment changeStudentDialogFragment = new ChangeStudentDialogFragment();
+        changeStudentDialogFragment.show(getSupportFragmentManager(), changeStudentDialogFragment.getTag());
+    }
+
+    @Override
+    public void onFinishEditDialog(String name, int homeworks) {
+        adapter.changeStudent(name, homeworks);
     }
 }

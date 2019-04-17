@@ -1,16 +1,12 @@
 package com.example.epamtraining;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.example.epamtraining.backend.IWebService;
 import com.example.epamtraining.backend.StudentsWebService;
@@ -25,15 +21,20 @@ import java.util.List;
 
 public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private boolean isShowLastViewAsLoading = false;
+    public interface OnItemClickListener {
+        void onItemClicked(View v);
+    }
 
+    private boolean isShowLastViewAsLoading = false;
     private final LayoutInflater inflater;
     private final List<Student> students = new ArrayList<>();
     private final IWebService<Student> webService = new StudentsWebService();
+    private int adaptersPosition;
+    private OnItemClickListener onItemClickListener;
 
-
-    public StudentsAdapter(final Context context) {
+    public StudentsAdapter(final Context context, final OnItemClickListener listener) {
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        onItemClickListener = listener;
     }
 
     @NonNull
@@ -45,10 +46,11 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             studentItemViewBaseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int position = studentItemViewBaseViewHolder.getAdapterPosition();
-                    showChangeDialog(v, position);
+                    adaptersPosition = studentItemViewBaseViewHolder.getAdapterPosition();
+                    onItemClickListener.onItemClicked(v);
                 }
             });
+
             return studentItemViewBaseViewHolder;
         } else {
             return new BaseViewHolder<>(inflater.inflate(R.layout.layout_progress, parent, false));
@@ -66,42 +68,12 @@ public class StudentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private void showChangeDialog(View v, int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-        View dialogView = inflater.inflate(R.layout.dialog_student, null);
-
-        EditText studentNameText = dialogView.findViewById(R.id.student_name_edit_text);
-        EditText studentHomeworksText = dialogView.findViewById(R.id.student_homeworks_edit_text);
-        TextView changeStudentView = dialogView.findViewById(R.id.alertTitle);
-        changeStudentView.setText(R.string.change_student_title);
-
-        builder.setView(dialogView)
-                .setPositiveButton(R.string.change_student, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        String name = studentNameText.getText().toString();
-                        int homeworks = Integer.parseInt(studentHomeworksText.getText().toString());
-
-                        changeStudent(name, homeworks, position);
-                    }
-                })
-
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-        builder.show();
+    public void changeStudent(String name, int homeworks) {
+        students.get(adaptersPosition).setName(name);
+        students.get(adaptersPosition).setHwCounter(homeworks);
+        webService.editEntity(adaptersPosition, name, homeworks);
+        notifyItemChanged(adaptersPosition);
     }
-
-    private void changeStudent(String name, int homeworks, int position) {
-        students.get(position).setName(name);
-        students.get(position).setHwCounter(homeworks);
-        webService.editEntity(position, name, homeworks);
-        notifyItemChanged(position);
-    }
-
 
     @ViewType
     @Override
