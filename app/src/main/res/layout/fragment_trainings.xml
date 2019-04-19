@@ -1,14 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TrainingsFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/exercise_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Training"
+        android:textColor="@color/colorBlack"
+        android:textSize="32sp" />
+
+    <TextView
+        android:id="@+id/exercise_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exercise_view"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:paddingTop="4dp"
+        android:text="Name"
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/exerciseNameText"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exercise_view"
+        android:layout_toRightOf="@+id/exercise_name_view"
+        android:hint="Exercise"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/sets_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exerciseNameText"
+        android:layout_marginLeft="8dp"
+        android:paddingTop="4dp"
+        android:text="Sets"
+        android:textColor="@color/colorBlack"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/exerciseSetsText"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exerciseNameText"
+        android:layout_toRightOf="@+id/exercise_name_view"
+        android:hint="Sets"
+        android:textSize="18sp" />
+
+    <ImageButton
+        android:id="@+id/addExerciseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorWhite"
+        android:layout_alignParentRight="true"
+        />
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/exercisesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello trainings" />
+        android:layout_below="@+id/exerciseSetsText"
+        android:layout_marginTop="0dp"
+        tools:listitem="@layout/exercise_item" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/submit_button"
+        android:text="submit"
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"/>
+
+</RelativeLayout>

@@ -11,7 +11,7 @@ import com.example.epamtraining.Callbacks.ExerciseTouchCallback
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.TrainingsAdapter
 import com.example.epamtraining.models.Exercises
-import kotlinx.android.synthetic.main.activity_trainings.*
+import kotlinx.android.synthetic.main.fragment_trainings.*
 import java.util.*
 
 class TrainingsActivity : AppCompatActivity() {
@@ -20,7 +20,7 @@ class TrainingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_trainings)
+        setContentView(R.layout.fragment_trainings)
 
         exercisesRecyclerView?.layoutManager = LinearLayoutManager(this)
         trainingsAdapter = TrainingsAdapter()
