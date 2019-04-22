@@ -21,7 +21,7 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHold
     }
 
     override fun onBindViewHolder(viewHolder: TrainingsViewHolder, i: Int) {
-        viewHolder.bind(exercisesList[i])
+        viewHolder.bind(exercisesList.get(i))
     }
 
     override fun getItemCount(): Int {

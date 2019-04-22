@@ -39,7 +39,7 @@
         android:layout_toRightOf="@id/usersImageView"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
-        tools:text="Maxim" />
+        android:text="Maxim" />
 
     <TextView
         android:id="@+id/profileParametres"
@@ -51,7 +51,8 @@
         android:layout_toRightOf="@id/usersImageView"
         android:text="Parametres"
         android:textSize="18sp"
-        app:fontFamily="@font/raleway_light" />
+        app:fontFamily="@font/raleway_light"
+        android:layout_marginLeft="80dp" />
 
     <TextView
         android:id="@+id/usersHeights"
@@ -64,7 +65,7 @@
         android:layout_toRightOf="@id/usersImageView"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
-        tools:text="190 sm" />
+        android:text="190 sm" />
 
     <TextView
         android:id="@+id/usersWeights"
@@ -80,21 +81,19 @@
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         app:fontFamily="@font/raleway_light"
-        tools:text="85 kg" />
+        android:text="85 kg" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/usersHeights"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp">
 

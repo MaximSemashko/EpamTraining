@@ -8,6 +8,7 @@ import com.example.epamtraining.models.Users
 import kotlinx.android.synthetic.main.activity_registration.*
 import java.util.*
 
+
 class RegistrationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,7 @@ class RegistrationActivity : AppCompatActivity() {
                     weight = usersWeightEditText.text.toString().toDouble(),
                     height = usersHeightEditText.text.toString().toDouble())
 
-            Toast.makeText(this, user.toString(),Toast.LENGTH_LONG).show()
+            Toast.makeText(this, user.toString(), Toast.LENGTH_LONG).show()
         }
     }
 }
