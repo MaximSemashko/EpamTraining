@@ -27,6 +27,12 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
         return productsList.size
     }
 
+    fun updateItems(pItems: Collection<Products>) {
+        productsList.clear()
+        productsList.addAll(pItems)
+        notifyDataSetChanged() //TODO DiffUtils
+    }
+
     fun setItems(products: Collection<Products>) {
         productsList.addAll(products)
         notifyDataSetChanged()
