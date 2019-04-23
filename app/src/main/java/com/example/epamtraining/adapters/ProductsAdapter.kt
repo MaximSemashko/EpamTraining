@@ -40,7 +40,7 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
     inner class ProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(products: Products) {
             itemView.productNameTextView.text = products.name
-            itemView.productsCaloriesTextView.text = products.calories.toString()
+            itemView.productsCaloriesTextView.text = products.callories.toString()
         }
     }
 }
