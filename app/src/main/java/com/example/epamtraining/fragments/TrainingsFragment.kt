@@ -11,10 +11,9 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.epamtraining.Callbacks.ExerciseTouchCallback
-
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.TrainingsAdapter
+import com.example.epamtraining.callbacks.ExerciseTouchCallback
 import com.example.epamtraining.models.Exercises
 import kotlinx.android.synthetic.main.fragment_trainings.*
 import java.util.*

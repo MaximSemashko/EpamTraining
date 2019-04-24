@@ -1,10 +1,11 @@
 package com.example.epamtraining.activities
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.design.widget.BottomNavigationView
+import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.example.epamtraining.R
 import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
@@ -14,53 +15,54 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var currentState: Int = 0
-
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.users_list_item -> {
-                addFragment(UsersFragment())
-
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.trainings_list_item -> {
-                addFragment(TrainingsFragment())
-
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.profile_item -> {
-                addFragment(ProfileFragment())
-
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
+    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainBottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        initToolbar();
 
-        if (savedInstanceState != null) mainBottomNavigationView.setSelectedItemId(currentState) else mainBottomNavigationView.selectedItemId = R.id.trainings_list_item
+        initDrawer();
     }
 
-    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        super.onSaveInstanceState(outState, outPersistentState)
-        currentState = mainBottomNavigationView.selectedItemId;
+    fun initDrawer() {
+        mainNavigationView.setNavigationItemSelectedListener(
+                object : NavigationView.OnNavigationItemSelectedListener {
+                    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
+                        menuItem.setChecked(true)
+                        drawerLayout.closeDrawers()
+                        selectDrawerItem(menuItem)
+
+                        return true
+                    }
+                })
     }
 
-    override fun onResume() {
-        super.onResume()
-        mainBottomNavigationView.selectedItemId = currentState
-    }
 
-    private fun addFragment(fragment: Fragment) {
+    fun selectDrawerItem(menuItem: MenuItem) {
+        val fragment: Fragment
+        val fragmentClass: Class<*>
+
+        when (menuItem.itemId) {
+            R.id.drawerProfile -> fragmentClass = ProfileFragment::class.java
+            R.id.drawerTrainingsList -> fragmentClass = TrainingsFragment::class.java
+            R.id.drawerUsersList -> fragmentClass = UsersFragment::class.java
+            else -> fragmentClass = ProfileFragment::class.java
+        }
+
+        fragment = fragmentClass.newInstance() as Fragment
         supportFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(R.anim.design_bottom_sheet_slide_in, R.anim.design_bottom_sheet_slide_out)
-                .replace(R.id.container_layout, fragment)
-                .commit()
+                .replace(R.id.content_frame, fragment).commit()
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(mainToolbar)
+        val actionbar = supportActionBar
+        if (actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true)
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
     }
 }

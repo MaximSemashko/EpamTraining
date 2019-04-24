@@ -7,9 +7,9 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import com.example.epamtraining.Callbacks.ExerciseTouchCallback
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.TrainingsAdapter
+import com.example.epamtraining.callbacks.ExerciseTouchCallback
 import com.example.epamtraining.models.Exercises
 import kotlinx.android.synthetic.main.fragment_trainings.*
 import java.util.*

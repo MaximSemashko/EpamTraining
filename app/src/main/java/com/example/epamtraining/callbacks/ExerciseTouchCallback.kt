@@ -1,4 +1,4 @@
-package com.example.epamtraining.Callbacks
+package com.example.epamtraining.callbacks
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper

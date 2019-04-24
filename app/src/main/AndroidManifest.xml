@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.epamtraining">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,17 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.ProductsActivity">
+        <activity
+            android:name=".activities.ExampleActivity"
+            android:label="@string/title_activity_example"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activities.ProductsActivity"></activity>
+        <activity android:name=".activities.RegistrationActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activities.RegistrationActivity"></activity>
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.MainActivity">
-
         </activity>
         <activity android:name=".activities.TrainingsActivity" />
 
