@@ -14,10 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".activities.ExampleActivity"
-            android:label="@string/title_activity_example"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activities.ProductsActivity"></activity>
         <activity android:name=".activities.RegistrationActivity" />
         <activity android:name=".activities.LoginActivity" />
@@ -28,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TrainingsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

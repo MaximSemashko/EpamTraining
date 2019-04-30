@@ -8,7 +8,7 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <com.example.epamtraining.HeaderView
+    <com.example.epamtraining.views.HeaderView
         android:id="@+id/main_header_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

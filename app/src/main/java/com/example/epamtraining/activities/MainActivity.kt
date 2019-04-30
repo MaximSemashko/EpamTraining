@@ -1,9 +1,9 @@
 package com.example.epamtraining.activities
 
 import android.os.Bundle
-import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
-import android.support.v4.widget.DrawerLayout
+import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.epamtraining.R
@@ -11,11 +11,10 @@ import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
 import com.example.epamtraining.fragments.UsersFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var drawerLayout: DrawerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,20 +26,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initDrawer() {
-        mainNavigationView.setNavigationItemSelectedListener(
-                object : NavigationView.OnNavigationItemSelectedListener {
-                    override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
-                        menuItem.setChecked(true)
-                        drawerLayout.closeDrawers()
-                        selectDrawerItem(menuItem)
+        mainNavigationView.setNavigationItemSelectedListener { menuItem ->
+            menuItem.setChecked(true)
+            drawerLayout.closeDrawers()
+            selectDrawerItem(menuItem)
 
-                        return true
-                    }
-                })
+            true
+        }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
 
-    fun selectDrawerItem(menuItem: MenuItem) {
+                return true
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.closeDrawer(GravityCompat.START) else super.onBackPressed()
+    }
+
+    private fun selectDrawerItem(menuItem: MenuItem) {
         val fragment: Fragment
         val fragmentClass: Class<*>
 
@@ -59,10 +70,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initToolbar() {
         setSupportActionBar(mainToolbar)
-        val actionbar = supportActionBar
-        if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(true)
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu)
+        val actionbar: ActionBar? = supportActionBar
+        actionbar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu)
         }
     }
 }
