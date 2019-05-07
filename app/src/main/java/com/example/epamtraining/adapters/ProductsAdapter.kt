@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.example.epamtraining.R
 import com.example.epamtraining.models.Products
 import kotlinx.android.synthetic.main.product_item.view.*
-import java.util.*
 
 class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
 
@@ -27,16 +26,12 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
         return productsList.size
     }
 
-    fun updateItems(pItems: Collection<Products>) {
+    fun updateItems(pItems: List<Products>) {
         productsList.clear()
         productsList.addAll(pItems)
         notifyDataSetChanged() //TODO DiffUtils
     }
 
-    fun setItems(products: Collection<Products>) {
-        productsList.addAll(products)
-        notifyDataSetChanged()
-    }
     inner class ProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(products: Products) {
             itemView.productNameTextView.text = products.name

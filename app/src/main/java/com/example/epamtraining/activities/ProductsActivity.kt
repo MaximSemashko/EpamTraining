@@ -14,12 +14,14 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.Response
 import kotlinx.android.synthetic.main.activity_products.*
+import org.json.JSONObject
 import java.io.IOException
 
 
 class ProductsActivity : AppCompatActivity() {
 
     private lateinit var productsAdapter: ProductsAdapter
+    private val products = ArrayList<Products>()
     private val ProductsWebService = IProductsWebService.Utils.getInstance()
     val url = "https://ksport-8842a.firebaseio.com/Products.json"
 
@@ -32,7 +34,6 @@ class ProductsActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
             adapter = productsAdapter
         }
-
         fetchJson()
     }
 
@@ -42,37 +43,21 @@ class ProductsActivity : AppCompatActivity() {
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(response: Response?) {
                 val responseBody = response?.body()?.string()
-                Log.i("TAG",responseBody)
-                val gson = GsonBuilder().create()
-                val products = gson.fromJson(responseBody, Products::class.java)
-                Log.i("TAG",products.toString())
-                runOnUiThread{
-                    productsAdapter.updateItems(listOf(products))
-                }
-            }
-
-            override fun onFailure(request: Request?, e: IOException?) {
-            }
-        })
-    }
-
-    /* private fun fetchJson() {
-        val request = Request.Builder().url(url).build()
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(response: Response?) {
-                val responseBody = response?.body()?.string()
+                Log.i("TAG", responseBody)
                 val gson = GsonBuilder().create()
                 val objects = JSONObject(responseBody)
                 val iterator = objects.keys()
                 while (iterator.hasNext()) {
                     val obj = objects.getJSONObject(iterator.next())
-                    val prod =gson.from
-                            runOnUiThread {
-                                productsAdapter.updateItems(obj)
-
-                            }
+                    val product = Products(obj.getString("id"),
+                            obj.getString("name"),
+                            obj.getDouble("callories"))
+                    products.add(product)
                     Log.d("TAG", obj.toString())
+                }
+                runOnUiThread {
+                    productsAdapter.updateItems(products)
+
                 }
             }
 
@@ -80,5 +65,5 @@ class ProductsActivity : AppCompatActivity() {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
-    }*/
+    }
 }
