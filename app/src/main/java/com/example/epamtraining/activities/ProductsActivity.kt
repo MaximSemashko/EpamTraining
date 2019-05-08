@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.example.epamtraining.adapters.ProductsAdapter
+import com.example.epamtraining.dialogs.ProductsDialogFragment
 import com.example.epamtraining.models.Products
 import com.squareup.okhttp.Callback
 import com.squareup.okhttp.OkHttpClient
@@ -15,7 +16,11 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class ProductsActivity : AppCompatActivity() {
+class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductDialogListener {
+
+    override fun addProduct(name: String, calories: Double) {
+        productsAdapter.addItem(name,calories)
+    }
 
     private lateinit var productsAdapter: ProductsAdapter
     private val products = ArrayList<Products>()
@@ -31,6 +36,11 @@ class ProductsActivity : AppCompatActivity() {
             adapter = productsAdapter
         }
         fetchJson()
+
+        productsFab.setOnClickListener{
+            val productsDialogFragment = ProductsDialogFragment()
+            productsDialogFragment.show(supportFragmentManager, productsDialogFragment.tag)
+        }
     }
 
     private fun fetchJson() {
