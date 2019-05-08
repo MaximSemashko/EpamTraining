@@ -3,12 +3,9 @@ package com.example.epamtraining.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
-import com.example.epamtraining.R
+import android.view.View
 import com.example.epamtraining.adapters.ProductsAdapter
-import com.example.epamtraining.backend.IProductsWebService
 import com.example.epamtraining.models.Products
-import com.google.gson.GsonBuilder
 import com.squareup.okhttp.Callback
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
@@ -22,12 +19,11 @@ class ProductsActivity : AppCompatActivity() {
 
     private lateinit var productsAdapter: ProductsAdapter
     private val products = ArrayList<Products>()
-    private val ProductsWebService = IProductsWebService.Utils.getInstance()
     val url = "https://ksport-8842a.firebaseio.com/Products.json"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_products)
+        setContentView(com.example.epamtraining.R.layout.activity_products)
         productsAdapter = ProductsAdapter()
 
         productsRecyclerView.apply {
@@ -38,13 +34,12 @@ class ProductsActivity : AppCompatActivity() {
     }
 
     private fun fetchJson() {
+        showProgress()
         val request = Request.Builder().url(url).build()
         val client = OkHttpClient()
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(response: Response?) {
                 val responseBody = response?.body()?.string()
-                Log.i("TAG", responseBody)
-                val gson = GsonBuilder().create()
                 val objects = JSONObject(responseBody)
                 val iterator = objects.keys()
                 while (iterator.hasNext()) {
@@ -52,18 +47,30 @@ class ProductsActivity : AppCompatActivity() {
                     val product = Products(obj.getString("id"),
                             obj.getString("name"),
                             obj.getDouble("callories"))
+
                     products.add(product)
-                    Log.d("TAG", obj.toString())
                 }
                 runOnUiThread {
                     productsAdapter.updateItems(products)
-
+                    hideProgress()
                 }
             }
 
             override fun onFailure(request: Request?, e: IOException?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                hideProgress()
             }
         })
+    }
+
+    private fun hideProgress() {
+        if (progressBar.visibility !== View.GONE) {
+            progressBar.setVisibility(View.GONE)
+        }
+    }
+
+    private fun showProgress() {
+        if (progressBar.visibility !== View.VISIBLE) {
+            progressBar.setVisibility(View.VISIBLE)
+        }
     }
 }
