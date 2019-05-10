@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.example.epamtraining.R
 import com.example.epamtraining.adapters.ProductsAdapter
 import com.example.epamtraining.dialogs.ProductsDialogFragment
 import com.example.epamtraining.models.Products
@@ -14,12 +15,19 @@ import com.squareup.okhttp.Response
 import kotlinx.android.synthetic.main.activity_products.*
 import org.json.JSONObject
 import java.io.IOException
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.concurrent.thread
 
 
 class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductDialogListener {
 
     override fun addProduct(name: String, calories: Double) {
         productsAdapter.addItem(name,calories)
+        thread {
+            sendMsg()
+        }
     }
 
     private lateinit var productsAdapter: ProductsAdapter
@@ -28,7 +36,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.epamtraining.R.layout.activity_products)
+        setContentView(R.layout.activity_products)
         productsAdapter = ProductsAdapter()
 
         productsRecyclerView.apply {
@@ -70,6 +78,39 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
                 hideProgress()
             }
         })
+    }
+
+    @Throws(IOException::class)
+    private fun sendMsg() {
+        val obj = URL(url)
+        val con = obj.openConnection() as HttpURLConnection
+
+        con.setRequestMethod("POST")
+        con.setRequestProperty("Content-Type", "application/json")
+        con.setRequestProperty("Authorization", "key=XXXX")
+
+//        val msg = JSONObject()
+//        msg.put("message", "test8")
+
+        val parent = JSONObject()
+
+//        parent.put("to", "XXXXX")
+        parent.put("callories","35")
+        parent.put("id","5")
+        parent.put("name","something")
+//        parent.put("data", msg)
+
+        con.setDoOutput(true)
+
+        val os = OutputStreamWriter(con.outputStream)
+        os.write(parent.toString())
+        os.flush()
+        os.close()
+        val responseCode = con.getResponseCode()
+        println("\nSending 'POST' request to URL : $url")
+        println("Post parameters : $parent")
+        println("Response Code : " + responseCode + " " + con.getResponseMessage())
+
     }
 
     private fun hideProgress() {
