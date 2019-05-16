@@ -23,10 +23,10 @@ import kotlin.concurrent.thread
 
 class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductDialogListener {
 
-    override fun addProduct(name: String, calories: Double) {
-        productsAdapter.addItem(name,calories)
+    override fun addProduct(product: Products) {
+        productsAdapter.addItem(product)
         thread {
-            sendMsg()
+            sendMsg(product)
         }
     }
 
@@ -45,7 +45,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
         }
         fetchJson()
 
-        productsFab.setOnClickListener{
+        productsFab.setOnClickListener {
             val productsDialogFragment = ProductsDialogFragment()
             productsDialogFragment.show(supportFragmentManager, productsDialogFragment.tag)
         }
@@ -81,7 +81,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
     }
 
     @Throws(IOException::class)
-    private fun sendMsg() {
+    private fun sendMsg(product: Products) {
         val obj = URL(url)
         val con = obj.openConnection() as HttpURLConnection
 
@@ -95,9 +95,9 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
         val parent = JSONObject()
 
 //        parent.put("to", "XXXXX")
-        parent.put("callories","35")
-        parent.put("id","5")
-        parent.put("name","something")
+        parent.put("callories", product.calories)
+        parent.put("id", product.id)
+        parent.put("name", product.name)
 //        parent.put("data", msg)
 
         con.setDoOutput(true)
@@ -114,14 +114,14 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
     }
 
     private fun hideProgress() {
-        if (progressBar.visibility !== View.GONE) {
-            progressBar.setVisibility(View.GONE)
+        if (progressBar.visibility != View.GONE) {
+            progressBar.visibility = View.GONE
         }
     }
 
     private fun showProgress() {
-        if (progressBar.visibility !== View.VISIBLE) {
-            progressBar.setVisibility(View.VISIBLE)
+        if (progressBar.visibility != View.VISIBLE) {
+            progressBar.visibility = View.VISIBLE
         }
     }
 }

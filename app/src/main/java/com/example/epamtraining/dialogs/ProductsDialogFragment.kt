@@ -6,12 +6,14 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.widget.EditText
 import com.example.epamtraining.R
+import com.example.epamtraining.models.Products
+import java.util.*
 
 
 class ProductsDialogFragment : DialogFragment() {
 
     interface addProductDialogListener {
-        fun addProduct(name: String, calories: Double)
+        fun addProduct(product: Products)
     }
 
     private lateinit var productName: EditText
@@ -29,7 +31,8 @@ class ProductsDialogFragment : DialogFragment() {
                     val name: String = productName.text.toString()
                     val calories: Double = productCalories.text.toString().toDouble()
                     val listener = activity as addProductDialogListener?
-                    listener?.addProduct(name, calories)
+                    val product = Products(id = UUID.randomUUID().toString(), name = name, calories = calories)
+                    listener?.addProduct(product)
                 }
                 .setNegativeButton("Cancel") { dialog, id -> dialog.dismiss() }
 
