@@ -30,7 +30,6 @@ class RegistrationActivity : AppCompatActivity() {
 
         registerButton.setOnClickListener {
 
-
             val user = TestUser(usersEmailEditText.text.toString(),
                     usersPasswordEditText.text.toString())
 
@@ -54,7 +53,6 @@ class RegistrationActivity : AppCompatActivity() {
 
     @Throws(Exception::class)
     fun signUnWithEmailAndPassword(user: TestUser): String? {
-
         var urlRequest: HttpURLConnection? = null
         var token: String?
 
@@ -99,11 +97,11 @@ class RegistrationActivity : AppCompatActivity() {
         con.setRequestProperty("Authorization", "key=XXXX")
         val dataMessages = JSONObject()
 
-        dataMessages.put("name", user.name.toString())
-        dataMessages.put("age", user.age.toString())
-        dataMessages.put("sex", user.sex.toString())
-        dataMessages.put("height", user.height.toString())
-        dataMessages.put("weight", user.weight.toString())
+        dataMessages.put("name", user.name)
+        dataMessages.put("age", user.age)
+        dataMessages.put("sex", user.sex)
+        dataMessages.put("height", user.height)
+        dataMessages.put("weight", user.weight)
 
         con.setDoOutput(true)
 
@@ -119,9 +117,7 @@ class RegistrationActivity : AppCompatActivity() {
 
     @Throws(Exception::class)
     fun setAccountInfo(user: TestUser): String? {
-
         var urlRequest: HttpURLConnection? = null
-
         try {
             val URL = URL(BASE_URL + OPERATION_SET_ACCOUNT_INFO + "?key=" + firebaseKey)
             urlRequest = URL.openConnection() as HttpURLConnection
