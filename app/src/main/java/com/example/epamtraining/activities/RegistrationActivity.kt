@@ -5,9 +5,10 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.epamtraining.R
 import com.example.epamtraining.models.Users
+import com.google.gson.Gson
 import com.google.gson.JsonParser
+import com.squareup.okhttp.*
 import kotlinx.android.synthetic.main.activity_registration.*
-import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -16,6 +17,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 import java.util.concurrent.Executors
+import kotlin.collections.HashMap
 
 
 class RegistrationActivity : AppCompatActivity() {
@@ -45,7 +47,7 @@ class RegistrationActivity : AppCompatActivity() {
                         height = usersHeightEditText.text.toString().toDouble())
                 Log.i("TAG", "User: $userNew")
                 localId = setAccountInfo(user)
-                addUserToRealtimeDatabase(userNew)
+                putUserToRealtimeDatabase(userNew)
             }
 
         }
@@ -87,32 +89,39 @@ class RegistrationActivity : AppCompatActivity() {
         return token
     }
 
+    var client = OkHttpClient()
+
     @Throws(IOException::class)
-    private fun addUserToRealtimeDatabase(user: Users) {
-        val obj = URL("https://ksport-8842a.firebaseio.com/users/$localId.json")
-        val con = obj.openConnection() as HttpURLConnection
-        val url = "https://ksport-8842a.firebaseio.com/users.json"
-        con.setRequestMethod("PUT")
-        con.setRequestProperty("Content-Type", "application/json")
-        con.setRequestProperty("Authorization", "key=XXXX")
-        val dataMessages = JSONObject()
+    fun putUserToRealtimeDatabase(user:Users) {
+        var gson = Gson()
 
-        dataMessages.put("name", user.name)
-        dataMessages.put("age", user.age)
-        dataMessages.put("sex", user.sex)
-        dataMessages.put("height", user.height)
-        dataMessages.put("weight", user.weight)
+        val userJson = HashMap<String,Any?>()
+        userJson["id"] = user.id
+        userJson["email"] = user.email
+        userJson["password"] = user.password
+        userJson["sex"] = user.sex
+        userJson["weight"] = user.weight
+        userJson["height"] = user.height
 
-        con.setDoOutput(true)
+        var jsonString = gson.toJson(userJson).toString()
 
-        val os = OutputStreamWriter(con.outputStream)
-        os.write(dataMessages.toString())
-        os.flush()
-        os.close()
-        val responseCode = con.getResponseCode()
-        println("\nSending 'POST' request to URL : $url")
-        println("Post parameters : $dataMessages")
-        println("Response Code : " + responseCode + " " + con.getResponseMessage())
+        val body = RequestBody.create(LoginActivity.JSON, jsonString)
+        val url = "https://ksport-8842a.firebaseio.com/users/$localId.json"
+        val request = Request.Builder()
+                .url(url)
+                .put(body)
+                .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onResponse(response: Response?) {
+                Log.i("TAG", response.toString())
+            }
+
+            override fun onFailure(request: Request?, e: IOException?) {
+                Log.i("TAG", request.toString())
+            }
+
+        })
     }
 
     @Throws(Exception::class)
