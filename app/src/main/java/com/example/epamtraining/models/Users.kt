@@ -14,9 +14,9 @@ data class Users(
         @SerializedName("sex")
         val sex: String? = "sex",
         @SerializedName("age")
-        var age: Int? = 0,
+        val age: Int?,
         @SerializedName("weight")
-        var weight: Double? = 0.0,
+        val weight: Double?,
         @SerializedName("height")
-        var height: Double? = 0.0
+        val height: Double?
 )

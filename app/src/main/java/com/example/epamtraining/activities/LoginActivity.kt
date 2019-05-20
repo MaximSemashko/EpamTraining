@@ -3,15 +3,14 @@ package com.example.epamtraining.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.epamtraining.R
-import com.google.gson.Gson
-import com.squareup.okhttp.MediaType
-import com.squareup.okhttp.OkHttpClient
+import com.example.epamtraining.Util
+import com.example.epamtraining.network.FirebaseAuth
+import com.squareup.okhttp.Callback
 import com.squareup.okhttp.Request
-import com.squareup.okhttp.RequestBody
+import com.squareup.okhttp.Response
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import java.io.IOException
-import java.net.URL
 import kotlin.concurrent.thread
 
 
@@ -28,36 +27,63 @@ class LoginActivity : AppCompatActivity() {
         signInButton.setOnClickListener {
             val email = loginEmailEditText.text.toString()
             val password = loginPasswordEditText.text.toString()
-            thread {
-                signIn(UserLogin(email,password))
+            if (validate()) {
+                Util.showProgress(loginProgressBar)
+                thread {
+                    FirebaseAuth
+                            .signIn(UserLogin(email, password), object : Callback {
+                                override fun onResponse(response: Response?) {
+                                    val responseString = response?.body()?.string()
+                                    val rootJsonObject = JSONObject(responseString)
+
+                                    if (!responseString?.contains("error")!!) {
+                                        localId = rootJsonObject.get("localId").toString()
+                                        runOnUiThread {
+                                            Util.hideProgress(loginProgressBar)
+                                            startActivity(MainActivity.startMainActivity(applicationContext))
+                                        }
+                                    } else {
+                                        runOnUiThread {
+                                            Util.hideProgress(loginProgressBar)
+                                            loginEmailEditText.error = "Please check your data"
+                                        }
+                                    }
+                                }
+
+                                override fun onFailure(request: Request?, e: IOException?) {
+                                    Util.hideProgress(loginProgressBar)
+                                }
+                            })
+                }
             }
+        }
+
+        registrationLinkTextView.setOnClickListener {
+            startActivity(RegistrationActivity.startRegistration(this))
         }
     }
 
-    var client = OkHttpClient()
+    fun validate(): Boolean {
+        var valid = true
 
-    @Throws(IOException::class)
-    fun signIn(user: UserLogin) {
-        val gson = Gson()
-        var jsonString = gson.toJson(user).toString()
-        val body = RequestBody.create(JSON, jsonString)
-        val URL = URL(BASE_URL + OPERATION_VERIFY_PASSWORD + "?key=" + firebaseKey)
-        val request = Request.Builder()
-                .url(URL)
-                .post(body)
-                .build()
+        val email = loginEmailEditText.text.toString()
+        val password = loginPasswordEditText.text.toString()
 
-        val response = client.newCall(request).execute()
-        val responseString = response.body().string()
-        val rootJsonObject = JSONObject(responseString)
-        localId = rootJsonObject.get("localId").toString()
-        println("User localId $localId")
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            loginEmailEditText.error = "Enter a valid email address"
+            valid = false
+        } else {
+            loginEmailEditText.setError(null)
+        }
+
+        if (password.isEmpty() || password.length < 6) {
+            loginPasswordEditText.error = "Enter password more than 6"
+            valid = false
+        } else {
+            loginPasswordEditText.setError(null)
+        }
+
+        return valid
     }
 
-    companion object {
-        private const val BASE_URL = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/"
-        private const val firebaseKey = "AIzaSyBgd6Go-zLI3qar4aKm4uCyEAjIhCbMlxQ"
-        private const val OPERATION_VERIFY_PASSWORD = "verifyPassword"
-        val JSON = MediaType.parse("application/json; charset=utf-8")
-    }
 }

@@ -1,85 +1,117 @@
 package com.example.epamtraining.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.epamtraining.R
+import com.example.epamtraining.Util
 import com.example.epamtraining.models.Users
-import com.google.gson.Gson
-import com.squareup.okhttp.OkHttpClient
-import com.squareup.okhttp.Request
-import com.squareup.okhttp.RequestBody
+import com.example.epamtraining.network.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_registration.*
-import org.json.JSONObject
-import java.io.IOException
-import java.net.URL
 import java.util.*
 import java.util.concurrent.Executors
 
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private var token: String? = null
-    private var localId: String? = null
     private val executor = Executors.newCachedThreadPool()
-    val client = OkHttpClient()
-    val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
         registerButton.setOnClickListener {
+            if (validate()) {
+                Util.showProgress(registrationProgressBar)
+                val user = Users(id = UUID.randomUUID().toString(),
+                        email = usersEmailEditText.text.toString(),
+                        name = usersNameEditText.text.toString(),
+                        password = usersPasswordEditText.text.toString(),
+                        sex = usersSexSpinner.selectedItem.toString(),
+                        age = Integer.parseInt(usersAgeEditText.text.toString()),
+                        weight = usersWeightEditText.text.toString().toDouble(),
+                        height = usersHeightEditText.text.toString().toDouble())
 
-            val user = Users(id = UUID.randomUUID().toString(),
-                    email = usersEmailEditText.text.toString(),
-                    name = usersNameEditText.text.toString(),
-                    password = usersPasswordEditText.text.toString(),
-                    age = Integer.parseInt(usersAgeEditText.text.toString()),
-                    weight = usersWeightEditText.text.toString().toDouble(),
-                    height = usersHeightEditText.text.toString().toDouble())
-
-            executor.execute {
-                signUp(user)
-                putUserToRealtimeDatabase(user)
+                executor.execute {
+                    FirebaseAuth.apply {
+                        signUp(user)
+                        putUserToRealtimeDatabase(user)
+                    }
+                    runOnUiThread {
+                        Util.hideProgress(registrationProgressBar)
+                        startActivity(MainActivity.startMainActivity(this))
+                    }
+                }
             }
         }
     }
 
-    @Throws(IOException::class)
-    fun signUp(user: Users) {
-        var jsonString = gson.toJson(user).toString()
-        val body = RequestBody.create(LoginActivity.JSON, jsonString)
-        val URL = URL(BASE_URL + OPERATION_SIGN_UP_USER + "?key=" + firebaseKey)
-        val request = Request.Builder()
-                .url(URL)
-                .post(body)
-                .build()
+    fun validate(): Boolean {
+        var valid = true
 
-        val response = client.newCall(request).execute()
-        val responseString = response.body().string()
-        val rootJsonObject = JSONObject(responseString)
-        token = rootJsonObject.get("idToken").toString()
-        localId = rootJsonObject.get("localId").toString()
-        println("User localId $localId")
-        println("User token $token")
-    }
+        val email = usersEmailEditText.text.toString()
+        val password = usersPasswordEditText.text.toString()
+        val repeatedPassword = repeatPassword.text.toString()
+        val name = usersNameEditText.text.toString()
+        val sex = usersSexSpinner.selectedItem.toString()
+        val weight = usersWeightEditText.text.toString()
+        val height = usersHeightEditText.text.toString()
 
-    @Throws(IOException::class)
-    fun putUserToRealtimeDatabase(user: Users) {
-        var jsonString = gson.toJson(user).toString()
-        val body = RequestBody.create(LoginActivity.JSON, jsonString)
-        val url = "https://ksport-8842a.firebaseio.com/users/$localId.json"
-        val request = Request.Builder()
-                .url(url)
-                .put(body)
-                .build()
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            usersEmailEditText.error = "Enter a valid email address"
+            valid = false
+        } else {
+            usersEmailEditText.setError(null)
+        }
 
-        client.newCall(request).execute()
+        if (password.isEmpty() || password.length < 6) {
+            usersPasswordEditText.error = "Enter password more than 6"
+            valid = false
+        } else {
+            usersPasswordEditText.setError(null)
+        }
+
+        if (password != repeatedPassword) {
+            usersPasswordEditText.error = "Passwords arent the same"
+            repeatPassword.error = "Passwords arent the same"
+            valid = false
+        } else {
+            usersPasswordEditText.setError(null)
+        }
+
+        if (name.isEmpty()) {
+            usersNameEditText.error = "Please, enter the name"
+            valid = false
+        } else {
+            usersNameEditText.setError(null)
+        }
+
+        if (sex.isEmpty()) {
+            valid = false
+        }
+
+        if (weight.isEmpty()) {
+            usersWeightEditText.error = "Please, enter correct weight"
+            valid = false
+        } else {
+            usersWeightEditText.setError(null)
+        }
+
+        if (height.isEmpty()) {
+            usersHeightEditText.error = "Please, enter correct height"
+            valid = false
+        } else {
+            usersHeightEditText.setError(null)
+        }
+
+        return valid
     }
 
     companion object {
-        private const val BASE_URL = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/"
-        private const val firebaseKey = "AIzaSyBgd6Go-zLI3qar4aKm4uCyEAjIhCbMlxQ"
-        private const val OPERATION_SIGN_UP_USER = "signupNewUser"
+        fun startRegistration(packageContext: Context): Intent {
+            val intent = Intent(packageContext, RegistrationActivity::class.java)
+            return intent
+        }
     }
 }

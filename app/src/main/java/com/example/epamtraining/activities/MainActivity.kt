@@ -1,15 +1,19 @@
 package com.example.epamtraining.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
 import com.example.epamtraining.R
 import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
 import com.example.epamtraining.fragments.UsersFragment
+import com.example.epamtraining.network.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -20,9 +24,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initToolbar();
+        initToolbar()
 
-        initDrawer();
+        initDrawer()
+
+//        localId = intent.getStringExtra(EXTRA_MESSAGE)
+        Log.i("TAG", "localId ${FirebaseAuth.localId}")
     }
 
     fun initDrawer() {
@@ -75,5 +82,16 @@ class MainActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu)
         }
+    }
+
+    companion object {
+        fun startMainActivity(packageContext: Context): Intent {
+            val intent = Intent(packageContext, MainActivity::class.java).apply {
+//                putExtra(EXTRA_MESSAGE, localId)
+            }
+            return intent
+        }
+
+        private const val EXTRA_MESSAGE = "com.example.epamtraining.activities.MainActivity"
     }
 }
