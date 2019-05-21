@@ -17,11 +17,11 @@ object FirebaseAuth {
 
     private val client = OkHttpClient()
     private val gson = Gson()
-    private var token: String? = null
+    var token: String? = null
     var localId: String? = null
 
     @Throws(IOException::class)
-    fun signIn(user: LoginActivity.UserLogin, callback: Callback) {
+    fun signIn(user: LoginActivity.UserLogin, callback:Callback) {
 
         var jsonString = gson.toJson(user).toString()
         val body = RequestBody.create(JSON, jsonString)
@@ -50,6 +50,30 @@ object FirebaseAuth {
         token = rootJsonObject.get("idToken").toString()
         localId = rootJsonObject.get("localId").toString()
     }
+
+    // TODO simple boolean method
+    @Throws(IOException::class)
+    fun getAccountInfo(token: String?): Boolean {
+        var jsonString = "{\"idToken\":\"$token\"}"
+        val body = RequestBody.create(JSON, jsonString)
+        val URL = URL(Constants.BASE_URL + Constants.OPERATION_GET_ACCOUNT_INFO + "?key=" + Constants.firebaseKey)
+        val request = Request.Builder()
+                .url(URL)
+                .post(body)
+                .build()
+
+        val response = client.newCall(request).execute()
+        if (response.isSuccessful) {
+            val responseString = response.body().string()
+            println(responseString)
+            val rootJsonObject = JSONObject(responseString)
+            val disabled = rootJsonObject.get("disabled").toString().toBoolean()
+            return disabled
+        } else {
+            return false
+        }
+    }
+
 
     @Throws(IOException::class)
     fun putUserToRealtimeDatabase(user: Users) {
