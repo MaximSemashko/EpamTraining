@@ -22,7 +22,6 @@ object FirebaseAuth {
 
     @Throws(IOException::class)
     fun signIn(user: LoginActivity.UserLogin, callback:Callback) {
-
         var jsonString = gson.toJson(user).toString()
         val body = RequestBody.create(JSON, jsonString)
         val URL = URL(Constants.BASE_URL + Constants.OPERATION_VERIFY_PASSWORD + "?key=" + Constants.firebaseKey)
@@ -51,9 +50,9 @@ object FirebaseAuth {
         localId = rootJsonObject.get("localId").toString()
     }
 
-    // TODO simple boolean method
+
     @Throws(IOException::class)
-    fun getAccountInfo(token: String?): Boolean {
+    fun getAccountInfo(): Boolean {
         var jsonString = "{\"idToken\":\"$token\"}"
         val body = RequestBody.create(JSON, jsonString)
         val URL = URL(Constants.BASE_URL + Constants.OPERATION_GET_ACCOUNT_INFO + "?key=" + Constants.firebaseKey)
@@ -63,15 +62,7 @@ object FirebaseAuth {
                 .build()
 
         val response = client.newCall(request).execute()
-        if (response.isSuccessful) {
-            val responseString = response.body().string()
-            println(responseString)
-            val rootJsonObject = JSONObject(responseString)
-            val disabled = rootJsonObject.get("disabled").toString().toBoolean()
-            return disabled
-        } else {
-            return false
-        }
+        return response.isSuccessful
     }
 
 

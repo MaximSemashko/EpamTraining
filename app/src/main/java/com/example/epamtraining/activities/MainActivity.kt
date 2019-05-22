@@ -9,11 +9,11 @@ import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.epamtraining.R
+import com.example.epamtraining.activities.LoginActivity.Companion.startAuth
 import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
 import com.example.epamtraining.fragments.UsersFragment
 import com.example.epamtraining.network.FirebaseAuth
-import com.example.epamtraining.network.FirebaseAuth.token
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.concurrent.thread
@@ -28,9 +28,19 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
 
         initDrawer()
+        mainNavigationView.setCheckedItem(R.id.drawerProfile)
+        selectDrawerItem(mainNavigationView.menu.getItem(0))
 
+    }
+
+    override fun onStart() {
+        super.onStart()
         thread {
-            FirebaseAuth.getAccountInfo(token)
+            if (!FirebaseAuth.getAccountInfo()) {
+                runOnUiThread {
+                    startActivity(startAuth(this))
+                }
+            }
         }
     }
 
@@ -39,7 +49,6 @@ class MainActivity : AppCompatActivity() {
             menuItem.setChecked(true)
             drawerLayout.closeDrawers()
             selectDrawerItem(menuItem)
-
             true
         }
     }
@@ -88,12 +97,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         fun startMainActivity(packageContext: Context): Intent {
-            val intent = Intent(packageContext, MainActivity::class.java).apply {
-                //                putExtra(EXTRA_MESSAGE, localId)
-            }
+            val intent = Intent(packageContext, MainActivity::class.java)
             return intent
         }
-
-        private const val EXTRA_MESSAGE = "com.example.epamtraining.activities.MainActivity"
     }
 }
