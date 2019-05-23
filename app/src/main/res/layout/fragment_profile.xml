@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,15 +15,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/profileParametresTextView"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="64dp"
-            android:layout_marginRight="64dp"
-            android:fontFamily="@font/raleway_light"
             android:layout_toRightOf="@id/usersImageView"
-            android:text="190 sm"
+            android:fontFamily="@font/raleway_light"
             android:textColor="@color/colorBlack"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/neededTextView" />
+            app:layout_constraintEnd_toEndOf="@+id/neededTextView"
+            app:layout_constraintStart_toStartOf="@+id/neededTextView"
+            app:layout_constraintTop_toBottomOf="@+id/neededTextView"
+            tools:text="2500" />
 
         <TextView
             android:id="@+id/burnedTextView"
@@ -46,11 +45,11 @@
             android:layout_height="128dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.029"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_profile" />
@@ -61,17 +60,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_toRightOf="@id/usersImageView"
             android:fontFamily="@font/raleway_light"
-            android:text="Maxim"
             android:textColor="@color/colorBlack"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/profileParametresTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usersImageView" />
+            app:layout_constraintHorizontal_bias="0.032"
+            app:layout_constraintStart_toEndOf="@+id/usersImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Maxim" />
 
         <TextView
             android:id="@+id/profileParametresTextView"
@@ -80,7 +80,6 @@
             android:layout_below="@id/usersNameTextView"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="40dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_toRightOf="@id/usersImageView"
@@ -102,11 +101,11 @@
             android:layout_marginRight="64dp"
             android:layout_toRightOf="@id/usersImageView"
             android:fontFamily="@font/raleway_light"
-            android:text="190 sm"
             android:textColor="@color/colorBlack"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileParametresTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/profileParametresTextView"
+            tools:text="190 sm" />
 
         <TextView
             android:id="@+id/usersWeights"
@@ -117,12 +116,12 @@
             android:layout_marginLeft="64dp"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/usersHeights"
-            android:text="85 kg"
             android:textColor="@color/colorBlack"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileParametresTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/profileParametresTextView"
+            tools:text="85 kg" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardView"
@@ -224,16 +223,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profileParametresTextView"
-            android:layout_marginStart="64dp"
-            android:layout_marginLeft="64dp"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@id/usersHeights"
-            android:text="85 kg"
             android:textColor="@color/colorBlack"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/burnedTextView" />
+            app:layout_constraintEnd_toEndOf="@+id/burnedTextView"
+            app:layout_constraintStart_toStartOf="@+id/burnedTextView"
+            app:layout_constraintTop_toBottomOf="@+id/burnedTextView"
+            tools:text="326" />
 
         <TextView
             android:id="@+id/neededTextView"
@@ -271,6 +269,55 @@
             app:layout_constraintStart_toEndOf="@+id/caloriesNeededTextView"
             app:layout_constraintTop_toBottomOf="@+id/neededTextView"
             app:srcCompat="@drawable/ic_calories" />
+
+        <TextView
+            android:id="@+id/usersAgeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@id/usersImageView"
+            android:fontFamily="@font/raleway_light"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.027"
+            app:layout_constraintStart_toEndOf="@+id/usersImageView"
+            app:layout_constraintTop_toBottomOf="@+id/usersEmailTextView"
+            tools:text="20" />
+
+        <TextView
+            android:id="@+id/usersEmailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_toRightOf="@id/usersImageView"
+            android:fontFamily="@font/raleway_light"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.048"
+            app:layout_constraintStart_toEndOf="@+id/usersImageView"
+            app:layout_constraintTop_toBottomOf="@+id/usersNameTextView"
+            tools:text="email@mail.ru" />
+
+        <ImageView
+            android:id="@+id/usersGenderImageView"
+            android:layout_width="26dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toEndOf="@+id/usersNameTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/male" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

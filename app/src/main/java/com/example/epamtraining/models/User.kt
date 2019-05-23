@@ -2,7 +2,7 @@ package com.example.epamtraining.models
 
 import com.google.gson.annotations.SerializedName
 
-data class Users(
+data class User(
         @SerializedName("id")
         val id: String?,
         @SerializedName("email")

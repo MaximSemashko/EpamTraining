@@ -28,21 +28,19 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
 
         initDrawer()
-        mainNavigationView.setCheckedItem(R.id.drawerProfile)
-        selectDrawerItem(mainNavigationView.menu.getItem(0))
 
-    }
-
-    override fun onStart() {
-        super.onStart()
         thread {
-            if (!FirebaseAuth.getAccountInfo()) {
+            if (FirebaseAuth.token == null) {
                 runOnUiThread {
                     startActivity(startAuth(this))
                 }
+            } else {
+                mainNavigationView.setCheckedItem(R.id.drawerProfile)
+                selectDrawerItem(mainNavigationView.menu.getItem(0))
             }
         }
     }
+
 
     fun initDrawer() {
         mainNavigationView.setNavigationItemSelectedListener { menuItem ->

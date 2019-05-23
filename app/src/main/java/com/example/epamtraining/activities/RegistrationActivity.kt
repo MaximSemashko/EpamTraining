@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.epamtraining.R
 import com.example.epamtraining.Util
-import com.example.epamtraining.models.Users
+import com.example.epamtraining.models.User
 import com.example.epamtraining.network.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_registration.*
 import java.util.*
@@ -24,7 +24,7 @@ class RegistrationActivity : AppCompatActivity() {
         registerButton.setOnClickListener {
             if (validate()) {
                 Util.showProgress(registrationProgressBar)
-                val user = Users(id = UUID.randomUUID().toString(),
+                val user = User(id = UUID.randomUUID().toString(),
                         email = usersEmailEditText.text.toString(),
                         name = usersNameEditText.text.toString(),
                         password = usersPasswordEditText.text.toString(),

@@ -3,7 +3,7 @@ package com.example.epamtraining.network
 import com.example.epamtraining.Constants
 import com.example.epamtraining.Constants.Companion.JSON
 import com.example.epamtraining.activities.LoginActivity
-import com.example.epamtraining.models.Users
+import com.example.epamtraining.models.User
 import com.google.gson.Gson
 import com.squareup.okhttp.Callback
 import com.squareup.okhttp.OkHttpClient
@@ -34,7 +34,7 @@ object FirebaseAuth {
     }
 
     @Throws(IOException::class)
-    fun signUp(user: Users) {
+    fun signUp(user: User) {
         var jsonString = gson.toJson(user).toString()
         val body = RequestBody.create(JSON, jsonString)
         val URL = URL(Constants.BASE_URL + Constants.OPERATION_SIGN_UP_USER + "?key=" + Constants.firebaseKey)
@@ -51,23 +51,23 @@ object FirebaseAuth {
     }
 
 
+//    @Throws(IOException::class)
+//    fun getAccountInfo(): Boolean {
+//        var jsonString = "{\"idToken\":\"$token\"}"
+//        val body = RequestBody.create(JSON, jsonString)
+//        val URL = URL(Constants.BASE_URL + Constants.OPERATION_GET_ACCOUNT_INFO + "?key=" + Constants.firebaseKey)
+//        val request = Request.Builder()
+//                .url(URL)
+//                .post(body)
+//                .build()
+//
+//        val response = client.newCall(request).execute()
+//        return response.isSuccessful
+//    }
+
+
     @Throws(IOException::class)
-    fun getAccountInfo(): Boolean {
-        var jsonString = "{\"idToken\":\"$token\"}"
-        val body = RequestBody.create(JSON, jsonString)
-        val URL = URL(Constants.BASE_URL + Constants.OPERATION_GET_ACCOUNT_INFO + "?key=" + Constants.firebaseKey)
-        val request = Request.Builder()
-                .url(URL)
-                .post(body)
-                .build()
-
-        val response = client.newCall(request).execute()
-        return response.isSuccessful
-    }
-
-
-    @Throws(IOException::class)
-    fun putUserToRealtimeDatabase(user: Users) {
+    fun putUserToRealtimeDatabase(user: User) {
         var jsonString = gson.toJson(user).toString()
         val body = RequestBody.create(JSON, jsonString)
         val url = "https://ksport-8842a.firebaseio.com/users/$localId.json"
