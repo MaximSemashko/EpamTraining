@@ -4,11 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.example.epamtraining.Constants
 import com.example.epamtraining.R
 import com.example.epamtraining.Util
 import com.example.epamtraining.models.User
 import com.example.epamtraining.network.FirebaseAuth
+import com.example.epamtraining.network.FirebaseDatabase.addToRealtimeDatabase
+import com.squareup.okhttp.Callback
+import com.squareup.okhttp.Request
+import com.squareup.okhttp.Response
 import kotlinx.android.synthetic.main.activity_registration.*
+import org.json.JSONObject
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -16,7 +23,7 @@ import java.util.concurrent.Executors
 class RegistrationActivity : AppCompatActivity() {
 
     private val executor = Executors.newCachedThreadPool()
-
+    private val url: String = Constants.BASE_URL + Constants.OPERATION_SIGN_UP_USER + "?key=" + Constants.firebaseKey
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -35,19 +42,42 @@ class RegistrationActivity : AppCompatActivity() {
 
                 executor.execute {
                     FirebaseAuth.apply {
-                        signUp(user)
-                        putUserToRealtimeDatabase(user)
+                        userAuth(user, url, object : Callback {
+                            override fun onResponse(response: Response?) {
+                                if (response!!.code() != 400) {
+                                    val responseString = response?.body()?.string()
+                                    val rootJsonObject = JSONObject(responseString)
+                                    localId = rootJsonObject.get("localId").toString()
+                                    token = rootJsonObject.get("idToken").toString()
+                                    addToRealtimeDatabase(user)
+                                    runOnUiThread {
+                                        Util.hideProgress(registrationProgressBar)
+                                        startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
+                                        finish()
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        Util.hideProgress(registrationProgressBar)
+                                        usersEmailEditText.error = "Please check your data"
+                                    }
+                                }
+                            }
+                            override fun onFailure(request: Request?, e: IOException?) {
+                                Util.hideProgress(registrationProgressBar)
+                            }
+                        })
                     }
-                    runOnUiThread {
-                        Util.hideProgress(registrationProgressBar)
-                        startActivity(MainActivity.startMainActivity(this))
-                    }
+
+                }
+                runOnUiThread {
+                    Util.hideProgress(registrationProgressBar)
+                    startActivity(MainActivity.startMainActivity(this))
                 }
             }
         }
     }
 
-    fun validate(): Boolean {
+    private fun validate(): Boolean {
         var valid = true
 
         val email = usersEmailEditText.text.toString()
@@ -62,14 +92,14 @@ class RegistrationActivity : AppCompatActivity() {
             usersEmailEditText.error = "Enter a valid email address"
             valid = false
         } else {
-            usersEmailEditText.setError(null)
+            usersEmailEditText.error = null
         }
 
         if (password.isEmpty() || password.length < 6) {
             usersPasswordEditText.error = "Enter password more than 6"
             valid = false
         } else {
-            usersPasswordEditText.setError(null)
+            usersPasswordEditText.error = null
         }
 
         if (password != repeatedPassword) {
@@ -77,14 +107,14 @@ class RegistrationActivity : AppCompatActivity() {
             repeatPassword.error = "Passwords arent the same"
             valid = false
         } else {
-            usersPasswordEditText.setError(null)
+            usersPasswordEditText.error = null
         }
 
         if (name.isEmpty()) {
             usersNameEditText.error = "Please, enter the name"
             valid = false
         } else {
-            usersNameEditText.setError(null)
+            usersNameEditText.error = null
         }
 
         if (sex.isEmpty()) {
@@ -95,14 +125,14 @@ class RegistrationActivity : AppCompatActivity() {
             usersWeightEditText.error = "Please, enter correct weight"
             valid = false
         } else {
-            usersWeightEditText.setError(null)
+            usersWeightEditText.error = null
         }
 
         if (height.isEmpty()) {
             usersHeightEditText.error = "Please, enter correct height"
             valid = false
         } else {
-            usersHeightEditText.setError(null)
+            usersHeightEditText.error = null
         }
 
         return valid
@@ -110,8 +140,7 @@ class RegistrationActivity : AppCompatActivity() {
 
     companion object {
         fun startRegistration(packageContext: Context): Intent {
-            val intent = Intent(packageContext, RegistrationActivity::class.java)
-            return intent
+            return Intent(packageContext, RegistrationActivity::class.java)
         }
     }
 }

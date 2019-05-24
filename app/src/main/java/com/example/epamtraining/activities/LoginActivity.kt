@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.example.epamtraining.Constants
 import com.example.epamtraining.R
 import com.example.epamtraining.Util
 import com.example.epamtraining.network.FirebaseAuth
@@ -22,6 +23,8 @@ class LoginActivity : AppCompatActivity() {
 
     data class UserLogin(val email: String, val password: String)
 
+    private val url = Constants.BASE_URL + Constants.OPERATION_VERIFY_PASSWORD + "?key=" + Constants.firebaseKey
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -34,17 +37,17 @@ class LoginActivity : AppCompatActivity() {
                 Util.showProgress(loginProgressBar)
                 thread {
                     FirebaseAuth
-                            .signIn(UserLogin(email, password), object : Callback {
+                            .userAuth(UserLogin(email, password), url, object : Callback {
                                 override fun onResponse(response: Response?) {
-                                    val responseString = response?.body()?.string()
-                                    val rootJsonObject = JSONObject(responseString)
-
-                                    if (!responseString?.contains("error")!!) {
+                                    if (response!!.code() != 400) {
+                                        val responseString = response?.body()?.string()
+                                        val rootJsonObject = JSONObject(responseString)
                                         localId = rootJsonObject.get("localId").toString()
                                         token = rootJsonObject.get("idToken").toString()
                                         runOnUiThread {
                                             Util.hideProgress(loginProgressBar)
-                                            startActivity(MainActivity.startMainActivity(applicationContext))
+                                            startActivity(MainActivity.startMainActivity(this@LoginActivity))
+                                            finish()
                                         }
                                     } else {
                                         runOnUiThread {

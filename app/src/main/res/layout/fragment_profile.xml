@@ -2,6 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -123,6 +124,23 @@
             app:layout_constraintTop_toBottomOf="@+id/profileParametresTextView"
             tools:text="85 kg" />
 
+        <com.example.epamtraining.views.DiagramView
+            android:id="@+id/caloriesDiagramView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="?android:attr/actionBarSize"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/burnedImageView"
+            app:layout_constraintVertical_bias="0.0">
+
+        </com.example.epamtraining.views.DiagramView>
+
         <android.support.v7.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
@@ -130,12 +148,13 @@
             android:layout_below="@id/usersHeights"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="88dp"
+            android:layout_marginTop="400dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/caloriesTextView">
 
