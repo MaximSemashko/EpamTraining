@@ -7,19 +7,28 @@ import com.google.gson.Gson
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
+import com.squareup.okhttp.Response
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.IOException
+import java.util.*
+import java.util.concurrent.Executors
+
 
 object FirebaseDatabase {
     private val client = OkHttpClient()
     private val gson = Gson()
-    private val url = "https://ksport-8842a.firebaseio.com/users/$localId.json"
+    private val usersUrl = "https://ksport-8842a.firebaseio.com/users/$localId.json"
+    private val imagesUrl = "https://firebasestorage.googleapis.com/v0/b/ksport-8842a.appspot.com/o/"
+
+    private val executor = Executors.newSingleThreadExecutor()
 
     @Throws(IOException::class)
-    fun <T>addToRealtimeDatabase(t: T) {
+    fun <T> addToRealtimeDatabase(t: T) {
         var jsonString = gson.toJson(t).toString()
         val body = RequestBody.create(Constants.JSON, jsonString)
         val request = Request.Builder()
-                .url(url)
+                .url(usersUrl)
                 .put(body)
                 .build()
 
@@ -28,7 +37,7 @@ object FirebaseDatabase {
 
     fun getUserInfo(): User {
         val request = Request.Builder()
-                .url(url)
+                .url(usersUrl)
                 .get()
                 .build()
 
@@ -38,5 +47,32 @@ object FirebaseDatabase {
         val user = gson.fromJson(responseString, User::class.java)
         return user
     }
+
+    fun getImage(): String {
+        val request = Request.Builder()
+                .url(imagesUrl)
+                .get()
+                .build()
+
+        val response = client.newCall(request).execute()
+        val parseResponse = parseResponse(response)
+        return parseResponse.get(0)
+    }
+
+    @Throws(IOException::class, JSONException::class)
+    private fun parseResponse(response: Response): List<String> {
+        val imagesUris = LinkedList<String>()
+        val responseString = response.body().string()
+        val rootJsonObject = JSONObject(responseString)
+        val images = rootJsonObject.getJSONArray("items")
+        for (i in 0 until images.length()) {
+            val image = images.getJSONObject(i)
+            val imageUrl = """$imagesUrl${image.get("name")}?alt=media"""
+            imagesUris.add(imageUrl)
+        }
+
+        return imagesUris
+    }
+
 
 }
