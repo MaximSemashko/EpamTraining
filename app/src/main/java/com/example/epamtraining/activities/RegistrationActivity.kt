@@ -17,13 +17,12 @@ import kotlinx.android.synthetic.main.activity_registration.*
 import org.json.JSONObject
 import java.io.IOException
 import java.util.*
-import java.util.concurrent.Executors
 
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private val executor = Executors.newCachedThreadPool()
     private val url: String = Constants.BASE_URL + Constants.OPERATION_SIGN_UP_USER + "?key=" + Constants.firebaseKey
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -40,39 +39,41 @@ class RegistrationActivity : AppCompatActivity() {
                         weight = usersWeightEditText.text.toString().toDouble(),
                         height = usersHeightEditText.text.toString().toDouble())
 
-                executor.execute {
-                    FirebaseAuth.apply {
-                        userAuth(user, url, object : Callback {
-                            override fun onResponse(response: Response?) {
-                                if (response!!.code() != 400) {
-                                    val responseString = response?.body()?.string()
-                                    val rootJsonObject = JSONObject(responseString)
-                                    localId = rootJsonObject.get("localId").toString()
-                                    token = rootJsonObject.get("idToken").toString()
-                                    addToRealtimeDatabase(user)
-                                    runOnUiThread {
-                                        Util.hideProgress(registrationProgressBar)
-                                        startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
-                                        finish()
-                                    }
-                                } else {
-                                    runOnUiThread {
-                                        Util.hideProgress(registrationProgressBar)
-                                        usersEmailEditText.error = "Please check your data"
-                                    }
+                FirebaseAuth.apply {
+                    userAuth(user, url, object : Callback {
+                        override fun onResponse(response: Response?) {
+                            if (response!!.code() != 400) {
+                                val responseString = response?.body()?.string()
+                                val rootJsonObject = JSONObject(responseString)
+
+                                localId = rootJsonObject.get("localId").toString()
+                                token = rootJsonObject.get("idToken").toString()
+
+                                addToRealtimeDatabase(user)
+
+                                runOnUiThread {
+                                    Util.hideProgress(registrationProgressBar)
+                                    startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
+                                    finish()
+                                }
+                            } else {
+                                runOnUiThread {
+                                    Util.hideProgress(registrationProgressBar)
+                                    usersEmailEditText.error = "Please check your data"
                                 }
                             }
-                            override fun onFailure(request: Request?, e: IOException?) {
-                                Util.hideProgress(registrationProgressBar)
-                            }
-                        })
-                    }
+                        }
 
+                        override fun onFailure(request: Request?, e: IOException?) {
+                            Util.hideProgress(registrationProgressBar)
+                        }
+                    })
                 }
-                runOnUiThread {
-                    Util.hideProgress(registrationProgressBar)
-                    startActivity(MainActivity.startMainActivity(this))
-                }
+
+            }
+            runOnUiThread {
+                Util.hideProgress(registrationProgressBar)
+                startActivity(MainActivity.startMainActivity(this))
             }
         }
     }

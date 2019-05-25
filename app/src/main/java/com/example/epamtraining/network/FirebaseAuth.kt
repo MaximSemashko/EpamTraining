@@ -7,23 +7,27 @@ import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
 import java.io.IOException
+import java.util.concurrent.Executors
 
 object FirebaseAuth {
 
+    private val executor = Executors.newCachedThreadPool()
     private val client = OkHttpClient()
     private val gson = Gson()
     var token: String? = null
     var localId: String? = null
 
     @Throws(IOException::class)
-    fun <T> userAuth(t:T,url:String, callback: Callback) {
-        var jsonString = gson.toJson(t).toString()
-        val body = RequestBody.create(JSON, jsonString)
-        val request = Request.Builder()
-                .url(url)
-                .post(body)
-                .build()
+    fun <T> userAuth(t: T, url: String, callback: Callback) {
+        executor.execute {
+            var jsonString = gson.toJson(t).toString()
+            val body = RequestBody.create(JSON, jsonString)
+            val request = Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build()
 
-        client.newCall(request).enqueue(callback)
+            client.newCall(request).enqueue(callback)
+        }
     }
 }

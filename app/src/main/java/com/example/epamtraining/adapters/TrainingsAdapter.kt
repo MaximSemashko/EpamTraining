@@ -57,7 +57,7 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHold
         notifyItemRemoved(position)
     }
 
-    inner class TrainingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class TrainingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(exercises: Exercises) {
             itemView.exerciseNameTextView.text = exercises.name
             itemView.exerciseSetsTextView.text = exercises.repeats.toString()

@@ -16,7 +16,6 @@ import com.squareup.okhttp.Response
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
 import java.io.IOException
-import kotlin.concurrent.thread
 
 
 class LoginActivity : AppCompatActivity() {
@@ -35,33 +34,33 @@ class LoginActivity : AppCompatActivity() {
 
             if (validate()) {
                 Util.showProgress(loginProgressBar)
-                thread {
-                    FirebaseAuth
-                            .userAuth(UserLogin(email, password), url, object : Callback {
-                                override fun onResponse(response: Response?) {
-                                    if (response!!.code() != 400) {
-                                        val responseString = response?.body()?.string()
-                                        val rootJsonObject = JSONObject(responseString)
-                                        localId = rootJsonObject.get("localId").toString()
-                                        token = rootJsonObject.get("idToken").toString()
-                                        runOnUiThread {
-                                            Util.hideProgress(loginProgressBar)
-                                            startActivity(MainActivity.startMainActivity(this@LoginActivity))
-                                            finish()
-                                        }
-                                    } else {
-                                        runOnUiThread {
-                                            Util.hideProgress(loginProgressBar)
-                                            loginEmailEditText.error = "Please check your data"
-                                        }
+                FirebaseAuth
+                        .userAuth(UserLogin(email, password), url, object : Callback {
+                            override fun onResponse(response: Response?) {
+                                if (response!!.code() != 400) {
+                                    val responseString = response?.body()?.string()
+                                    val rootJsonObject = JSONObject(responseString)
+
+                                    localId = rootJsonObject.get("localId").toString()
+                                    token = rootJsonObject.get("idToken").toString()
+
+                                    runOnUiThread {
+                                        Util.hideProgress(loginProgressBar)
+                                        startActivity(MainActivity.startMainActivity(this@LoginActivity))
+                                        finish()
+                                    }
+                                } else {
+                                    runOnUiThread {
+                                        Util.hideProgress(loginProgressBar)
+                                        loginEmailEditText.error = "Please check your data"
                                     }
                                 }
+                            }
 
-                                override fun onFailure(request: Request?, e: IOException?) {
-                                    Util.hideProgress(loginProgressBar)
-                                }
-                            })
-                }
+                            override fun onFailure(request: Request?, e: IOException?) {
+                                Util.hideProgress(loginProgressBar)
+                            }
+                        })
             }
         }
 

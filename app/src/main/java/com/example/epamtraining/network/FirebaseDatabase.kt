@@ -11,8 +11,6 @@ import com.squareup.okhttp.Response
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import java.util.*
-import java.util.concurrent.Executors
 
 
 object FirebaseDatabase {
@@ -20,8 +18,6 @@ object FirebaseDatabase {
     private val gson = Gson()
     private val usersUrl = "https://ksport-8842a.firebaseio.com/users/$localId.json"
     private val imagesUrl = "https://firebasestorage.googleapis.com/v0/b/ksport-8842a.appspot.com/o/"
-
-    private val executor = Executors.newSingleThreadExecutor()
 
     @Throws(IOException::class)
     fun <T> addToRealtimeDatabase(t: T) {
@@ -36,32 +32,32 @@ object FirebaseDatabase {
     }
 
     fun getUserInfo(): User {
-        val request = Request.Builder()
-                .url(usersUrl)
-                .get()
-                .build()
+            val request = Request.Builder()
+                    .url(usersUrl)
+                    .get()
+                    .build()
 
-        val response = client.newCall(request).execute()
-        val responseString = response.body().string()
+            val response = client.newCall(request).execute()
+            val responseString = response.body().string()
 
-        val user = gson.fromJson(responseString, User::class.java)
-        return user
+            val user = gson.fromJson(responseString, User::class.java)
+            return user
     }
 
-    fun getImage(): String {
+    fun getImageUris(): List<String> {
         val request = Request.Builder()
                 .url(imagesUrl)
                 .get()
                 .build()
 
         val response = client.newCall(request).execute()
-        val parseResponse = parseResponse(response)
-        return parseResponse.get(0)
+        val items = parseResponse(response)
+        return items
     }
 
     @Throws(IOException::class, JSONException::class)
     private fun parseResponse(response: Response): List<String> {
-        val imagesUris = LinkedList<String>()
+        val imagesUris = ArrayList<String>()
         val responseString = response.body().string()
         val rootJsonObject = JSONObject(responseString)
         val images = rootJsonObject.getJSONArray("items")
@@ -73,6 +69,4 @@ object FirebaseDatabase {
 
         return imagesUris
     }
-
-
 }
