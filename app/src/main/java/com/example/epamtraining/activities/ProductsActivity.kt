@@ -3,6 +3,7 @@ package com.example.epamtraining.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.View
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.ProductsAdapter
@@ -58,6 +59,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(response: Response?) {
                 val responseBody = response?.body()?.string()
+                Log.i("TAG",responseBody)
                 val objects = JSONObject(responseBody)
                 val iterator = objects.keys()
                 while (iterator.hasNext()) {
@@ -89,16 +91,11 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
         con.setRequestProperty("Content-Type", "application/json")
         con.setRequestProperty("Authorization", "key=XXXX")
 
-//        val msg = JSONObject()
-//        msg.put("message", "test8")
 
         val parent = JSONObject()
-
-//        parent.put("to", "XXXXX")
         parent.put("callories", product.calories)
         parent.put("id", product.id)
         parent.put("name", product.name)
-//        parent.put("data", msg)
 
         con.setDoOutput(true)
 

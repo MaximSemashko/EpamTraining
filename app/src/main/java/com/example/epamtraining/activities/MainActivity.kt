@@ -1,5 +1,7 @@
 package com.example.epamtraining.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -7,11 +9,14 @@ import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.epamtraining.R
+import com.example.epamtraining.activities.LoginActivity.Companion.startAuth
+import com.example.epamtraining.fragments.PostsFragment
 import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
-import com.example.epamtraining.fragments.UsersFragment
+import com.example.epamtraining.network.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,17 +25,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initToolbar();
+        initToolbar()
 
-        initDrawer();
+        initDrawer()
+
+        thread {
+            if (FirebaseAuth.token == null) {
+                runOnUiThread {
+                    startActivity(startAuth(this))
+                }
+            } else {
+                mainNavigationView.setCheckedItem(R.id.drawerProfile)
+                selectDrawerItem(mainNavigationView.menu.getItem(0))
+            }
+        }
     }
+
 
     fun initDrawer() {
         mainNavigationView.setNavigationItemSelectedListener { menuItem ->
             menuItem.setChecked(true)
             drawerLayout.closeDrawers()
             selectDrawerItem(menuItem)
-
             true
         }
     }
@@ -58,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         when (menuItem.itemId) {
             R.id.drawerProfile -> fragmentClass = ProfileFragment::class.java
             R.id.drawerTrainingsList -> fragmentClass = TrainingsFragment::class.java
-            R.id.drawerUsersList -> fragmentClass = UsersFragment::class.java
+            R.id.drawerUsersList -> fragmentClass = PostsFragment::class.java
             else -> fragmentClass = ProfileFragment::class.java
         }
 
@@ -74,6 +90,13 @@ class MainActivity : AppCompatActivity() {
         actionbar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
+    }
+
+    companion object {
+        fun startMainActivity(packageContext: Context): Intent {
+            val intent = Intent(packageContext, MainActivity::class.java)
+            return intent
         }
     }
 }

@@ -1,159 +1,147 @@
 package com.example.epamtraining.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import com.example.epamtraining.Constants
 import com.example.epamtraining.R
-import com.example.epamtraining.models.Users
-import com.google.gson.JsonParser
+import com.example.epamtraining.Util
+import com.example.epamtraining.models.User
+import com.example.epamtraining.network.FirebaseAuth
+import com.example.epamtraining.network.FirebaseDatabase.addToRealtimeDatabase
+import com.squareup.okhttp.Callback
+import com.squareup.okhttp.Request
+import com.squareup.okhttp.Response
 import kotlinx.android.synthetic.main.activity_registration.*
 import org.json.JSONObject
 import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.*
-import java.util.concurrent.Executors
 
 
 class RegistrationActivity : AppCompatActivity() {
 
-    private var token: String? = null
-    private var localId: String? = null
-    private val executor = Executors.newCachedThreadPool()
+    private val url: String = Constants.BASE_URL + Constants.OPERATION_SIGN_UP_USER + "?key=" + Constants.firebaseKey
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
         registerButton.setOnClickListener {
-
-            val user = TestUser(usersEmailEditText.text.toString(),
-                    usersPasswordEditText.text.toString())
-
-            executor.execute {
-                token = signUnWithEmailAndPassword(user)
-                println(token)
-                val userNew = Users(id = UUID.randomUUID().toString(),
+            if (validate()) {
+                Util.showProgress(registrationProgressBar)
+                val user = User(id = UUID.randomUUID().toString(),
                         email = usersEmailEditText.text.toString(),
                         name = usersNameEditText.text.toString(),
                         password = usersPasswordEditText.text.toString(),
+                        sex = usersSexSpinner.selectedItem.toString(),
                         age = Integer.parseInt(usersAgeEditText.text.toString()),
                         weight = usersWeightEditText.text.toString().toDouble(),
                         height = usersHeightEditText.text.toString().toDouble())
-                Log.i("TAG", "User: $userNew")
-                localId = setAccountInfo(user)
-                addUserToRealtimeDatabase(userNew)
+
+                FirebaseAuth.apply {
+                    userAuth(user, url, object : Callback {
+                        override fun onResponse(response: Response?) {
+                            if (response!!.code() != 400) {
+                                val responseString = response?.body()?.string()
+                                val rootJsonObject = JSONObject(responseString)
+
+                                localId = rootJsonObject.get("localId").toString()
+                                token = rootJsonObject.get("idToken").toString()
+
+                                addToRealtimeDatabase(user)
+
+                                runOnUiThread {
+                                    Util.hideProgress(registrationProgressBar)
+                                    startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
+                                    finish()
+                                }
+                            } else {
+                                runOnUiThread {
+                                    Util.hideProgress(registrationProgressBar)
+                                    usersEmailEditText.error = "Please check your data"
+                                }
+                            }
+                        }
+
+                        override fun onFailure(request: Request?, e: IOException?) {
+                            Util.hideProgress(registrationProgressBar)
+                        }
+                    })
+                }
+
             }
-
+            runOnUiThread {
+                Util.hideProgress(registrationProgressBar)
+                startActivity(MainActivity.startMainActivity(this))
+            }
         }
     }
 
-    @Throws(Exception::class)
-    fun signUnWithEmailAndPassword(user: TestUser): String? {
-        var urlRequest: HttpURLConnection? = null
-        var token: String?
+    private fun validate(): Boolean {
+        var valid = true
 
-        try {
-            val URL = URL(BASE_URL + OPERATION_SIGN_UP_USER + "?key=" + firebaseKey)
-            urlRequest = URL.openConnection() as HttpURLConnection
-            urlRequest.doOutput = true
-            urlRequest.setRequestProperty("Content-Type", "application/json; charset=UTF-8")
-            val outputStream = urlRequest.outputStream
-            val outputStreamWriter = OutputStreamWriter(outputStream, "UTF-8")
-            outputStreamWriter.write("{\"email\":\"${user.email}\",\"password\":\"${user.password}\",\"returnSecureToken\":true}")
-            outputStreamWriter.flush()
-            outputStreamWriter.close()
+        val email = usersEmailEditText.text.toString()
+        val password = usersPasswordEditText.text.toString()
+        val repeatedPassword = repeatPassword.text.toString()
+        val name = usersNameEditText.text.toString()
+        val sex = usersSexSpinner.selectedItem.toString()
+        val weight = usersWeightEditText.text.toString()
+        val height = usersHeightEditText.text.toString()
 
-            urlRequest.connect()
-
-            val jsonParser = JsonParser() //from gson
-            val root = jsonParser.parse(InputStreamReader(urlRequest.content as InputStream)) //Convert the input stream to a json element
-            val rootJsonObject = root.asJsonObject //May be an array, may be an object.
-
-            token = rootJsonObject.get("idToken").asString
-            println("User token $token")
-            println("\nSending 'POST' request to URL : $URL")
-            println("Post parameters : $parent")
-            println("Response Code : " + urlRequest.getResponseMessage())
-        } catch (e: Exception) {
-            return null
-        } finally {
-            urlRequest?.disconnect()
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            usersEmailEditText.error = "Enter a valid email address"
+            valid = false
+        } else {
+            usersEmailEditText.error = null
         }
 
-        return token
-    }
-
-    @Throws(IOException::class)
-    private fun addUserToRealtimeDatabase(user: Users) {
-        val obj = URL("https://ksport-8842a.firebaseio.com/users/$localId.json")
-        val con = obj.openConnection() as HttpURLConnection
-        val url = "https://ksport-8842a.firebaseio.com/users.json"
-        con.setRequestMethod("PUT")
-        con.setRequestProperty("Content-Type", "application/json")
-        con.setRequestProperty("Authorization", "key=XXXX")
-        val dataMessages = JSONObject()
-
-        dataMessages.put("name", user.name)
-        dataMessages.put("age", user.age)
-        dataMessages.put("sex", user.sex)
-        dataMessages.put("height", user.height)
-        dataMessages.put("weight", user.weight)
-
-        con.setDoOutput(true)
-
-        val os = OutputStreamWriter(con.outputStream)
-        os.write(dataMessages.toString())
-        os.flush()
-        os.close()
-        val responseCode = con.getResponseCode()
-        println("\nSending 'POST' request to URL : $url")
-        println("Post parameters : $dataMessages")
-        println("Response Code : " + responseCode + " " + con.getResponseMessage())
-    }
-
-    @Throws(Exception::class)
-    fun setAccountInfo(user: TestUser): String? {
-        var urlRequest: HttpURLConnection? = null
-        try {
-            val URL = URL(BASE_URL + OPERATION_SET_ACCOUNT_INFO + "?key=" + firebaseKey)
-            urlRequest = URL.openConnection() as HttpURLConnection
-            urlRequest.doOutput = true
-            urlRequest.setRequestProperty("Content-Type", "application/json; charset=UTF-8")
-            val outputStream = urlRequest.outputStream
-            val outputStreamWriter = OutputStreamWriter(outputStream, "UTF-8")
-            outputStreamWriter.write("{\"idToken\":\"$token\",\"email\":\"${user.email}\",\"password\":\"${user.password}\",\"returnSecureToken\":true}")
-            outputStreamWriter.flush()
-            outputStreamWriter.close()
-
-            urlRequest.connect()
-
-            val jsonParser = JsonParser() //from gson
-            val root = jsonParser.parse(InputStreamReader(urlRequest.content as InputStream)) //Convert the input stream to a json element
-            val rootJsonObject = root.asJsonObject //May be an array, may be an object.
-
-            localId = rootJsonObject.get("localId").asString
-            println("User localId $localId")
-            println("\nSending 'POST' request to URL : $URL")
-            println("Post parameters : $parent")
-            println("Response Code : " + urlRequest.getResponseMessage())
-        } catch (e: Exception) {
-            return null
-        } finally {
-            urlRequest?.disconnect()
+        if (password.isEmpty() || password.length < 6) {
+            usersPasswordEditText.error = "Enter password more than 6"
+            valid = false
+        } else {
+            usersPasswordEditText.error = null
         }
 
-        return localId
+        if (password != repeatedPassword) {
+            usersPasswordEditText.error = "Passwords arent the same"
+            repeatPassword.error = "Passwords arent the same"
+            valid = false
+        } else {
+            usersPasswordEditText.error = null
+        }
+
+        if (name.isEmpty()) {
+            usersNameEditText.error = "Please, enter the name"
+            valid = false
+        } else {
+            usersNameEditText.error = null
+        }
+
+        if (sex.isEmpty()) {
+            valid = false
+        }
+
+        if (weight.isEmpty()) {
+            usersWeightEditText.error = "Please, enter correct weight"
+            valid = false
+        } else {
+            usersWeightEditText.error = null
+        }
+
+        if (height.isEmpty()) {
+            usersHeightEditText.error = "Please, enter correct height"
+            valid = false
+        } else {
+            usersHeightEditText.error = null
+        }
+
+        return valid
     }
+
     companion object {
-        private const val BASE_URL = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/"
-        private const val firebaseKey = "AIzaSyBgd6Go-zLI3qar4aKm4uCyEAjIhCbMlxQ"
-        private const val OPERATION_SIGN_UP_USER = "signupNewUser"
-        private const val OPERATION_SET_ACCOUNT_INFO = "setAccountInfo"
+        fun startRegistration(packageContext: Context): Intent {
+            return Intent(packageContext, RegistrationActivity::class.java)
+        }
     }
 }
-
-data class TestUser(val email: String?, val password: String?)
