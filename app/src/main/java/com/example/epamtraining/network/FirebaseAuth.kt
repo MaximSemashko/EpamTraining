@@ -20,7 +20,7 @@ object FirebaseAuth {
     @Throws(IOException::class)
     fun <T> userAuth(t: T, url: String, callback: Callback) {
         executor.execute {
-            var jsonString = gson.toJson(t).toString()
+            val jsonString = gson.toJson(t).toString()
             val body = RequestBody.create(JSON, jsonString)
             val request = Request.Builder()
                     .url(url)
@@ -29,5 +29,10 @@ object FirebaseAuth {
 
             client.newCall(request).enqueue(callback)
         }
+    }
+
+    fun signOut(){
+        token = null
+        localId = null
     }
 }

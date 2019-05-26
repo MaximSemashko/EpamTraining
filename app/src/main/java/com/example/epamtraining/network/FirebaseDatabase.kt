@@ -1,6 +1,7 @@
 package com.example.epamtraining.network
 
 import com.example.epamtraining.Constants
+import com.example.epamtraining.Constants.Companion.STORAGE_URL
 import com.example.epamtraining.models.User
 import com.example.epamtraining.network.FirebaseAuth.localId
 import com.google.gson.Gson
@@ -17,11 +18,10 @@ object FirebaseDatabase {
     private val client = OkHttpClient()
     private val gson = Gson()
     private val usersUrl = "https://ksport-8842a.firebaseio.com/users/$localId.json"
-    private val imagesUrl = "https://firebasestorage.googleapis.com/v0/b/ksport-8842a.appspot.com/o/"
 
     @Throws(IOException::class)
     fun <T> addToRealtimeDatabase(t: T) {
-        var jsonString = gson.toJson(t).toString()
+        val jsonString = gson.toJson(t).toString()
         val body = RequestBody.create(Constants.JSON, jsonString)
         val request = Request.Builder()
                 .url(usersUrl)
@@ -40,19 +40,17 @@ object FirebaseDatabase {
             val response = client.newCall(request).execute()
             val responseString = response.body().string()
 
-            val user = gson.fromJson(responseString, User::class.java)
-            return user
+        return gson.fromJson(responseString, User::class.java)
     }
 
     fun getImageUris(): List<String> {
         val request = Request.Builder()
-                .url(imagesUrl)
+                .url(STORAGE_URL)
                 .get()
                 .build()
 
         val response = client.newCall(request).execute()
-        val items = parseResponse(response)
-        return items
+        return parseResponse(response)
     }
 
     @Throws(IOException::class, JSONException::class)
@@ -63,7 +61,8 @@ object FirebaseDatabase {
         val images = rootJsonObject.getJSONArray("items")
         for (i in 0 until images.length()) {
             val image = images.getJSONObject(i)
-            val imageUrl = """$imagesUrl${image.get("name")}?alt=media"""
+            val imageUrl = """$STORAGE_URL${image.get("name")}?alt=media"""
+
             imagesUris.add(imageUrl)
         }
 

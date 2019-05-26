@@ -43,7 +43,7 @@ class RegistrationActivity : AppCompatActivity() {
                     userAuth(user, url, object : Callback {
                         override fun onResponse(response: Response?) {
                             if (response!!.code() != 400) {
-                                val responseString = response?.body()?.string()
+                                val responseString = response.body()?.string()
                                 val rootJsonObject = JSONObject(responseString)
 
                                 localId = rootJsonObject.get("localId").toString()

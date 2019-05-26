@@ -28,11 +28,6 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHold
         return exercisesList.size
     }
 
-    fun setItems(exercises: Collection<Exercises>) {
-        exercisesList.addAll(exercises)
-        notifyDataSetChanged()
-    }
-
     fun setItem(exercise: Exercises) {
         exercisesList.add(exercise)
         notifyDataSetChanged()

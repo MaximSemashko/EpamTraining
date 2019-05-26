@@ -11,8 +11,8 @@ class MemoryCache : ImageCache {
         val cacheSize: Int = (maxMemory / 4).toInt()
 
         cache = object : LruCache<String, Bitmap>(cacheSize) {
-            fun sizeOf(key: String?, bitmap: Bitmap?): Int {
-                return (bitmap?.rowBytes ?: 0) * (bitmap?.height ?: 0) / 1024
+            override fun sizeOf(key: String, bitmap: Bitmap): Int {
+                return bitmap.rowBytes * bitmap.height / 1024
             }
         }
     }

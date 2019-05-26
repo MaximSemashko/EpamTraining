@@ -26,13 +26,4 @@
         android:textColor="@color/colorBlack"
         android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/headerEmailTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="email@email.com"
-        android:textColor="@color/colorBlack"
-        android:textSize="14sp" />
-
 </merge>

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">EpamTraining</string>
     <string name="hello_blank_fragment">hello</string>
+    <string name="profileItem">Profile</string>
+    <string name="trainingsItem">Trainings</string>
+    <string name="postsItem">Posts</string>
+    <string name="logout">Logout</string>
     <array name="genders">
         <item>Male</item>
         <item>Female</item>

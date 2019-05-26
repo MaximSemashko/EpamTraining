@@ -18,8 +18,8 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
         return ProductsViewHolder(view)
     }
 
-    override fun onBindViewHolder(viewHolder: ProductsAdapter.ProductsViewHolder, i: Int) {
-        viewHolder.bind(productsList.get(i))
+    override fun onBindViewHolder(viewHolder: ProductsViewHolder, i: Int) {
+        viewHolder.bind(productsList[i])
     }
 
     override fun getItemCount(): Int {
@@ -27,9 +27,9 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
     }
 
     fun updateItems(products: List<Products>) {
-        productsList.clear()
-        productsList.addAll(products)
-        notifyDataSetChanged() //TODO DiffUtils
+        this.productsList.clear()
+        this.productsList.addAll(products)
+        notifyDataSetChanged()
     }
 
     fun addItem(product: Products) {

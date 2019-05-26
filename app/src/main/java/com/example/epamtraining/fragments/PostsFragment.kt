@@ -29,7 +29,7 @@ class PostsFragment : Fragment() {
         thread {
             imageList = FirebaseDatabase.getImageUris() as ArrayList<String>
             activity?.runOnUiThread {
-                postsAdapter = PostsAdapter(context, imageList as ArrayList<String>)
+                postsAdapter = PostsAdapter(context, imageList)
                 postsRecyclerView.apply {
                     layoutManager = LinearLayoutManager(activity)
                     adapter = postsAdapter

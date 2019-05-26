@@ -3,15 +3,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/drawerProfile"
-            android:title="Profile"
-            android:icon="@drawable/ic_profile"/>
+            android:icon="@drawable/ic_profile"
+            android:title="@string/profileItem" />
         <item
             android:id="@+id/drawerTrainingsList"
-            android:title="Trainings"
-            android:icon="@drawable/ic_trainings_list"/>
+            android:icon="@drawable/ic_trainings_list"
+            android:title="@string/trainingsItem" />
         <item
-            android:id="@+id/drawerUsersList"
-            android:title="Users"
-            android:icon="@drawable/ic_users"/>
+            android:id="@+id/drawerPosts"
+            android:icon="@drawable/ic_users"
+            android:title="@string/postsItem" />
+        <item
+            android:id="@+id/drawerLogout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout" />
     </group>
 </menu>
