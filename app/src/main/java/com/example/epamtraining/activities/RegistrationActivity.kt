@@ -8,15 +8,14 @@ import com.example.epamtraining.Constants
 import com.example.epamtraining.R
 import com.example.epamtraining.Util
 import com.example.epamtraining.models.User
-import com.example.epamtraining.network.FirebaseAuth
+import com.example.epamtraining.network.FirebaseAuth.localId
+import com.example.epamtraining.network.FirebaseAuth.token
+import com.example.epamtraining.network.FirebaseAuth.userAuth
 import com.example.epamtraining.network.FirebaseDatabase.addToRealtimeDatabase
-import com.squareup.okhttp.Callback
-import com.squareup.okhttp.Request
-import com.squareup.okhttp.Response
 import kotlinx.android.synthetic.main.activity_registration.*
 import org.json.JSONObject
-import java.io.IOException
 import java.util.*
+import kotlin.concurrent.thread
 
 
 class RegistrationActivity : AppCompatActivity() {
@@ -38,42 +37,29 @@ class RegistrationActivity : AppCompatActivity() {
                         age = Integer.parseInt(usersAgeEditText.text.toString()),
                         weight = usersWeightEditText.text.toString().toDouble(),
                         height = usersHeightEditText.text.toString().toDouble())
+                thread {
+                    val response = userAuth(user, url)
+                    if (response!!.code() != 400) {
+                        val responseString = response.body()?.string()
+                        val rootJsonObject = JSONObject(responseString)
 
-                FirebaseAuth.apply {
-                    userAuth(user, url, object : Callback {
-                        override fun onResponse(response: Response?) {
-                            if (response!!.code() != 400) {
-                                val responseString = response.body()?.string()
-                                val rootJsonObject = JSONObject(responseString)
+                        localId = rootJsonObject.get("localId").toString()
+                        token = rootJsonObject.get("idToken").toString()
 
-                                localId = rootJsonObject.get("localId").toString()
-                                token = rootJsonObject.get("idToken").toString()
+                        addToRealtimeDatabase(user)
 
-                                addToRealtimeDatabase(user)
-
-                                runOnUiThread {
-                                    Util.hideProgress(registrationProgressBar)
-                                    startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
-                                    finish()
-                                }
-                            } else {
-                                runOnUiThread {
-                                    Util.hideProgress(registrationProgressBar)
-                                    usersEmailEditText.error = "Please check your data"
-                                }
-                            }
-                        }
-
-                        override fun onFailure(request: Request?, e: IOException?) {
+                        runOnUiThread {
                             Util.hideProgress(registrationProgressBar)
+                            startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
+                            finish()
                         }
-                    })
+                    } else {
+                        runOnUiThread {
+                            Util.hideProgress(registrationProgressBar)
+                            usersEmailEditText.error = "Please check your data"
+                        }
+                    }
                 }
-
-            }
-            runOnUiThread {
-                Util.hideProgress(registrationProgressBar)
-                startActivity(MainActivity.startMainActivity(this))
             }
         }
     }

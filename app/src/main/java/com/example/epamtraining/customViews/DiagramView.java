@@ -1,4 +1,4 @@
-package com.example.epamtraining.views;
+package com.example.epamtraining.customViews;
 
 import android.content.Context;
 import android.graphics.Canvas;

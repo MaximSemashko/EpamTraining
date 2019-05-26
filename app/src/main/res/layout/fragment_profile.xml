@@ -124,7 +124,7 @@
             app:layout_constraintTop_toBottomOf="@+id/profileParametresTextView"
             tools:text="85 kg" />
 
-        <com.example.epamtraining.views.DiagramView
+        <com.example.epamtraining.customViews.DiagramView
             android:id="@+id/caloriesDiagramView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -139,7 +139,7 @@
             app:layout_constraintTop_toBottomOf="@+id/burnedImageView"
             app:layout_constraintVertical_bias="0.0">
 
-        </com.example.epamtraining.views.DiagramView>
+        </com.example.epamtraining.customViews.DiagramView>
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardView"
