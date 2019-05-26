@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.epamtraining.R
-import com.example.epamtraining.Util
 import com.example.epamtraining.contracts.LoginContract
 import com.example.epamtraining.models.UserLogin
 import com.example.epamtraining.presenters.LoginPresenter
@@ -19,6 +18,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         val loginRepository = LoginRepository()
         val loginPresenter = LoginPresenter(loginRepository = loginRepository, loginView = this)
 
@@ -27,20 +27,20 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         }
 
         registrationLinkTextView.setOnClickListener {
-            loginPresenter.onSignUpWasClicked()
+            loginPresenter.onSignUpLinkWasClicked()
         }
     }
 
-    override fun onFaileParse() {
+    override fun onFailedParse() {
         runOnUiThread {
-            Util.hideProgress(loginProgressBar)
+            hideProgress()
             loginEmailEditText.error = "Please check your data"
         }
     }
 
     override fun onSuccessParse() {
         runOnUiThread {
-            Util.hideProgress(loginProgressBar)
+            hideProgress()
             startActivity(MainActivity.startMainActivity(this@LoginActivity))
             finish()
         }

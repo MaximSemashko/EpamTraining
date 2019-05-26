@@ -1,25 +1,23 @@
 package com.example.epamtraining.contracts
 
-import com.example.epamtraining.models.UserLogin
+import com.example.epamtraining.models.User
 
-interface LoginContract {
+interface RegistrationContract {
 
     interface Repository {
-        fun parseResponse(user: UserLogin, url: String): Boolean
+        fun parseResponse(user: User, url: String): Boolean
     }
 
     interface View {
         fun validate(): Boolean
         fun showProgress()
         fun hideProgress()
-        fun startRegistrationActivity()
-        fun initUser(): UserLogin
+        fun initUser(): User
         fun onFailedParse()
         fun onSuccessParse()
     }
 
     interface Presenter {
-        fun onSignInWasClicked()
-        fun onSignUpLinkWasClicked()
+        fun onSignUpWasClicked()
     }
 }

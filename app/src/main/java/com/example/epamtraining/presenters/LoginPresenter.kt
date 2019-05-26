@@ -14,12 +14,12 @@ class LoginPresenter(val loginView: LoginContract.View, val loginRepository: Log
             loginView.showProgress()
             thread {
                 val boolean = loginRepository.parseResponse(user, url)
-                if (boolean) loginView.onSuccessParse() else loginView.onFaileParse()
+                if (boolean) loginView.onSuccessParse() else loginView.onFailedParse()
             }
         }
     }
 
-    override fun onSignUpWasClicked() {
+    override fun onSignUpLinkWasClicked() {
         loginView.startRegistrationActivity()
     }
 }
