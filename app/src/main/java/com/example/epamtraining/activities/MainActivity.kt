@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.LoginActivity.Companion.startAuth
+import com.example.epamtraining.fragments.NutritionFragment
 import com.example.epamtraining.fragments.PostsFragment
 import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         when (menuItem.itemId) {
             R.id.drawerProfile -> fragmentClass = ProfileFragment::class.java
+            R.id.drawerNutrition -> fragmentClass = NutritionFragment::class.java
             R.id.drawerTrainingsList -> fragmentClass = TrainingsFragment::class.java
             R.id.drawerPosts -> fragmentClass = PostsFragment::class.java
             R.id.drawerLogout -> {

@@ -18,7 +18,8 @@
         <activity android:name=".activities.ProductsActivity"></activity>
         <activity android:name=".activities.RegistrationActivity"></activity>
         <activity android:name=".activities.LoginActivity"></activity>
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

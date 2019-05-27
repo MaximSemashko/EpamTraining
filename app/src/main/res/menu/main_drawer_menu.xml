@@ -5,6 +5,12 @@
             android:id="@+id/drawerProfile"
             android:icon="@drawable/ic_profile"
             android:title="@string/profileItem" />
+
+        <item
+            android:id="@+id/drawerNutrition"
+            android:icon="@drawable/ic_nutrition"
+            android:title="@string/nutrition" />
+
         <item
             android:id="@+id/drawerTrainingsList"
             android:icon="@drawable/ic_trainings_list"

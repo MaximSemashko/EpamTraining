@@ -23,8 +23,18 @@
     <string name="calories">Calories</string>
     <string name="needed">Needed</string>
     <string name="product">Product</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="nutrition">Nutrition</string>
+    <string name="total_calories">Total calories:</string>
     <array name="genders">
         <item>Male</item>
         <item>Female</item>
+    </array>
+
+    <array name="tab_title">
+        <item>@string/breakfast</item>
+        <item>@string/lunch</item>
+        <item>@string/dinner</item>
     </array>
 </resources>
