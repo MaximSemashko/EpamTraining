@@ -1,7 +1,9 @@
 package com.example.epamtraining.network
 
+import android.util.Log
 import com.example.epamtraining.Constants
 import com.example.epamtraining.Constants.Companion.STORAGE_URL
+import com.example.epamtraining.models.Products
 import com.example.epamtraining.models.User
 import com.example.epamtraining.network.FirebaseAuth.localId
 import com.google.gson.Gson
@@ -12,6 +14,7 @@ import com.squareup.okhttp.Response
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
+import kotlin.concurrent.thread
 
 
 object FirebaseDatabase {
@@ -20,7 +23,7 @@ object FirebaseDatabase {
     private val usersUrl = "https://ksport-8842a.firebaseio.com/users/$localId.json"
 
     @Throws(IOException::class)
-    fun <T> addToRealtimeDatabase(t: T) {
+    fun <T> putToRealtimeDatabase(t: T) {
         val jsonString = gson.toJson(t).toString()
         val body = RequestBody.create(Constants.JSON, jsonString)
         val request = Request.Builder()
@@ -31,14 +34,59 @@ object FirebaseDatabase {
         client.newCall(request).execute()
     }
 
-    fun getUserInfo(): User {
+    @Throws(IOException::class)
+    fun <T> postToRealtimeDatabase(t: T, url: String) {
+        thread {
+            val jsonString = gson.toJson(t).toString()
+            val body = RequestBody.create(Constants.JSON, jsonString)
             val request = Request.Builder()
-                    .url(usersUrl)
-                    .get()
+                    .url(url)
+                    .post(body)
                     .build()
 
-            val response = client.newCall(request).execute()
-            val responseString = response.body().string()
+            client.newCall(request).execute()
+        }
+    }
+
+    fun getProducts(url: String): List<Products> {
+        val request = Request
+                .Builder()
+                .url(url)
+                .build()
+
+        val response = client.newCall(request).execute()
+        val responseBody = response?.body()?.string()
+        val products = ArrayList<Products>()
+        //wtf
+        if (responseBody.equals("null")) {
+            return emptyList()
+        } else {
+            Log.i("TAG", response.toString())
+            Log.i("TAG", responseBody)
+            val objects: JSONObject = JSONObject(responseBody)
+            if(objects.equals(null)){
+                return emptyList()
+            }
+            val iterator = objects.keys()
+
+            while (iterator.hasNext()) {
+                val obj = objects.getJSONObject(iterator?.next())
+                val product = gson.fromJson(obj.toString(), Products::class.java)
+                products.add(product)
+            }
+
+            return products
+        }
+    }
+
+    fun getUserInfo(): User {
+        val request = Request.Builder()
+                .url(usersUrl)
+                .get()
+                .build()
+
+        val response = client.newCall(request).execute()
+        val responseString = response.body().string()
 
         return gson.fromJson(responseString, User::class.java)
     }
@@ -50,11 +98,11 @@ object FirebaseDatabase {
                 .build()
 
         val response = client.newCall(request).execute()
-        return parseResponse(response)
+        return parseImageUrisResponse(response)
     }
 
     @Throws(IOException::class, JSONException::class)
-    private fun parseResponse(response: Response): List<String> {
+    private fun parseImageUrisResponse(response: Response): List<String> {
         val imagesUris = ArrayList<String>()
         val responseString = response.body().string()
         val rootJsonObject = JSONObject(responseString)

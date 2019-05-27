@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
-import com.example.epamtraining.interfaces.ItemTouchHelperAdapter
 import com.example.epamtraining.models.Exercises
 import kotlinx.android.synthetic.main.exercise_item.view.*
 import java.util.*
 
-class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHolder>(), ItemTouchHelperAdapter {
+class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHolder>() {
 
     private val exercisesList = ArrayList<Exercises>()
 
@@ -33,24 +32,24 @@ class TrainingsAdapter : RecyclerView.Adapter<TrainingsAdapter.TrainingsViewHold
         notifyDataSetChanged()
     }
 
-    override fun onItemMove(fromPosition: Int, toPosition: Int) {
-        if (fromPosition < toPosition) {
-            for (i in fromPosition until toPosition) {
-                Collections.swap(exercisesList, i, i + 1)
-            }
-        } else {
-            for (i in fromPosition downTo toPosition + 1) {
-                Collections.swap(exercisesList, i, i - 1)
-            }
-        }
-
-        notifyItemMoved(fromPosition, toPosition)
-    }
-
-    override fun onItemDismiss(position: Int) {
-        exercisesList.removeAt(position)
-        notifyItemRemoved(position)
-    }
+//    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+//        if (fromPosition < toPosition) {
+//            for (i in fromPosition until toPosition) {
+//                Collections.swap(exercisesList, i, i + 1)
+//            }
+//        } else {
+//            for (i in fromPosition downTo toPosition + 1) {
+//                Collections.swap(exercisesList, i, i - 1)
+//            }
+//        }
+//
+//        notifyItemMoved(fromPosition, toPosition)
+//    }
+//
+//    override fun addUserBreakfast(position: Int) {
+//        exercisesList.removeAt(position)
+//        notifyItemRemoved(position)
+//    }
 
     class TrainingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(exercises: Exercises) {

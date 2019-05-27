@@ -2,10 +2,9 @@ package com.example.epamtraining.callbacks
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import com.example.epamtraining.adapters.ProductsAdapter
 
-import com.example.epamtraining.adapters.TrainingsAdapter
-
-class ExerciseTouchCallback(private val trainingsAdapter: TrainingsAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+class ItemTouchCallback(private val adapter: ProductsAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
@@ -22,7 +21,7 @@ class ExerciseTouchCallback(private val trainingsAdapter: TrainingsAdapter) : It
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, viewHolder1: RecyclerView.ViewHolder): Boolean {
-        trainingsAdapter.onItemMove(viewHolder.adapterPosition, viewHolder1.adapterPosition)
+        adapter.onItemMove(viewHolder.adapterPosition, viewHolder1.adapterPosition)
         return true
     }
 
@@ -30,7 +29,7 @@ class ExerciseTouchCallback(private val trainingsAdapter: TrainingsAdapter) : It
         val position = viewHolder.adapterPosition
 
         if (RecyclerView.NO_POSITION != position) {
-            trainingsAdapter.onItemDismiss(position)
+            adapter.addUserBreakfast(position)
         }
     }
 }

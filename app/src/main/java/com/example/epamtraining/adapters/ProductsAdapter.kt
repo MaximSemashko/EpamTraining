@@ -5,12 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
+import com.example.epamtraining.interfaces.ItemTouchHelperAdapter
 import com.example.epamtraining.models.Products
+import com.example.epamtraining.network.FirebaseAuth.localId
+import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.product_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>() {
+class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ItemTouchHelperAdapter {
 
     private val productsList = ArrayList<Products>()
+    private val url = "https://ksport-8842a.firebaseio.com/users/$localId/Breakfast.json"
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
@@ -37,7 +43,28 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
         notifyDataSetChanged()
     }
 
-    inner class ProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun onItemMove(fromPosition: Int, toPosition: Int) {
+        if (fromPosition < toPosition) {
+            for (i in fromPosition until toPosition) {
+                Collections.swap(productsList, i, i + 1)
+            }
+        } else {
+            for (i in fromPosition downTo toPosition + 1) {
+                Collections.swap(productsList, i, i - 1)
+            }
+        }
+
+        notifyItemMoved(fromPosition, toPosition)
+    }
+
+    override fun addUserBreakfast(position: Int) {
+        val product = productsList.get(position)
+        FirebaseDatabase.postToRealtimeDatabase(product, url = url)
+        productsList.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    class ProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(products: Products) {
             itemView.productNameTextView.text = products.name
             itemView.productsCaloriesTextView.text = products.calories.toString()

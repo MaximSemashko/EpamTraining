@@ -7,13 +7,11 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.TrainingsAdapter
-import com.example.epamtraining.callbacks.ExerciseTouchCallback
 import com.example.epamtraining.models.Exercises
 import kotlinx.android.synthetic.main.fragment_trainings.*
 import java.util.*
@@ -32,12 +30,12 @@ class TrainingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         trainingsAdapter = TrainingsAdapter()
-        val itemTouchHelper = ItemTouchHelper(ExerciseTouchCallback(trainingsAdapter))
+//        val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(trainingsAdapter))
 
         exercisesRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = trainingsAdapter
-            itemTouchHelper.attachToRecyclerView(this)
+//            itemTouchHelper.attachToRecyclerView(this)
             itemAnimator = object : DefaultItemAnimator() {
                 override fun animateMove(holder: RecyclerView.ViewHolder, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
                     return super.animateMove(holder, fromX, fromY, toX, toY)

@@ -23,6 +23,7 @@ class ProductsDialogFragment : DialogFragment() {
         val context = activity
         val builder = AlertDialog.Builder(context!!)
         val dialogView = activity!!.layoutInflater.inflate(R.layout.products_dialog, null)
+
         productName = dialogView.findViewById(R.id.productNameEditText);
         productCalories = dialogView.findViewById(R.id.productCaloriesEditText);
 
@@ -38,6 +39,7 @@ class ProductsDialogFragment : DialogFragment() {
 
         val dialog = builder.create()
         dialog.show()
+
         return dialog
     }
 }
