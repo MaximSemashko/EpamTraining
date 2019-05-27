@@ -34,8 +34,8 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products)
-        productsAdapter = ProductsAdapter()
 
+        productsAdapter = ProductsAdapter(this@ProductsActivity)
         val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(productsAdapter))
 
         productsRecyclerView.apply {

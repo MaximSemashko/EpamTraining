@@ -1,3 +1,9 @@
 package com.example.epamtraining.models
 
-data class UserLogin(val email: String, val password: String)
+import com.google.gson.annotations.SerializedName
+
+data class UserLogin(
+        @SerializedName("email")
+        val email: String,
+        @SerializedName("password")
+        val password: String)

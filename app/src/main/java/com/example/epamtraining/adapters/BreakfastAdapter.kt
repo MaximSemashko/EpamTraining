@@ -34,11 +34,6 @@ class BreakfastAdapter(context: Context?) : RecyclerView.Adapter<BreakfastAdapte
         notifyDataSetChanged()
     }
 
-    fun addItem(product: Products) {
-        productsList.add(product)
-        notifyDataSetChanged()
-    }
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(products: Products) {
             itemView.productNameTextView.text = products.name

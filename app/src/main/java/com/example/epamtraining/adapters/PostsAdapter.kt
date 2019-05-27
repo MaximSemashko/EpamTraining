@@ -15,6 +15,7 @@ import java.util.*
 class PostsAdapter(context: Context?, private val items: ArrayList<String>) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         return ViewHolder(layoutInflater.inflate(R.layout.post_item, viewGroup, false))
     }

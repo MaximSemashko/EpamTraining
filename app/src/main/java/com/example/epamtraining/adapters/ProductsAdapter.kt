@@ -1,5 +1,6 @@
 package com.example.epamtraining.adapters
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +14,13 @@ import kotlinx.android.synthetic.main.product_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ItemTouchHelperAdapter {
+class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ItemTouchHelperAdapter {
 
     private val productsList = ArrayList<Products>()
     private val url = "https://ksport-8842a.firebaseio.com/users/$localId/Breakfast.json"
-
+    private val layoutInflater = LayoutInflater.from(context)
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsViewHolder {
-        val view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.product_item, viewGroup, false)
-        return ProductsViewHolder(view)
+        return ProductsViewHolder(layoutInflater.inflate(R.layout.product_item, viewGroup, false))
     }
 
     override fun onBindViewHolder(viewHolder: ProductsViewHolder, i: Int) {

@@ -97,8 +97,11 @@ object FirebaseDatabase {
     @Throws(IOException::class, JSONException::class)
     private fun parseImageUrisResponse(response: Response): List<String> {
         val imagesUris = ArrayList<String>()
+
         val responseString = response.body().string()
+
         val rootJsonObject = JSONObject(responseString)
+
         val images = rootJsonObject.getJSONArray("items")
         for (i in 0 until images.length()) {
             val image = images.getJSONObject(i)

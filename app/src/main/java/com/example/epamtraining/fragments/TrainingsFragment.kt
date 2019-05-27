@@ -29,7 +29,7 @@ class TrainingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        trainingsAdapter = TrainingsAdapter()
+        trainingsAdapter = TrainingsAdapter(context)
 //        val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(trainingsAdapter))
 
         exercisesRecyclerView.apply {

@@ -7,11 +7,10 @@ import com.squareup.okhttp.Request
 import com.squareup.okhttp.RequestBody
 import com.squareup.okhttp.Response
 import java.io.IOException
-import java.util.concurrent.Executors
 
 object FirebaseAuth {
 
-    private val executor = Executors.newCachedThreadPool()
+//    private val executor = Executors.newCachedThreadPool()
     private val client = OkHttpClient()
     private val gson = Gson()
     var token: String? = null
@@ -19,7 +18,6 @@ object FirebaseAuth {
 
     @Throws(IOException::class)
     fun <T> userAuth(t: T, url: String): Response? {
-
         val jsonString = gson.toJson(t).toString()
         val body = RequestBody.create(JSON, jsonString)
         val request = Request.Builder()
