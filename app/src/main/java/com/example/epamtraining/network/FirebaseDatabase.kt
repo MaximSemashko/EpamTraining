@@ -1,6 +1,5 @@
 package com.example.epamtraining.network
 
-import android.util.Log
 import com.example.epamtraining.Constants
 import com.example.epamtraining.Constants.Companion.STORAGE_URL
 import com.example.epamtraining.models.Products
@@ -61,14 +60,8 @@ object FirebaseDatabase {
         if (responseBody.equals("null")) {
             return emptyList()
         } else {
-            Log.i("TAG", response.toString())
-            Log.i("TAG", responseBody)
-            val objects: JSONObject = JSONObject(responseBody)
-            if(objects.equals(null)){
-                return emptyList()
-            }
+            val objects = JSONObject(responseBody)
             val iterator = objects.keys()
-
             while (iterator.hasNext()) {
                 val obj = objects.getJSONObject(iterator?.next())
                 val product = gson.fromJson(obj.toString(), Products::class.java)
