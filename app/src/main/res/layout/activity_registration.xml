@@ -7,14 +7,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="Name">
+            android:hint="@string/name">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/usersNameEditText"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="Email">
+            android:hint="@string/email">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/usersEmailEditText"
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="Password">
+            android:hint="@string/password">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/usersPasswordEditText"
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="Repeat password">
+            android:hint="@string/repeat_password">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/repeatPassword"
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:text="Sex"
+            android:text="@string/sex"
             android:textColor="@color/colorBlack"
             android:textSize="18sp" />
 
@@ -89,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="Age">
+            android:hint="@string/age">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/usersAgeEditText"
@@ -102,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="Height">
+            android:hint="@string/height">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/usersHeightEditText"
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:hint="Weight">
+            android:hint="@string/weight">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/usersWeightEditText"
@@ -132,8 +132,9 @@
             android:layout_gravity="right"
             android:background="@color/colorPrimary"
             android:paddingRight="4dp"
-            android:text="Apply"
-            android:textColor="@color/colorWhite" />
+            android:text="@string/apply"
+            android:textColor="@color/colorWhite"
+            android:paddingEnd="4dp" />
 
     </LinearLayout>
 

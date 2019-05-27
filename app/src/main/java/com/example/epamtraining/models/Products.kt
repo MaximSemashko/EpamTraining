@@ -1,5 +1,11 @@
 package com.example.epamtraining.models
 
-data class Products(val id: String,
-               val name:String,
-               val calories: Double)
+import com.google.gson.annotations.SerializedName
+
+data class Products(
+        @SerializedName("id")
+        val id: String,
+        @SerializedName("name")
+        val name: String,
+        @SerializedName("calories")
+        val calories: Double)

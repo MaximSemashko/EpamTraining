@@ -1,4 +1,4 @@
-package com.example.epamtraining.views;
+package com.example.epamtraining.customViews;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -81,7 +81,8 @@ public class DiagramView extends View {
 
         int space = 10; // space between caloriesNeeded and caloriesBurned
         int size = Math.min(getWidth(), getHeight()) - space * 2;
-        final int xMargin = (getWidth() - size) / 2, yMargin = (getHeight() - size) / 2;
+        final int xMargin = (getWidth() - size) / 2;
+        final int yMargin = (getHeight() - size) / 2;
 
         canvas.drawArc(xMargin - space, yMargin, getWidth() - xMargin - space, getHeight() - yMargin, 180 - burnedAngle / 2, burnedAngle, true, burnedPaint);
         canvas.drawArc(xMargin + space, yMargin, getWidth() - xMargin + space, getHeight() - yMargin, 360 - neededAngle / 2, neededAngle, true, neededPaint);

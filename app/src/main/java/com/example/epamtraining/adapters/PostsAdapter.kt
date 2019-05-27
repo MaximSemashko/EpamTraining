@@ -11,10 +11,13 @@ import com.example.epamtraining.imageLoader.ImageLoader
 import com.example.epamtraining.imageLoader.MemoryCache
 import java.util.*
 
-class PostsAdapter(private val context: Context?, private val items: ArrayList<String>) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
+
+class PostsAdapter(context: Context?, private val items: ArrayList<String>) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.post_item, viewGroup, false))
+        return ViewHolder(layoutInflater.inflate(R.layout.post_item, viewGroup, false))
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {

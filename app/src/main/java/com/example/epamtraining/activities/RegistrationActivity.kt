@@ -4,81 +4,70 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.example.epamtraining.Constants
+import android.view.View
 import com.example.epamtraining.R
-import com.example.epamtraining.Util
+import com.example.epamtraining.contracts.RegistrationContract
 import com.example.epamtraining.models.User
-import com.example.epamtraining.network.FirebaseAuth
-import com.example.epamtraining.network.FirebaseDatabase.addToRealtimeDatabase
-import com.squareup.okhttp.Callback
-import com.squareup.okhttp.Request
-import com.squareup.okhttp.Response
+import com.example.epamtraining.presenters.RegistrationPresenter
+import com.example.epamtraining.repositories.RegistrationRepository
 import kotlinx.android.synthetic.main.activity_registration.*
-import org.json.JSONObject
-import java.io.IOException
 import java.util.*
 
 
-class RegistrationActivity : AppCompatActivity() {
-
-    private val url: String = Constants.BASE_URL + Constants.OPERATION_SIGN_UP_USER + "?key=" + Constants.firebaseKey
+class RegistrationActivity : AppCompatActivity(), RegistrationContract.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
+        val registrationRepository = RegistrationRepository()
+        val registrationPresenter = RegistrationPresenter(registationRepository = registrationRepository, registrationView = this)
         registerButton.setOnClickListener {
-            if (validate()) {
-                Util.showProgress(registrationProgressBar)
-                val user = User(id = UUID.randomUUID().toString(),
-                        email = usersEmailEditText.text.toString(),
-                        name = usersNameEditText.text.toString(),
-                        password = usersPasswordEditText.text.toString(),
-                        sex = usersSexSpinner.selectedItem.toString(),
-                        age = Integer.parseInt(usersAgeEditText.text.toString()),
-                        weight = usersWeightEditText.text.toString().toDouble(),
-                        height = usersHeightEditText.text.toString().toDouble())
-
-                FirebaseAuth.apply {
-                    userAuth(user, url, object : Callback {
-                        override fun onResponse(response: Response?) {
-                            if (response!!.code() != 400) {
-                                val responseString = response?.body()?.string()
-                                val rootJsonObject = JSONObject(responseString)
-
-                                localId = rootJsonObject.get("localId").toString()
-                                token = rootJsonObject.get("idToken").toString()
-
-                                addToRealtimeDatabase(user)
-
-                                runOnUiThread {
-                                    Util.hideProgress(registrationProgressBar)
-                                    startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
-                                    finish()
-                                }
-                            } else {
-                                runOnUiThread {
-                                    Util.hideProgress(registrationProgressBar)
-                                    usersEmailEditText.error = "Please check your data"
-                                }
-                            }
-                        }
-
-                        override fun onFailure(request: Request?, e: IOException?) {
-                            Util.hideProgress(registrationProgressBar)
-                        }
-                    })
-                }
-
-            }
-            runOnUiThread {
-                Util.hideProgress(registrationProgressBar)
-                startActivity(MainActivity.startMainActivity(this))
-            }
+            registrationPresenter.onSignUpWasClicked()
         }
     }
 
-    private fun validate(): Boolean {
+    override fun hideProgress() {
+        if (registrationProgressBar.visibility != View.GONE) {
+            registrationProgressBar.visibility = View.GONE
+        }
+    }
+
+    override fun showProgress() {
+        if (registrationProgressBar.visibility != View.VISIBLE) {
+            registrationProgressBar.visibility = View.VISIBLE
+        }
+    }
+
+    override fun initUser(): User {
+        val id = UUID.randomUUID().toString()
+        val email = usersEmailEditText.text.toString()
+        val name = usersNameEditText.text.toString()
+        val password = usersPasswordEditText.text.toString()
+        val sex = usersSexSpinner.selectedItem.toString()
+        val age = Integer.parseInt(usersAgeEditText.text.toString())
+        val weight = usersWeightEditText.text.toString().toDouble()
+        val height = usersHeightEditText.text.toString().toDouble()
+
+        return User(id, email, password, name, sex, age, weight, height)
+    }
+
+    override fun onFailedParse() {
+        runOnUiThread {
+            hideProgress()
+            usersNameEditText.error = "Please check your data"
+        }
+    }
+
+    override fun onSuccessParse() {
+        runOnUiThread {
+            hideProgress()
+            startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
+            finish()
+        }
+    }
+
+    override fun validate(): Boolean {
         var valid = true
 
         val email = usersEmailEditText.text.toString()

@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,9 +13,10 @@
         android:gravity="center_horizontal"
         android:paddingTop="16dp"
         android:scaleType="center"
-        android:text="Product"
+        android:text="@string/product"
         android:textColor="#000000"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:targetApi="jelly_bean" />
 
     <EditText
         android:id="@+id/productNameEditText"
@@ -24,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="text"
         android:textColor="@color/colorBlack" />
 
@@ -37,8 +39,9 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="Calories"
+        android:hint="@string/calories"
         android:inputType="numberDecimal"
-        android:textColor="@color/colorBlack" />
+        android:textColor="@color/colorBlack"
+        tools:targetApi="jelly_bean" />
 
 </LinearLayout>
