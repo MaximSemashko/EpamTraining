@@ -36,13 +36,13 @@ class BreakfastFragment : Fragment() {
             adapter = productsAdapter
 
         }
-//        showProgress()
+        showProgress()
         thread {
             products = FirebaseDatabase.getProducts(url)
 
             activity?.runOnUiThread {
                 productsAdapter.updateItems(products)
-//                hideProgress()
+                hideProgress()
             }
         }
 
@@ -53,15 +53,35 @@ class BreakfastFragment : Fragment() {
                     android.R.color.holo_red_light)
 
             setOnRefreshListener {
+                thread {
+                    products = FirebaseDatabase.getProducts(url)
+
+                    activity?.runOnUiThread {
+                        productsAdapter.updateItems(products)
+                        isRefreshing = false
+                    }
+                }
                 activity?.runOnUiThread {
                     productsAdapter.updateItems(products)
-                    isRefreshing = false
+
                 }
             }
 
             addProductFab.setOnClickListener {
-                startActivity(startProductsActivity(context))
+                startProductsActivity(context)
             }
+        }
+    }
+
+    fun hideProgress() {
+        if (breakfastProgressBar.visibility != View.GONE) {
+            breakfastProgressBar.visibility = View.GONE
+        }
+    }
+
+    fun showProgress() {
+        if (breakfastProgressBar.visibility != View.VISIBLE) {
+            breakfastProgressBar.visibility = View.VISIBLE
         }
     }
 }

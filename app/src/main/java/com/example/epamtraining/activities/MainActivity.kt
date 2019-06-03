@@ -31,8 +31,7 @@ class MainActivity : AppCompatActivity() {
         initDrawer()
 
         if (FirebaseAuth.token == null) {
-            finish()
-            startActivity(startAuth(this))
+            startAuth(this)
         } else {
             mainNavigationView.setCheckedItem(R.id.drawerProfile)
             selectDrawerItem(mainNavigationView.menu.getItem(0))
@@ -78,8 +77,7 @@ class MainActivity : AppCompatActivity() {
                 fragmentClass = ProfileFragment::class.java
                 removeAllFragments(supportFragmentManager)
                 FirebaseAuth.signOut()
-                finish()
-                startActivity(startAuth(this@MainActivity))
+                startAuth(this@MainActivity)
             }
 
             else -> fragmentClass = ProfileFragment::class.java
@@ -110,9 +108,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun startMainActivity(packageContext: Context): Intent {
+        fun startMainActivity(packageContext: Context?) {
             val intent = Intent(packageContext, MainActivity::class.java)
-            return intent
+            packageContext?.startActivity(intent)
         }
     }
 }

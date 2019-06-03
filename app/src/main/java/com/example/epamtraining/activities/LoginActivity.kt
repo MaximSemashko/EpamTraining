@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.epamtraining.R
+import com.example.epamtraining.activities.MainActivity.Companion.startMainActivity
+import com.example.epamtraining.activities.RegistrationActivity.Companion.startRegistration
 import com.example.epamtraining.contracts.LoginContract
 import com.example.epamtraining.models.UserLogin
 import com.example.epamtraining.presenters.LoginPresenter
@@ -41,8 +43,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     override fun onSuccessParse() {
         runOnUiThread {
             hideProgress()
-            startActivity(MainActivity.startMainActivity(this@LoginActivity))
-            finish()
+            startMainActivity(this@LoginActivity)
         }
     }
 
@@ -88,13 +89,13 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
     }
 
     override fun startRegistrationActivity() {
-        startActivity(RegistrationActivity.startRegistration(this))
+        startRegistration(this)
     }
 
     companion object {
-        fun startAuth(packageContext: Context): Intent {
+        fun startAuth(packageContext: Context?) {
             val intent = Intent(packageContext, LoginActivity::class.java)
-            return intent
+            packageContext?.startActivity(intent)
         }
     }
 }

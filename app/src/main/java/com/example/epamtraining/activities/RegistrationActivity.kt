@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.epamtraining.R
+import com.example.epamtraining.activities.MainActivity.Companion.startMainActivity
 import com.example.epamtraining.contracts.RegistrationContract
 import com.example.epamtraining.models.User
 import com.example.epamtraining.presenters.RegistrationPresenter
@@ -62,8 +63,7 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View {
     override fun onSuccessParse() {
         runOnUiThread {
             hideProgress()
-            startActivity(MainActivity.startMainActivity(this@RegistrationActivity))
-            finish()
+            startMainActivity(this@RegistrationActivity)
         }
     }
 
@@ -129,8 +129,9 @@ class RegistrationActivity : AppCompatActivity(), RegistrationContract.View {
     }
 
     companion object {
-        fun startRegistration(packageContext: Context): Intent {
-            return Intent(packageContext, RegistrationActivity::class.java)
+        fun startRegistration(packageContext: Context) {
+            val intent = Intent(packageContext, RegistrationActivity::class.java)
+            packageContext.startActivity(intent)
         }
     }
 }

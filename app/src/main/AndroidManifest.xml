@@ -15,11 +15,25 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activities.ProductsActivity"></activity>
-        <activity android:name=".activities.RegistrationActivity"></activity>
-        <activity android:name=".activities.LoginActivity"></activity>
-        <activity android:name=".activities.MainActivity"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".activities.ProductsActivity"
+            android:noHistory="true">
+
+        </activity>
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:noHistory="true">
+
+        </activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:noHistory="true">
+
+        </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

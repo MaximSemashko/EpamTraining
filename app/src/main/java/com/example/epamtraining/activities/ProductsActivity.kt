@@ -21,6 +21,8 @@ import kotlin.concurrent.thread
 
 class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductDialogListener {
 
+    private val PRODUCTS_KEY = "key"
+
     override fun addProduct(product: Products) {
         productsAdapter.addItem(product)
         FirebaseDatabase.postToRealtimeDatabase(product, PRODUCTS_URL)
@@ -56,7 +58,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
                 }
             }
         } else {
-            products = savedInstanceState.getParcelableArrayList(STATE)
+            products = savedInstanceState.getParcelableArrayList(PRODUCTS_KEY)
             productsAdapter.updateItems(products)
             hideProgress()
         }
@@ -68,11 +70,8 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        val listState = productsRecyclerView.getLayoutManager()?.onSaveInstanceState()
+        outState?.putParcelableArrayList(PRODUCTS_KEY, products)
 
-//        outState?.putParcelable(STATE, listState)
-        outState?.putParcelableArrayList(STATE, products)
-       //TODO Parcelable
         super.onSaveInstanceState(outState)
     }
 
@@ -89,11 +88,9 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
     }
 
     companion object {
-        fun startProductsActivity(packageContext: Context?): Intent {
+        fun startProductsActivity(packageContext: Context?) {
             val intent = Intent(packageContext, ProductsActivity::class.java)
-            return intent
+            packageContext?.startActivity(intent)
         }
-
-        private const val STATE = "state"
     }
 }
