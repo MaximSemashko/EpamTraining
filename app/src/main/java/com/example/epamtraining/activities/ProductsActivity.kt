@@ -3,12 +3,9 @@ package com.example.epamtraining.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
 import com.example.epamtraining.Constants.Companion.PRODUCTS_URL
@@ -31,8 +28,6 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
 
     private lateinit var productsAdapter: ProductsAdapter
 
-    private var listState: Parcelable? = null
-
     private var products = ArrayList<Products>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,11 +41,6 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
             layoutManager = LinearLayoutManager(context)
             adapter = productsAdapter
             itemTouchHelper.attachToRecyclerView(this)
-            itemAnimator = object : DefaultItemAnimator() {
-                override fun animateMove(holder: RecyclerView.ViewHolder, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
-                    return super.animateMove(holder, fromX, fromY, toX, toY)
-                }
-            }
 
             addItemDecoration((DividerItemDecoration(this@ProductsActivity, DividerItemDecoration.VERTICAL)))
         }
@@ -66,7 +56,9 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
                 }
             }
         } else {
-            listState = savedInstanceState.getParcelable(STATE)
+            products = savedInstanceState.getParcelableArrayList(STATE)
+            productsAdapter.updateItems(products)
+            hideProgress()
         }
 
         productsFab.setOnClickListener {
@@ -78,7 +70,8 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
     override fun onSaveInstanceState(outState: Bundle?) {
         val listState = productsRecyclerView.getLayoutManager()?.onSaveInstanceState()
 
-        outState?.putParcelable(STATE, listState)
+//        outState?.putParcelable(STATE, listState)
+        outState?.putParcelableArrayList(STATE, products)
        //TODO Parcelable
         super.onSaveInstanceState(outState)
     }

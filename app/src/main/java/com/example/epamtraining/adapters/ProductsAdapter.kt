@@ -33,8 +33,8 @@ class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.P
     }
 
     fun updateItems(products: List<Products>) {
-        this.productsList.clear()
-        this.productsList.addAll(products)
+        productsList.clear()
+        productsList.addAll(products)
         notifyDataSetChanged()
     }
 
