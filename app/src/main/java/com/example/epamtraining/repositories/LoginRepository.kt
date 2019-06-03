@@ -6,9 +6,10 @@ import com.example.epamtraining.network.FirebaseAuth
 import org.json.JSONObject
 
 class LoginRepository() : LoginContract.Repository {
+
     override fun parseResponse(user: UserLogin, url: String): Boolean {
         val response = FirebaseAuth.userAuth(user, url)
-        if (response!!.code() != 400) {
+        if (response?.code() != 400) {
             val responseString = response?.body()?.string()
             val rootJsonObject = JSONObject(responseString)
 

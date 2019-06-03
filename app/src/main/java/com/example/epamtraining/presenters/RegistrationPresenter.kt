@@ -6,7 +6,7 @@ import kotlin.concurrent.thread
 
 class RegistrationPresenter(val registrationView: RegistrationContract.View, val registationRepository: RegistrationContract.Repository) : RegistrationContract.Presenter {
 
-    private val url: String = Constants.BASE_URL + Constants.OPERATION_SIGN_UP_USER + "?key=" + Constants.firebaseKey
+    private val url: String = Constants.BASE_URL + Constants.OPERATION_SIGN_UP_USER + "?key=" + Constants.FIREBASE_KEY
 
     override fun onSignUpWasClicked() {
         val user = registrationView.initUser()

@@ -6,7 +6,7 @@ import kotlin.concurrent.thread
 
 class LoginPresenter(val loginView: LoginContract.View, val loginRepository: LoginContract.Repository) : LoginContract.Presenter {
 
-    private val url = Constants.BASE_URL + Constants.OPERATION_VERIFY_PASSWORD + "?key=" + Constants.firebaseKey
+    private val url = Constants.BASE_URL + Constants.OPERATION_VERIFY_PASSWORD + "?key=" + Constants.FIREBASE_KEY
 
     override fun onSignInWasClicked() {
         val user = loginView.initUser()

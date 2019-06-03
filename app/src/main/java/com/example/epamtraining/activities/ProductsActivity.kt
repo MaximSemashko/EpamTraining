@@ -3,6 +3,7 @@ package com.example.epamtraining.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.DividerItemDecoration
@@ -10,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import com.example.epamtraining.Constants.Companion.PRODUCTS_URL
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.ProductsAdapter
 import com.example.epamtraining.callbacks.ItemTouchCallback
@@ -20,16 +22,18 @@ import kotlinx.android.synthetic.main.activity_products.*
 import kotlin.concurrent.thread
 
 
-class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductDialogListener {
+class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductDialogListener {
 
     override fun addProduct(product: Products) {
         productsAdapter.addItem(product)
-        FirebaseDatabase.postToRealtimeDatabase(product, url)
+        FirebaseDatabase.postToRealtimeDatabase(product, PRODUCTS_URL)
     }
 
     private lateinit var productsAdapter: ProductsAdapter
+
+    private var listState: Parcelable? = null
+
     private var products = ArrayList<Products>()
-    val url = "https://ksport-8842a.firebaseio.com/Products.json"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,20 +54,33 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
 
             addItemDecoration((DividerItemDecoration(this@ProductsActivity, DividerItemDecoration.VERTICAL)))
         }
-        showProgress()
-        thread {
-            products = FirebaseDatabase.getProducts(url) as ArrayList<Products>
 
-            runOnUiThread {
-                productsAdapter.updateItems(products)
-                hideProgress()
+        if (savedInstanceState == null) {
+            showProgress()
+            thread {
+                products = FirebaseDatabase.getProducts(PRODUCTS_URL) as ArrayList<Products>
+
+                runOnUiThread {
+                    productsAdapter.updateItems(products)
+                    hideProgress()
+                }
             }
+        } else {
+            listState = savedInstanceState.getParcelable(STATE)
         }
 
         productsFab.setOnClickListener {
             val productsDialogFragment = ProductsDialogFragment()
             productsDialogFragment.show(supportFragmentManager, productsDialogFragment.tag)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        val listState = productsRecyclerView.getLayoutManager()?.onSaveInstanceState()
+
+        outState?.putParcelable(STATE, listState)
+       //TODO Parcelable
+        super.onSaveInstanceState(outState)
     }
 
     private fun hideProgress() {
@@ -83,5 +100,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.addProductD
             val intent = Intent(packageContext, ProductsActivity::class.java)
             return intent
         }
+
+        private const val STATE = "state"
     }
 }

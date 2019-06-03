@@ -19,6 +19,7 @@ class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.P
     private val productsList = ArrayList<Products>()
     private val url = "https://ksport-8842a.firebaseio.com/users/$localId/Breakfast.json"
     private val layoutInflater = LayoutInflater.from(context)
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsViewHolder {
         return ProductsViewHolder(layoutInflater.inflate(R.layout.product_item, viewGroup, false))
     }
