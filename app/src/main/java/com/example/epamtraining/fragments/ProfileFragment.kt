@@ -8,17 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
-import com.example.epamtraining.models.Products
 import com.example.epamtraining.models.User
-import com.example.epamtraining.network.FirebaseAuth
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlin.concurrent.thread
 
 class ProfileFragment : Fragment() {
 
-    private var products: List<Products> = ArrayList()
-    private val url = "https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json"
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -27,28 +23,9 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val productsAdapter = BreakfastAdapter(activity)
 
-//        breakfastRecyclerView.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = productsAdapter
-//
-//        }
-////        showProgress()
-//        thread {
-//            products = FirebaseDatabase.getProducts(url)
-//
-//            activity?.runOnUiThread {
-//                productsAdapter.updateItems(products)
-////                hideProgress()
-//            }
-//        }
         setUserInfo()
         caloriesDiagramView.update(1500, 1400)
-//
-//        breakfastTextView.setOnClickListener {
-//            startActivity(startProductsActivity(context))
-//        }
     }
 
     @SuppressLint("SetTextI18n")

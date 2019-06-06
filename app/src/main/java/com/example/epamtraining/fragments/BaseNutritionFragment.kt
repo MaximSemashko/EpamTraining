@@ -1,6 +1,5 @@
 package com.example.epamtraining.fragments
 
-
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -8,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
-import com.example.epamtraining.activities.ProductsActivity.Companion.startProductsActivity
+import com.example.epamtraining.activities.ProductsActivity
 import com.example.epamtraining.adapters.BreakfastAdapter
 import com.example.epamtraining.models.Products
 import com.example.epamtraining.network.FirebaseAuth
@@ -16,10 +15,10 @@ import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_ingestion.*
 import kotlin.concurrent.thread
 
-class BreakfastFragment : Fragment() {
+class BaseNutritionFragment : Fragment() {
 
     private var products: List<Products> = ArrayList()
-    private val url = "https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json"
+    private var url = "https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -68,9 +67,13 @@ class BreakfastFragment : Fragment() {
             }
 
             addProductFab.setOnClickListener {
-                startProductsActivity(context, url)
+                ProductsActivity.startProductsActivity(context, url)
             }
         }
+    }
+
+    fun setUrl(url: String) {
+        this.url = url
     }
 
     fun hideProgress() {

@@ -19,8 +19,8 @@ import kotlin.concurrent.thread
 object FirebaseDatabase {
     private val client = OkHttpClient()
     private val gson = Gson()
+
     private val usersUrl = "https://ksport-8842a.firebaseio.com/users/$localId.json"
-    val products = ArrayList<Products>()
 
     @Throws(IOException::class)
     fun <T> putToRealtimeDatabase(t: T) {
@@ -49,6 +49,8 @@ object FirebaseDatabase {
     }
 
     fun getProducts(url: String): List<Products> {
+        val products = ArrayList<Products>()
+
         val request = Request
                 .Builder()
                 .url(url)
@@ -57,7 +59,6 @@ object FirebaseDatabase {
         val response = client.newCall(request).execute()
         val responseBody = response?.body()?.string()
 
-        //wtf
         if (responseBody.equals("null")) {
             return emptyList()
         } else {

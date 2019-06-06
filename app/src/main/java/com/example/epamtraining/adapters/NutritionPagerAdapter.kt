@@ -6,9 +6,8 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.example.epamtraining.R
-import com.example.epamtraining.fragments.BreakfastFragment
-import com.example.epamtraining.fragments.DinnerFragment
-import com.example.epamtraining.fragments.LunchFragment
+import com.example.epamtraining.fragments.BaseNutritionFragment
+import com.example.epamtraining.network.FirebaseAuth
 
 
 class NutritionPagerAdapter(context: Context?, fm: FragmentManager?) : FragmentPagerAdapter(fm) {
@@ -18,11 +17,22 @@ class NutritionPagerAdapter(context: Context?, fm: FragmentManager?) : FragmentP
     override fun getItem(position: Int): Fragment {
         val fragment: Fragment
         when (position) {
-
-            0 -> fragment = BreakfastFragment()
-            1 -> fragment = LunchFragment()
-            2 -> fragment = DinnerFragment()
-            else -> fragment = BreakfastFragment()
+            0 -> {
+                fragment = BaseNutritionFragment()
+                fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json")
+            }
+            1 -> {
+                fragment = BaseNutritionFragment()
+                fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Lunch.json")
+            }
+            2 -> {
+                fragment = BaseNutritionFragment()
+                fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Dinner.json")
+            }
+            else -> {
+                fragment = BaseNutritionFragment()
+                fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json")
+            }
         }
         return fragment
     }

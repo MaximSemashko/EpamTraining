@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.support.v4.util.LruCache
 
 class MemoryCache : ImageCache {
+
     private val cache: LruCache<String, Bitmap>
 
     init {

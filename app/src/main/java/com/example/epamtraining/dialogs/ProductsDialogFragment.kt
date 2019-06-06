@@ -12,7 +12,7 @@ import java.util.*
 
 class ProductsDialogFragment : DialogFragment() {
 
-    interface addProductDialogListener {
+    interface AddProductDialogListener {
         fun addProduct(product: Products)
     }
 
@@ -31,7 +31,7 @@ class ProductsDialogFragment : DialogFragment() {
                 .setPositiveButton("Add") { dialog, id ->
                     val name: String = productName.text.toString()
                     val calories: Double = productCalories.text.toString().toDouble()
-                    val listener = activity as addProductDialogListener?
+                    val listener = activity as AddProductDialogListener?
                     val product = Products(id = UUID.randomUUID().toString(), name = name, calories = calories)
                     listener?.addProduct(product)
                 }
