@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_products.*
 
 class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductDialogListener, ProductsContract.View {
 
+    private lateinit var url: String
     private lateinit var productsAdapter: ProductsAdapter
     private val productsRepository = ProductsRepository()
     private val productsPresenter = ProductsPresenter(this, productsRepository)
@@ -36,6 +37,8 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products)
 
+        getUrl()
+
         initRecycler()
 
         showProgress()
@@ -47,6 +50,9 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
         }
     }
 
+    override fun getUrl() {
+        url = intent.getStringExtra(NUTRITION_URL)
+    }
     override fun startDialog() {
         val productsDialogFragment = ProductsDialogFragment()
         productsDialogFragment.show(supportFragmentManager, productsDialogFragment.tag)
@@ -60,7 +66,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
     }
 
     override fun initRecycler() {
-        productsAdapter = ProductsAdapter(this@ProductsActivity)
+        productsAdapter = ProductsAdapter(this@ProductsActivity, url)
         val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(productsAdapter))
 
         productsRecyclerView.apply {

@@ -9,6 +9,7 @@ interface ProductsContract {
     }
 
     interface View {
+        fun getUrl()
         fun initRecycler()
         fun startDialog()
         fun showProgress()

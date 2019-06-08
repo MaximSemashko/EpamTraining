@@ -4,6 +4,6 @@ interface ItemTouchHelperAdapter {
 
     fun onItemMove(fromPosition: Int, toPosition: Int)
 
-    fun addUserBreakfast(position: Int)
+    fun addUserMeal(position: Int)
 
 }

@@ -31,25 +31,6 @@ class TrainingsAdapter(context: Context?) : RecyclerView.Adapter<TrainingsAdapte
         notifyDataSetChanged()
     }
 
-//    override fun onItemMove(fromPosition: Int, toPosition: Int) {
-//        if (fromPosition < toPosition) {
-//            for (i in fromPosition until toPosition) {
-//                Collections.swap(exercisesList, i, i + 1)
-//            }
-//        } else {
-//            for (i in fromPosition downTo toPosition + 1) {
-//                Collections.swap(exercisesList, i, i - 1)
-//            }
-//        }
-//
-//        notifyItemMoved(fromPosition, toPosition)
-//    }
-//
-//    override fun addUserBreakfast(position: Int) {
-//        exercisesList.removeAt(position)
-//        notifyItemRemoved(position)
-//    }
-
     class TrainingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(exercises: Exercises) {
             itemView.exerciseNameTextView.text = exercises.name

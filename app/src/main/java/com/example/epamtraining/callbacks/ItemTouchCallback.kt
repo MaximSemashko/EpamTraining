@@ -20,16 +20,16 @@ class ItemTouchCallback(private val adapter: ProductsAdapter) : ItemTouchHelper.
         return true
     }
 
-    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, viewHolder1: RecyclerView.ViewHolder): Boolean {
-        adapter.onItemMove(viewHolder.adapterPosition, viewHolder1.adapterPosition)
+    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+        adapter.onItemMove(viewHolder.adapterPosition, target.adapterPosition)
         return true
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val position = viewHolder.adapterPosition
 
         if (RecyclerView.NO_POSITION != position) {
-            adapter.addUserBreakfast(position)
+            adapter.addUserMeal(position)
         }
     }
 }

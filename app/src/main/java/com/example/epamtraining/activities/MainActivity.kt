@@ -47,6 +47,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
+    override fun detachMainActivity() {
+        finish()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -65,6 +69,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun logout() {
         removeAllFragments()
+        finish()
         FirebaseAuth.signOut()
         startAuth(this@MainActivity)
     }

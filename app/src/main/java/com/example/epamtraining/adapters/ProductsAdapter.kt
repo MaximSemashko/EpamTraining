@@ -8,16 +8,14 @@ import android.view.ViewGroup
 import com.example.epamtraining.R
 import com.example.epamtraining.interfaces.ItemTouchHelperAdapter
 import com.example.epamtraining.models.Products
-import com.example.epamtraining.network.FirebaseAuth.localId
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.product_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ItemTouchHelperAdapter {
+class ProductsAdapter(context: Context, private var url: String) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ItemTouchHelperAdapter {
 
     private val productsList = ArrayList<Products>()
-    private val url = "https://ksport-8842a.firebaseio.com/users/$localId/Breakfast.json"
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsViewHolder {
@@ -57,7 +55,7 @@ class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.P
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    override fun addUserBreakfast(position: Int) {
+    override fun addUserMeal(position: Int) {
         val product = productsList.get(position)
         FirebaseDatabase.postToRealtimeDatabase(product, url = url)
         productsList.removeAt(position)

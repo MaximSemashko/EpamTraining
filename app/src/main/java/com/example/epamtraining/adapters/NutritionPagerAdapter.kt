@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.example.epamtraining.R
-import com.example.epamtraining.fragments.BaseNutritionFragment
+import com.example.epamtraining.fragments.IngestionFragment
 import com.example.epamtraining.network.FirebaseAuth
 
 
@@ -18,19 +18,19 @@ class NutritionPagerAdapter(context: Context?, fm: FragmentManager?) : FragmentP
         val fragment: Fragment
         when (position) {
             0 -> {
-                fragment = BaseNutritionFragment()
+                fragment = IngestionFragment()
                 fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json")
             }
             1 -> {
-                fragment = BaseNutritionFragment()
+                fragment = IngestionFragment()
                 fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Lunch.json")
             }
             2 -> {
-                fragment = BaseNutritionFragment()
+                fragment = IngestionFragment()
                 fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Dinner.json")
             }
             else -> {
-                fragment = BaseNutritionFragment()
+                fragment = IngestionFragment()
                 fragment.setUrl("https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json")
             }
         }

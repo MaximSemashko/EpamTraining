@@ -19,6 +19,7 @@ class MainPresenter(val context: Context,
 
     override fun checkCurrentUserToken() {
         if (repository.isUserOnline()) {
+            view.detachMainActivity()
             LoginActivity.startAuth(packageContext = context)
         } else {
             view.initProfile()

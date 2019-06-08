@@ -14,6 +14,7 @@ interface MainContract {
         fun removeAllFragments()
         fun logout()
         fun initProfile()
+        fun detachMainActivity()
         fun onBackPressed()
         fun onOptionsItemSelected(item: MenuItem): Boolean
     }

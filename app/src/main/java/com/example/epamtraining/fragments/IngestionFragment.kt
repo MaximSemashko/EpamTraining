@@ -10,15 +10,14 @@ import com.example.epamtraining.R
 import com.example.epamtraining.activities.ProductsActivity
 import com.example.epamtraining.adapters.BreakfastAdapter
 import com.example.epamtraining.models.Products
-import com.example.epamtraining.network.FirebaseAuth
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_ingestion.*
 import kotlin.concurrent.thread
 
-class BaseNutritionFragment : Fragment() {
+class IngestionFragment : Fragment() {
 
     private var products: List<Products> = ArrayList()
-    private var url = "https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json"
+    private lateinit var url:String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,6 +34,7 @@ class BaseNutritionFragment : Fragment() {
             adapter = productsAdapter
 
         }
+
         showProgress()
         thread {
             products = FirebaseDatabase.getProducts(url)
