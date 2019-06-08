@@ -19,16 +19,11 @@ import com.example.epamtraining.network.FirebaseDatabase
 import com.example.epamtraining.presenters.ProductsPresenter
 import com.example.epamtraining.repositories.ProductsRepository
 import kotlinx.android.synthetic.main.activity_products.*
-import kotlin.concurrent.thread
 
 
 class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductDialogListener, ProductsContract.View {
 
-    private val PRODUCTS_KEY = "key"
-
     private lateinit var productsAdapter: ProductsAdapter
-
-    private var products = ArrayList<Products>()
     private val productsRepository = ProductsRepository()
     private val productsPresenter = ProductsPresenter(this, productsRepository)
 
@@ -43,20 +38,9 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
 
         initRecycler()
 
+        showProgress()
 
-        if (savedInstanceState == null) {
-            showProgress()
-            thread {
-                products = FirebaseDatabase.getProducts(PRODUCTS_URL) as ArrayList<Products>
-                runOnUiThread {
-                    productsAdapter.updateItems(products)
-                    hideProgress()
-                }
-            }
-        } else {
-            productsAdapter.updateItems(savedInstanceState.getParcelableArrayList(PRODUCTS_KEY))
-            hideProgress()
-        }
+        productsPresenter.initList()
 
         productsFab.setOnClickListener {
             productsPresenter.onFabWasClicked()
@@ -68,9 +52,9 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
         productsDialogFragment.show(supportFragmentManager, productsDialogFragment.tag)
     }
 
-    override fun updateList(items: ArrayList<Products>) {
+    override fun updateList(products: ArrayList<Products>) {
         runOnUiThread {
-            productsAdapter.updateItems(items)
+            productsAdapter.updateItems(products)
             hideProgress()
         }
     }
@@ -86,12 +70,6 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
 
             addItemDecoration((DividerItemDecoration(this@ProductsActivity, DividerItemDecoration.VERTICAL)))
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putParcelableArrayList(PRODUCTS_KEY, products)
-
-        super.onSaveInstanceState(outState)
     }
 
     override fun hideProgress() {
