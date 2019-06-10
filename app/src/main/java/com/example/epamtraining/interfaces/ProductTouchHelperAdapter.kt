@@ -1,6 +1,6 @@
 package com.example.epamtraining.interfaces
 
-interface ItemTouchHelperAdapter {
+interface ProductTouchHelperAdapter {
 
     fun onItemMove(fromPosition: Int, toPosition: Int)
 

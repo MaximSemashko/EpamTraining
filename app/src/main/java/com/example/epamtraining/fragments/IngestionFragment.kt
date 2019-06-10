@@ -27,12 +27,11 @@ class IngestionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val ingestionAdapter = IngestionAdapter(activity)
 
+        val ingestionAdapter = IngestionAdapter(activity)
         ingestionRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = ingestionAdapter
-
         }
 
         showProgress()

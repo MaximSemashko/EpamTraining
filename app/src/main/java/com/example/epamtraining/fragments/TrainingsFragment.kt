@@ -30,12 +30,10 @@ class TrainingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         trainingsAdapter = TrainingsAdapter(context)
-//        val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(trainingsAdapter))
 
         exercisesRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = trainingsAdapter
-//            itemTouchHelper.attachToRecyclerView(this)
             itemAnimator = object : DefaultItemAnimator() {
                 override fun animateMove(holder: RecyclerView.ViewHolder, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
                     return super.animateMove(holder, fromX, fromY, toX, toY)

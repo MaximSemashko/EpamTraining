@@ -11,7 +11,7 @@ import android.view.View
 import com.example.epamtraining.Constants.Companion.PRODUCTS_URL
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.ProductsAdapter
-import com.example.epamtraining.callbacks.ItemTouchCallback
+import com.example.epamtraining.callbacks.ProductTouchCallback
 import com.example.epamtraining.contracts.ProductsContract
 import com.example.epamtraining.dialogs.ProductsDialogFragment
 import com.example.epamtraining.models.Products
@@ -67,7 +67,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
 
     override fun initRecycler() {
         productsAdapter = ProductsAdapter(this@ProductsActivity, url)
-        val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(productsAdapter))
+        val itemTouchHelper = ItemTouchHelper(ProductTouchCallback(productsAdapter))
 
         productsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)

@@ -48,6 +48,17 @@ object FirebaseDatabase {
         }
     }
 
+    fun removeFromRealtimeDatabase(url: String) {
+        thread {
+            val request = Request.Builder()
+                    .url(url)
+                    .delete()
+                    .build()
+
+            client.newCall(request).execute()
+        }
+    }
+
     fun getProducts(url: String): List<Products> {
         val products = ArrayList<Products>()
 

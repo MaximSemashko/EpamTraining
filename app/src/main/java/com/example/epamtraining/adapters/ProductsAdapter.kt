@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
-import com.example.epamtraining.interfaces.ItemTouchHelperAdapter
+import com.example.epamtraining.interfaces.ProductTouchHelperAdapter
 import com.example.epamtraining.models.Products
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.product_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProductsAdapter(context: Context, private var url: String) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ItemTouchHelperAdapter {
+class ProductsAdapter(context: Context, private var url: String) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ProductTouchHelperAdapter {
 
     private val productsList = ArrayList<Products>()
     private val layoutInflater = LayoutInflater.from(context)
