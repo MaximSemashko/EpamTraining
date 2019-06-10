@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.ProductsActivity
-import com.example.epamtraining.adapters.BreakfastAdapter
+import com.example.epamtraining.adapters.IngestionAdapter
 import com.example.epamtraining.models.Products
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_ingestion.*
@@ -17,7 +17,7 @@ import kotlin.concurrent.thread
 class IngestionFragment : Fragment() {
 
     private var products: List<Products> = ArrayList()
-    private lateinit var url:String
+    private lateinit var url: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -27,11 +27,11 @@ class IngestionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val productsAdapter = BreakfastAdapter(activity)
+        val ingestionAdapter = IngestionAdapter(activity)
 
         ingestionRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = productsAdapter
+            adapter = ingestionAdapter
 
         }
 
@@ -40,7 +40,8 @@ class IngestionFragment : Fragment() {
             products = FirebaseDatabase.getProducts(url)
 
             activity?.runOnUiThread {
-                productsAdapter.updateItems(products)
+                ingestionAdapter.updateItems(products)
+                totalCaloriesTextView.setText(ingestionAdapter.getMealCalories().toString())
                 hideProgress()
             }
         }
@@ -56,12 +57,13 @@ class IngestionFragment : Fragment() {
                     products = FirebaseDatabase.getProducts(url)
 
                     activity?.runOnUiThread {
-                        productsAdapter.updateItems(products)
+                        ingestionAdapter.updateItems(products)
+                        totalCaloriesTextView.setText(ingestionAdapter.getMealCalories().toString())
                         isRefreshing = false
                     }
                 }
                 activity?.runOnUiThread {
-                    productsAdapter.updateItems(products)
+                    ingestionAdapter.updateItems(products)
 
                 }
             }

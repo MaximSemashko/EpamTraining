@@ -9,15 +9,15 @@ import com.example.epamtraining.R
 import com.example.epamtraining.models.Products
 import kotlinx.android.synthetic.main.product_item.view.*
 
-//TODO
-class BreakfastAdapter(context: Context?) : RecyclerView.Adapter<BreakfastAdapter.ViewHolder>() {
+
+class IngestionAdapter(context: Context?) : RecyclerView.Adapter<IngestionAdapter.ViewHolder>() {
 
     private val productsList = ArrayList<Products>()
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getItemCount(): Int {
-       return productsList.size
+        return productsList.size
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
@@ -32,6 +32,18 @@ class BreakfastAdapter(context: Context?) : RecyclerView.Adapter<BreakfastAdapte
         this.productsList.clear()
         this.productsList.addAll(products)
         notifyDataSetChanged()
+    }
+
+    fun getMealCalories(): Double? {
+        var totalCalories: Double? = 0.0
+
+        if (totalCalories != null) {
+            for (product in productsList) {
+                totalCalories += product.calories
+            }
+        }
+
+        return totalCalories
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
