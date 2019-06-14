@@ -32,6 +32,11 @@
     <string name="all_trainings">All</string>
     <string name="favourite_trainings">Favourite</string>
 
+    <array name="tab_trainings_title">
+        <item>@string/all_trainings</item>
+        <item>@string/favourite_trainings</item>
+    </array>
+
     <array name="genders">
         <item>Male</item>
         <item>Female</item>
@@ -43,8 +48,4 @@
         <item>@string/dinner</item>
     </array>
 
-    <array name="tab_trainings_title">
-        <item>@string/all_trainings</item>
-        <item>@string/favourite_trainings</item>
-    </array>
 </resources>

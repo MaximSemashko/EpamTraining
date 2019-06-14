@@ -7,6 +7,6 @@ import com.example.epamtraining.network.FirebaseDatabase
 
 class ProductsRepository : ProductsContract.Repository {
     override fun getProducts(): ArrayList<Products> {
-        return FirebaseDatabase.getItems(PRODUCTS_URL) as ArrayList<Products>
+        return FirebaseDatabase.getItems<Products>(PRODUCTS_URL) as ArrayList<Products>
     }
 }

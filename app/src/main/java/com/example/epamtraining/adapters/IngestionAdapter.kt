@@ -1,12 +1,12 @@
 package com.example.epamtraining.adapters
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.recyclerview.widget.RecyclerView
 import com.example.epamtraining.R
 import com.example.epamtraining.models.Products
 import com.example.epamtraining.network.FirebaseDatabase
