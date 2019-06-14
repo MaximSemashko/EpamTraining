@@ -1,9 +1,16 @@
 package com.example.epamtraining.models
 
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class Trainings(val id: UUID?,
-                     val name: String?,
-                     val type: String?,
-                     val duration: Double,
-                     val exercisesList: List<Exercises>)
+data class Trainings(
+        @SerializedName("id")
+        val id: Int?,
+        @SerializedName("name")
+        val name: String?,
+        @SerializedName("type")
+        val type: String?,
+        @SerializedName("duration")
+        val duration: String?,
+        val exercisesList: ArrayList<Exercises>?
+)

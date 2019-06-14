@@ -35,7 +35,7 @@ class IngestionFragment : androidx.fragment.app.Fragment() {
 
         showProgress()
         thread {
-            products = FirebaseDatabase.getProducts(url)
+            products = FirebaseDatabase.getItems(url)
 
             activity?.runOnUiThread {
                 ingestionAdapter.updateItems(products)
@@ -52,7 +52,7 @@ class IngestionFragment : androidx.fragment.app.Fragment() {
 
             setOnRefreshListener {
                 thread {
-                    products = FirebaseDatabase.getProducts(url)
+                    products = FirebaseDatabase.getItems(url)
 
                     activity?.runOnUiThread {
                         ingestionAdapter.updateItems(products)

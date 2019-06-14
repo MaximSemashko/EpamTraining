@@ -12,6 +12,7 @@ import com.example.epamtraining.R
 import com.example.epamtraining.activities.ProductsActivity
 import com.example.epamtraining.adapters.WorkoutAdapter
 import com.example.epamtraining.models.Trainings
+import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_ingestion.*
 import kotlinx.android.synthetic.main.fragment_ingestion.workoutProgressBar
 import kotlinx.android.synthetic.main.fragment_ingestion.workoutRecyclerView
@@ -40,8 +41,9 @@ class WorkoutFragment : Fragment() {
 
         showProgress()
         thread {
+            FirebaseDatabase.getTrainings()
             //TODO
-//            trainings = FirebaseDatabase.getProducts(url)
+//            trainings = FirebaseDatabase.getItems(url)
 
             activity?.runOnUiThread {
                 workoutAdapter.updateItems(trainings)
@@ -59,7 +61,7 @@ class WorkoutFragment : Fragment() {
             setOnRefreshListener {
                 thread {
                     //TODO
-//                    trainings = FirebaseDatabase.getProducts(url)
+//                    trainings = FirebaseDatabase.getItems(url)
 
                     activity?.runOnUiThread {
                         workoutAdapter.updateItems(trainings)

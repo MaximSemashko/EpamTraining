@@ -1,8 +1,9 @@
 package com.example.epamtraining.network
 
+import android.util.Log
 import com.example.epamtraining.Constants
 import com.example.epamtraining.Constants.Companion.STORAGE_URL
-import com.example.epamtraining.models.Products
+import com.example.epamtraining.models.Trainings
 import com.example.epamtraining.models.User
 import com.example.epamtraining.network.FirebaseAuth.localId
 import com.google.gson.Gson
@@ -17,10 +18,11 @@ import kotlin.concurrent.thread
 
 
 object FirebaseDatabase {
-    private val client = OkHttpClient()
-    private val gson = Gson()
+    val client = OkHttpClient()
+    val gson = Gson()
 
     private val usersUrl = "https://ksport-8842a.firebaseio.com/users/$localId.json"
+    private val trainingsUrl = "https://ksport-8842a.firebaseio.com/Trainings.json"
 
     @Throws(IOException::class)
     fun <T> putToRealtimeDatabase(t: T) {
@@ -59,8 +61,8 @@ object FirebaseDatabase {
         }
     }
 
-    fun getProducts(url: String): List<Products> {
-        val products = ArrayList<Products>()
+    inline fun <reified T> getItems(url: String): List<T> {
+        val items = ArrayList<T>()
 
         val request = Request
                 .Builder()
@@ -77,11 +79,45 @@ object FirebaseDatabase {
             val iterator = objects.keys()
             while (iterator.hasNext()) {
                 val obj = objects.getJSONObject(iterator?.next())
-                val product = gson.fromJson(obj.toString(), Products::class.java)
-                products.add(product)
+                Log.i("TAG", obj.toString())
+
+                val product = gson.fromJson(obj.toString(), T::class.java)
+                items.add(product)
             }
 
-            products
+            items
+        }
+    }
+
+    fun getTrainings(): List<Trainings> {
+        val trainings = ArrayList<Trainings>()
+
+        val request = Request
+                .Builder()
+                .url(trainingsUrl)
+                .build()
+
+        val response = client.newCall(request).execute()
+        val responseBody = response?.body()?.string()
+
+        return if (responseBody.equals("null")) {
+            emptyList()
+        } else {
+            val objects = JSONObject(responseBody)
+            val iterator = objects.keys()
+
+            while (iterator.hasNext()) {
+                val key = iterator?.next()
+                val obj = objects.getJSONObject(key)
+
+                val training = gson.fromJson(obj.toString(), Trainings::class.java)
+                trainings.add(training)
+                val exercisesUrl = "https://ksport-8842a.firebaseio.com/Trainings/$key/exercises.json"
+                Log.i("TAG", exercisesUrl)
+
+            }
+
+            trainings
         }
     }
 
