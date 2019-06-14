@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun initDrawer() {
         mainNavigationView.setNavigationItemSelectedListener { menuItem ->
-            menuItem.setChecked(true)
+            menuItem.isChecked = true
             drawerLayout.closeDrawers()
             mainPresenter.selectDrawerItem(menuItem)
             true
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.closeDrawer(GravityCompat.START) else super.onBackPressed()
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.closeDrawer(GravityCompat.START) else drawerLayout.openDrawer(GravityCompat.START)
     }
 
     override fun logout() {
