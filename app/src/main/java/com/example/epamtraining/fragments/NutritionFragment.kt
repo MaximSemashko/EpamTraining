@@ -21,7 +21,7 @@ class NutritionFragment : androidx.fragment.app.Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = NutritionPagerAdapter(context, fragmentManager)
+        val adapter = NutritionPagerAdapter(context, childFragmentManager)
 
         nutritionViewPager.adapter = adapter
 

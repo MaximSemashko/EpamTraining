@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/trainingItemLayout"
+    android:id="@+id/workoutItemLayout"
     android:layout_width="match_parent"
     android:layout_height="320dp"
     android:layout_margin="2dp"
-    tools:background="@drawable/power_training">
+    android:background="@drawable/power_training">
 
     <TextView
         android:id="@+id/trainingNameTextView"

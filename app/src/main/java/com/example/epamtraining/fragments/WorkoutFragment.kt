@@ -2,18 +2,15 @@ package com.example.epamtraining.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.example.epamtraining.R
-import com.example.epamtraining.activities.ProductsActivity
 import com.example.epamtraining.adapters.WorkoutAdapter
 import com.example.epamtraining.models.Trainings
 import com.example.epamtraining.network.FirebaseDatabase
-import kotlinx.android.synthetic.main.fragment_ingestion.*
 import kotlinx.android.synthetic.main.fragment_ingestion.workoutProgressBar
 import kotlinx.android.synthetic.main.fragment_ingestion.workoutRecyclerView
 import kotlinx.android.synthetic.main.fragment_workout.*
@@ -29,6 +26,7 @@ class WorkoutFragment : Fragment() {
 
         return inflater.inflate(R.layout.fragment_workout, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -41,13 +39,10 @@ class WorkoutFragment : Fragment() {
 
         showProgress()
         thread {
-            FirebaseDatabase.getTrainings()
-            //TODO
-//            trainings = FirebaseDatabase.getItems(url)
+            trainings = FirebaseDatabase.getTrainings()
 
             activity?.runOnUiThread {
                 workoutAdapter.updateItems(trainings)
-//                totalCaloriesTextView.text = workoutAdapter.getMealCalories().toString()
                 hideProgress()
             }
         }
@@ -60,12 +55,10 @@ class WorkoutFragment : Fragment() {
 
             setOnRefreshListener {
                 thread {
-                    //TODO
-//                    trainings = FirebaseDatabase.getItems(url)
+                    trainings = FirebaseDatabase.getTrainings()
 
                     activity?.runOnUiThread {
                         workoutAdapter.updateItems(trainings)
-//                        totalCaloriesTextView.text = workoutAdapter.getMealCalories().toString()
                         isRefreshing = false
                     }
                 }

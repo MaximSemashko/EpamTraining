@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.TrainingsAdapter
@@ -31,11 +29,9 @@ class TrainingsFragment : androidx.fragment.app.Fragment() {
         trainingsRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = trainingsAdapter
-            itemAnimator = object : DefaultItemAnimator() {
-            }
-            addItemDecoration((DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)))
 
-            val adapter = TrainingsPagerAdapter(context, fragmentManager)
+
+            val adapter = TrainingsPagerAdapter(context, childFragmentManager)
 
             trainingsViewPager.adapter = adapter
 

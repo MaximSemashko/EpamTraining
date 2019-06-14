@@ -3,6 +3,7 @@ package com.example.epamtraining.network
 import android.util.Log
 import com.example.epamtraining.Constants
 import com.example.epamtraining.Constants.Companion.STORAGE_URL
+import com.example.epamtraining.models.Exercises
 import com.example.epamtraining.models.Trainings
 import com.example.epamtraining.models.User
 import com.example.epamtraining.network.FirebaseAuth.localId
@@ -110,9 +111,12 @@ object FirebaseDatabase {
                 val key = iterator?.next()
                 val obj = objects.getJSONObject(key)
 
-                val training = gson.fromJson(obj.toString(), Trainings::class.java)
-                trainings.add(training)
                 val exercisesUrl = "https://ksport-8842a.firebaseio.com/Trainings/$key/exercises.json"
+
+                val training = gson.fromJson(obj.toString(), Trainings::class.java)
+                training.exercisesList = getItems<Exercises>(exercisesUrl) as ArrayList<Exercises>
+                Log.i("TAG", training.toString())
+                trainings.add(training)
                 Log.i("TAG", exercisesUrl)
 
             }

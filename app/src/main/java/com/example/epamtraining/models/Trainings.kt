@@ -12,5 +12,5 @@ data class Trainings(
         val type: String?,
         @SerializedName("duration")
         val duration: String?,
-        val exercisesList: ArrayList<Exercises>?
+        var exercisesList: ArrayList<Exercises>?
 )

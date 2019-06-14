@@ -1,13 +1,16 @@
 package com.example.epamtraining.adapters
 
+import android.annotation.TargetApi
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.epamtraining.R
 import com.example.epamtraining.models.Trainings
-import kotlinx.android.synthetic.main.product_item.view.*
 
 class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
 
@@ -19,7 +22,7 @@ class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): WorkoutViewHolder {
-        return WorkoutViewHolder(layoutInflater.inflate(R.layout.product_item, viewGroup, false))
+        return WorkoutViewHolder(layoutInflater.inflate(R.layout.training_item, viewGroup, false))
     }
 
     override fun getItemCount(): Int {
@@ -38,10 +41,32 @@ class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.
     }
 
     class WorkoutViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var name: TextView? = null
+        private var type: TextView? = null
+        private var duration: TextView? = null
+        private var layout: ConstraintLayout? = null
+
+        init {
+            name = itemView.findViewById(R.id.trainingNameTextView)
+            type = itemView.findViewById(R.id.trainingTypeTextView)
+            duration = itemView.findViewById(R.id.trainingDurationTextView)
+            layout = itemView.findViewById(R.id.workoutItemLayout)
+        }
+
         fun bind(trainings: Trainings) {
-            //TODO
-            itemView.trainingNameTextView.text = trainings.name
-//            itemView.productsCaloriesTextView.text = trainings.calories.toString()
+            name?.text = trainings.name
+            type?.text = trainings.type
+            duration?.text = trainings.duration
+            selectBackground(trainings.type)
+        }
+
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        fun selectBackground(type: String?) {
+            when {
+                type.equals("cardio") -> layout?.background = itemView.context.getDrawable(R.drawable.cardio_training)
+                type.equals("aerobic") -> layout?.background = itemView.context.getDrawable(R.drawable.aerobic_training)
+                type.equals("power") -> layout?.background = itemView.context.getDrawable(R.drawable.power_training)
+            }
         }
     }
 }
