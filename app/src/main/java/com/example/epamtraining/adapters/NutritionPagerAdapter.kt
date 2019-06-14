@@ -1,21 +1,18 @@
 package com.example.epamtraining.adapters
 
 import android.content.Context
-import android.support.annotation.Nullable
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.annotation.Nullable
 import com.example.epamtraining.R
 import com.example.epamtraining.fragments.IngestionFragment
 import com.example.epamtraining.network.FirebaseAuth
 
 
-class NutritionPagerAdapter(context: Context?, fm: FragmentManager?) : FragmentPagerAdapter(fm) {
+class NutritionPagerAdapter(context: Context?, fm: androidx.fragment.app.FragmentManager?) : androidx.fragment.app.FragmentPagerAdapter(fm!!) {
 
     val tabTitles = context?.resources?.getStringArray(R.array.tab_title)
 
-    override fun getItem(position: Int): Fragment {
-        val fragment: Fragment
+    override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        val fragment: androidx.fragment.app.Fragment
         when (position) {
             0 -> {
                 fragment = IngestionFragment()
@@ -38,7 +35,7 @@ class NutritionPagerAdapter(context: Context?, fm: FragmentManager?) : FragmentP
     }
 
     override fun getCount(): Int {
-        return 3;
+        return 3
     }
 
     @Nullable

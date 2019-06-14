@@ -3,7 +3,7 @@ package com.example.epamtraining.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.MainActivity.Companion.startMainActivity
@@ -63,14 +63,14 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
             loginEmailEditText.error = "Enter a valid email address"
             valid = false
         } else {
-            loginEmailEditText.setError(null)
+            loginEmailEditText.error = null
         }
 
         if (password.isEmpty() || password.length < 6) {
             loginPasswordEditText.error = "Enter password more than 6"
             valid = false
         } else {
-            loginPasswordEditText.setError(null)
+            loginPasswordEditText.error = null
         }
 
         return valid

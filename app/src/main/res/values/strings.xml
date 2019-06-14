@@ -18,7 +18,7 @@
     <string name="apply">Apply</string>
     <string name="sets">Sets</string>
     <string name="burned">Burned</string>
-    <string name="parametres">Parametres</string>
+    <string name="parameters">Parameters</string>
     <string name="breakfast">Breakfast</string>
     <string name="calories">Calories</string>
     <string name="needed">Needed</string>
@@ -27,6 +27,11 @@
     <string name="dinner">Dinner</string>
     <string name="nutrition">Nutrition</string>
     <string name="total_calories">Total calories:</string>
+    <string name="training_type">Type</string>
+    <string name="number_of_exercises">Number of exercises</string>
+    <string name="all_trainings">All</string>
+    <string name="favourite_trainings">Favourite</string>
+
     <array name="genders">
         <item>Male</item>
         <item>Female</item>
@@ -36,5 +41,10 @@
         <item>@string/breakfast</item>
         <item>@string/lunch</item>
         <item>@string/dinner</item>
+    </array>
+
+    <array name="tab_trainings_title">
+        <item>@string/all_trainings</item>
+        <item>@string/favourite_trainings</item>
     </array>
 </resources>

@@ -1,17 +1,17 @@
 package com.example.epamtraining.imageLoader
 
 import android.graphics.Bitmap
-import android.support.v4.util.LruCache
+import androidx.collection.LruCache
 
 class MemoryCache : ImageCache {
 
-    private val cache: LruCache<String, Bitmap>
+    private val cache: androidx.collection.LruCache<String, Bitmap>
 
     init {
         val maxMemory: Long = Runtime.getRuntime().maxMemory() / 1024
         val cacheSize: Int = (maxMemory / 4).toInt()
 
-        cache = object : LruCache<String, Bitmap>(cacheSize) {
+        cache = object : androidx.collection.LruCache<String, Bitmap>(cacheSize) {
             override fun sizeOf(key: String, bitmap: Bitmap): Int {
                 return bitmap.rowBytes * bitmap.height / 1024
             }

@@ -1,50 +1,56 @@
 package com.example.epamtraining.fragments
 
+
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.ProductsActivity
-import com.example.epamtraining.adapters.IngestionAdapter
-import com.example.epamtraining.models.Products
-import com.example.epamtraining.network.FirebaseDatabase
+import com.example.epamtraining.adapters.WorkoutAdapter
+import com.example.epamtraining.models.Trainings
 import kotlinx.android.synthetic.main.fragment_ingestion.*
+import kotlinx.android.synthetic.main.fragment_ingestion.workoutProgressBar
+import kotlinx.android.synthetic.main.fragment_ingestion.workoutRecyclerView
+import kotlinx.android.synthetic.main.fragment_workout.*
 import kotlin.concurrent.thread
 
-class IngestionFragment : androidx.fragment.app.Fragment() {
+class WorkoutFragment : Fragment() {
 
-    private var products: List<Products> = ArrayList()
+    private var trainings: List<Trainings> = ArrayList()
     private lateinit var url: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_ingestion, container, false)
+        return inflater.inflate(R.layout.fragment_workout, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val ingestionAdapter = IngestionAdapter(activity)
+        val workoutAdapter = WorkoutAdapter(context, url)
+
         workoutRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ingestionAdapter
+            adapter = workoutAdapter
         }
 
         showProgress()
         thread {
-            products = FirebaseDatabase.getProducts(url)
+            //TODO
+//            trainings = FirebaseDatabase.getProducts(url)
 
             activity?.runOnUiThread {
-                ingestionAdapter.updateItems(products)
-                totalCaloriesTextView.text = ingestionAdapter.getMealCalories().toString()
+                workoutAdapter.updateItems(trainings)
+//                totalCaloriesTextView.text = workoutAdapter.getMealCalories().toString()
                 hideProgress()
             }
         }
 
-        ingestionSwipeRefreshLayout.apply {
+        workoutSwipeRefreshLayout.apply {
             setColorSchemeResources(android.R.color.holo_blue_bright,
                     android.R.color.holo_green_light,
                     android.R.color.holo_orange_light,
@@ -52,22 +58,19 @@ class IngestionFragment : androidx.fragment.app.Fragment() {
 
             setOnRefreshListener {
                 thread {
-                    products = FirebaseDatabase.getProducts(url)
+                    //TODO
+//                    trainings = FirebaseDatabase.getProducts(url)
 
                     activity?.runOnUiThread {
-                        ingestionAdapter.updateItems(products)
-                        totalCaloriesTextView.text = ingestionAdapter.getMealCalories().toString()
+                        workoutAdapter.updateItems(trainings)
+//                        totalCaloriesTextView.text = workoutAdapter.getMealCalories().toString()
                         isRefreshing = false
                     }
                 }
                 activity?.runOnUiThread {
-                    ingestionAdapter.updateItems(products)
+                    workoutAdapter.updateItems(trainings)
 
                 }
-            }
-
-            addProductFab.setOnClickListener {
-                ProductsActivity.startProductsActivity(context, url)
             }
         }
     }

@@ -5,7 +5,7 @@ import com.example.epamtraining.models.UserLogin
 import com.example.epamtraining.network.FirebaseAuth
 import org.json.JSONObject
 
-class LoginRepository() : LoginContract.Repository {
+class LoginRepository : LoginContract.Repository {
 
     override fun parseResponse(user: UserLogin, url: String): Boolean {
         val response = FirebaseAuth.userAuth(user, url)

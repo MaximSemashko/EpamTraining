@@ -1,7 +1,7 @@
 package com.example.epamtraining.callbacks
 
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.epamtraining.adapters.ProductsAdapter
 
 class ProductTouchCallback(private val adapter: ProductsAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -26,7 +26,7 @@ class ProductTouchCallback(private val adapter: ProductsAdapter) : ItemTouchHelp
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int) {
-//        val position = viewHolder.adapterPosition
+        val position = viewHolder.adapterPosition
 
         if (RecyclerView.NO_POSITION != position) {
             adapter.addUserMeal(position)

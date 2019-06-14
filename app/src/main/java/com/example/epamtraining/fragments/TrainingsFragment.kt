@@ -2,23 +2,20 @@ package com.example.epamtraining.fragments
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.TrainingsAdapter
-import com.example.epamtraining.models.Exercises
+import com.example.epamtraining.adapters.TrainingsPagerAdapter
 import kotlinx.android.synthetic.main.fragment_trainings.*
-import java.util.*
 
-class TrainingsFragment : Fragment() {
+class TrainingsFragment : androidx.fragment.app.Fragment() {
 
-    lateinit private var trainingsAdapter: TrainingsAdapter
+    private lateinit var trainingsAdapter: TrainingsAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -31,23 +28,18 @@ class TrainingsFragment : Fragment() {
 
         trainingsAdapter = TrainingsAdapter(context)
 
-        exercisesRecyclerView.apply {
+        trainingsRecyclerView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = trainingsAdapter
             itemAnimator = object : DefaultItemAnimator() {
-                override fun animateMove(holder: RecyclerView.ViewHolder, fromX: Int, fromY: Int, toX: Int, toY: Int): Boolean {
-                    return super.animateMove(holder, fromX, fromY, toX, toY)
-                }
             }
             addItemDecoration((DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)))
-        }
 
-        addExerciseButton?.setOnClickListener {
-            val name = exerciseNameText?.text.toString()
-            val sets = Integer.parseInt(exerciseSetsText?.text.toString())
-            trainingsAdapter.setItem(Exercises(UUID.randomUUID(), name, sets, 1.0))
-            exerciseNameText?.setText(null)
-            exerciseSetsText?.setText(null)
+            val adapter = TrainingsPagerAdapter(context, fragmentManager)
+
+            trainingsViewPager.adapter = adapter
+
+            trainingsTabLayout.setupWithViewPager(trainingsViewPager)
         }
     }
 }

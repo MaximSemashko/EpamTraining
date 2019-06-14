@@ -70,8 +70,8 @@ object FirebaseDatabase {
         val response = client.newCall(request).execute()
         val responseBody = response?.body()?.string()
 
-        if (responseBody.equals("null")) {
-            return emptyList()
+        return if (responseBody.equals("null")) {
+            emptyList()
         } else {
             val objects = JSONObject(responseBody)
             val iterator = objects.keys()
@@ -81,7 +81,7 @@ object FirebaseDatabase {
                 products.add(product)
             }
 
-            return products
+            products
         }
     }
 

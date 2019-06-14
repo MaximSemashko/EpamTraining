@@ -1,8 +1,8 @@
 package com.example.epamtraining.presenters
 
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import android.view.MenuItem
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.LoginActivity
@@ -13,7 +13,7 @@ import com.example.epamtraining.fragments.ProfileFragment
 import com.example.epamtraining.fragments.TrainingsFragment
 
 class MainPresenter(val context: Context,
-                    val fragmentManager: FragmentManager,
+                    private val fragmentManager: FragmentManager,
                     val view: MainContract.View,
                     val repository: MainContract.Repository) : MainContract.Presenter {
 
@@ -47,7 +47,6 @@ class MainPresenter(val context: Context,
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.content_frame, fragment)
-                .addToBackStack(null)
                 .commit()
     }
 }

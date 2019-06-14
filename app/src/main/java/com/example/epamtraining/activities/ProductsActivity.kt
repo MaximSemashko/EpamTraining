@@ -3,11 +3,10 @@ package com.example.epamtraining.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.epamtraining.Constants.Companion.PRODUCTS_URL
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.ProductsAdapter
@@ -53,6 +52,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
     override fun getUrl() {
         url = intent.getStringExtra(NUTRITION_URL)
     }
+
     override fun startDialog() {
         val productsDialogFragment = ProductsDialogFragment()
         productsDialogFragment.show(supportFragmentManager, productsDialogFragment.tag)
@@ -74,7 +74,7 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
             adapter = productsAdapter
             itemTouchHelper.attachToRecyclerView(this)
 
-            addItemDecoration((DividerItemDecoration(this@ProductsActivity, DividerItemDecoration.VERTICAL)))
+            addItemDecoration((androidx.recyclerview.widget.DividerItemDecoration(this@ProductsActivity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)))
         }
     }
 
