@@ -44,12 +44,14 @@ class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.
         private var name: TextView? = null
         private var type: TextView? = null
         private var duration: TextView? = null
+        private var numberOfExercises: TextView? = null
         private var layout: ConstraintLayout? = null
 
         init {
-            name = itemView.findViewById(R.id.trainingNameTextView)
+            name = itemView.findViewById(R.id.exerciseNameTextView)
             type = itemView.findViewById(R.id.trainingTypeTextView)
             duration = itemView.findViewById(R.id.trainingDurationTextView)
+            numberOfExercises = itemView.findViewById(R.id.trainingExercisesCountTextView)
             layout = itemView.findViewById(R.id.workoutItemLayout)
         }
 
@@ -57,6 +59,7 @@ class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.
             name?.text = trainings.name
             type?.text = trainings.type
             duration?.text = trainings.duration
+            numberOfExercises?.text = trainings.exercisesList?.size.toString()
             selectBackground(trainings.type)
         }
 

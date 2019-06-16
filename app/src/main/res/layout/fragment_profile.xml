@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:fontFamily="@font/raleway_light"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@+id/neededTextView"
             app:layout_constraintStart_toStartOf="@+id/neededTextView"
@@ -38,10 +39,11 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:text="@string/burned"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/caloriesTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/repeatsTextView" />
 
         <ImageView
             android:id="@+id/usersImageView"
@@ -70,7 +72,7 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:fontFamily="@font/raleway_light"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.032"
@@ -91,6 +93,7 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:text="@string/parameters"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
             app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +112,7 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:fontFamily="@font/raleway_light"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileParametresTextView"
@@ -126,7 +129,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@id/usersHeights"
             android:layout_toRightOf="@id/usersHeights"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
             app:layout_constraintStart_toStartOf="parent"
@@ -149,51 +152,8 @@
 
         </com.example.epamtraining.customViews.DiagramView>
 
-        <!--<android.support.v7.widget.CardView-->
-            <!--android:id="@+id/cardView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/usersHeights"-->
-            <!--android:layout_marginStart="8dp"-->
-            <!--android:layout_marginLeft="8dp"-->
-            <!--android:layout_marginTop="400dp"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--android:layout_marginRight="8dp"-->
-            <!--app:cardElevation="4dp"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintHorizontal_bias="1.0"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@+id/caloriesTextView">-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="8dp"-->
-                <!--android:orientation="vertical">-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/breakfastTextView"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="8dp"-->
-                    <!--android:layout_marginLeft="8dp"-->
-                    <!--android:layout_marginTop="16dp"-->
-                    <!--android:layout_marginBottom="16dp"-->
-                    <!--android:text="@string/breakfast"-->
-                    <!--android:textColor="@color/colorBlack"-->
-                    <!--android:textSize="24sp"-->
-                    <!--app:fontFamily="@font/raleway_light" />-->
-
-                <!--<android.support.v7.widget.RecyclerView-->
-                    <!--android:id="@+id/breakfastRecyclerView"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="300dp" />-->
-
-            <!--</LinearLayout>-->
-        <!--</android.support.v7.widget.CardView>-->
-
         <TextView
-            android:id="@+id/caloriesTextView"
+            android:id="@+id/repeatsTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/usersNameTextView"
@@ -205,6 +165,7 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:text="@string/calories"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
             app:layout_constraintEnd_toEndOf="parent"
@@ -220,7 +181,7 @@
             android:layout_marginTop="12dp"
             android:layout_toEndOf="@id/usersHeights"
             android:layout_toRightOf="@id/usersHeights"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
             app:layout_constraintEnd_toEndOf="@+id/burnedTextView"
@@ -239,10 +200,11 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:text="@string/needed"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:fontFamily="@font/raleway_light"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/caloriesTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/repeatsTextView" />
 
         <ImageView
             android:id="@+id/burnedImageView"
@@ -278,7 +240,7 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:fontFamily="@font/raleway_light"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.027"
@@ -299,7 +261,7 @@
             android:layout_toEndOf="@id/usersImageView"
             android:layout_toRightOf="@id/usersImageView"
             android:fontFamily="@font/raleway_light"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.048"

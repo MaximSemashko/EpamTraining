@@ -1,10 +1,10 @@
 package com.example.epamtraining.adapters
 
 import android.content.Context
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.epamtraining.R
 import com.example.epamtraining.interfaces.ProductTouchHelperAdapter
 import com.example.epamtraining.models.Products
@@ -64,8 +64,8 @@ class ProductsAdapter(context: Context, private var url: String) : RecyclerView.
 
     class ProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(products: Products) {
-            itemView.trainingNameTextView.text = products.name
-            itemView.productsCaloriesTextView.text = products.calories.toString()
+            itemView.exerciseNameTextView.text = products.name
+            itemView.numberOfRepeatsTextView.text = products.calories.toString()
         }
     }
 }

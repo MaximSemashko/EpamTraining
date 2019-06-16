@@ -31,6 +31,8 @@
     <string name="number_of_exercises">Number of exercises</string>
     <string name="all_trainings">All</string>
     <string name="favourite_trainings">Favourite</string>
+    <string name="exercises">Exercises</string>
+    <string name="repeats">Repeats</string>
 
     <array name="tab_trainings_title">
         <item>@string/all_trainings</item>

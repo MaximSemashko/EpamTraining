@@ -9,7 +9,7 @@
     android:background="@drawable/power_training">
 
     <TextView
-        android:id="@+id/trainingNameTextView"
+        android:id="@+id/exerciseNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -34,7 +34,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trainingNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseNameTextView"
         tools:targetApi="jelly_bean" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/typeView"
-        app:layout_constraintTop_toBottomOf="@+id/trainingNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseNameTextView"
         tools:targetApi="jelly_bean"
         tools:text="Cardio" />
 

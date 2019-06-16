@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:theme="@style/Theme.MaterialComponents">
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trainingsRecyclerView"
@@ -23,17 +23,17 @@
             android:id="@+id/trainingsTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorWhite"
+            android:background="@color/colorPrimaryDark"
             app:tabIndicatorColor="@color/colorAccent"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorBlack"
-            app:tabTextColor="@color/colorBlack" />
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="@color/colorWhite" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/trainingsViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorWhite" />
+            android:background="@color/colorPrimary" />
 
     </LinearLayout>
 
