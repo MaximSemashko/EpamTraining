@@ -8,7 +8,7 @@
     android:background="@color/colorPrimaryDark">
 
     <TextView
-        android:id="@+id/exerciseNameTextView"
+        android:id="@+id/workoutNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="144dp"
@@ -33,7 +33,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseNameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/workoutNameTextView" />
 
     <TextView
         android:id="@+id/numberOfRepeatsTextView"
@@ -46,7 +46,7 @@
         android:textColor="@color/colorWhite"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/repeatsTextView"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/workoutNameTextView"
         tools:text="35" />
 
     <Button

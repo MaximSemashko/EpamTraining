@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.epamtraining.R
+import com.example.epamtraining.activities.WorkoutDetailPageActivity
 import com.example.epamtraining.models.Trainings
 
 class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.Adapter<WorkoutAdapter.WorkoutViewHolder>() {
@@ -19,6 +20,9 @@ class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.
 
     override fun onBindViewHolder(holder: WorkoutViewHolder, position: Int) {
         holder.bind(trainingsList[position])
+        holder.itemView.setOnClickListener {
+            WorkoutDetailPageActivity.startWorkoutPage(holder.itemView.context, training = trainingsList[holder.adapterPosition])
+        }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): WorkoutViewHolder {
@@ -48,7 +52,7 @@ class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.
         private var layout: ConstraintLayout? = null
 
         init {
-            name = itemView.findViewById(R.id.exerciseNameTextView)
+            name = itemView.findViewById(R.id.workoutNameTextView)
             type = itemView.findViewById(R.id.trainingTypeTextView)
             duration = itemView.findViewById(R.id.trainingDurationTextView)
             numberOfExercises = itemView.findViewById(R.id.trainingExercisesCountTextView)

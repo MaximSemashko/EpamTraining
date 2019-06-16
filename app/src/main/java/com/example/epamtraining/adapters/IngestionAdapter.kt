@@ -72,7 +72,7 @@ class IngestionAdapter(context: Context?) : RecyclerView.Adapter<IngestionAdapte
         var deleteProductButton: Button = itemView.findViewById(R.id.deleteProductButton)
 
         fun bind(products: Products) {
-            itemView.exerciseNameTextView.text = products.name
+            itemView.workoutNameTextView.text = products.name
             itemView.numberOfRepeatsTextView.text = products.calories.toString()
         }
 

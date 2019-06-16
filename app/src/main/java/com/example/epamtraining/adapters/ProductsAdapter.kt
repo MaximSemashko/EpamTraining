@@ -64,7 +64,7 @@ class ProductsAdapter(context: Context, private var url: String) : RecyclerView.
 
     class ProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(products: Products) {
-            itemView.exerciseNameTextView.text = products.name
+            itemView.workoutNameTextView.text = products.name
             itemView.numberOfRepeatsTextView.text = products.calories.toString()
         }
     }
