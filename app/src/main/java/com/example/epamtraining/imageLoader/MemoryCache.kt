@@ -5,7 +5,7 @@ import androidx.collection.LruCache
 
 class MemoryCache : ImageCache {
 
-    private val cache: androidx.collection.LruCache<String, Bitmap>
+    private val cache: LruCache<String, Bitmap>
 
     init {
         val maxMemory: Long = Runtime.getRuntime().maxMemory() / 1024

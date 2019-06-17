@@ -39,11 +39,6 @@ class WorkoutAdapter(context: Context?, private var url: String) : RecyclerView.
         notifyDataSetChanged()
     }
 
-    fun addItem(trainings: Trainings) {
-        trainingsList.add(trainings)
-        notifyDataSetChanged()
-    }
-
     class WorkoutViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var name: TextView? = null
         private var type: TextView? = null

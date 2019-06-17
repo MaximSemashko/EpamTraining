@@ -33,4 +33,8 @@ class HeaderView : LinearLayout {
         userIconView = findViewById(R.id.headerImageView)
         userNameView = findViewById(R.id.headerNameTextView)
     }
+
+    fun initViews(name: String?) {
+        userNameView?.text = name
+    }
 }

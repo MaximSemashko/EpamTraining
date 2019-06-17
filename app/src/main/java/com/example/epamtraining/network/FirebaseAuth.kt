@@ -10,7 +10,6 @@ import java.io.IOException
 
 object FirebaseAuth {
 
-//    private val executor = Executors.newCachedThreadPool()
     private val client = OkHttpClient()
     private val gson = Gson()
     var token: String? = null

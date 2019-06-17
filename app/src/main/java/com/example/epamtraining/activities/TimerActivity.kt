@@ -72,8 +72,6 @@ class TimerActivity : AppCompatActivity() {
 
         time?.let { setNewTimerLength(it) }
 
-        timeProgressBar.progress = 0
-
         PrefUtil.setSecondsRemaining(timerLengthSeconds, this)
         secondsRemaining = timerLengthSeconds
 
@@ -98,20 +96,17 @@ class TimerActivity : AppCompatActivity() {
     fun setNewTimerLength(time: String) {
         val lengthInMinutes = PrefUtil.setTimerLength(time)
         timerLengthSeconds = (lengthInMinutes * 60L)
-        timeProgressBar.max = timerLengthSeconds.toInt()
     }
 
     private fun setPreviousTimerLength() {
         timerLengthSeconds = PrefUtil.getPreviousTimerLengthSeconds(this)
-        timeProgressBar.max = timerLengthSeconds.toInt()
     }
 
     private fun updateCountdownUI() {
         val minutesUntilFinished = secondsRemaining / 60
         val secondsInMinuteUntilFinished = secondsRemaining - minutesUntilFinished * 60
         val secondsStr = secondsInMinuteUntilFinished.toString()
-        timeView.text = "$minutesUntilFinished:${if (secondsStr.length == 2) secondsStr else "0" + secondsStr}"
-        timeProgressBar.progress = (timerLengthSeconds - secondsRemaining).toInt()
+        timeView.text = "$minutesUntilFinished:${if (secondsStr.length == 2) secondsStr else "0$secondsStr"}"
     }
 
     private fun updateButtons() {

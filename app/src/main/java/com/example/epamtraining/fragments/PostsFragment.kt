@@ -31,7 +31,7 @@ class PostsFragment : androidx.fragment.app.Fragment() {
             activity?.runOnUiThread {
                 postsAdapter = PostsAdapter(context, imageList)
                 postsRecyclerView.apply {
-                    layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+                    layoutManager = LinearLayoutManager(activity)
                     adapter = postsAdapter
                 }
             }

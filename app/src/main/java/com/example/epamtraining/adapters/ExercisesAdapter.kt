@@ -23,7 +23,7 @@ class ExercisesAdapter(val context: Context?, val exercisesList: ArrayList<Exerc
     }
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
-        holder.bind(exercisesList.get(position))
+        holder.bind(exercisesList[position])
     }
 
     class ExerciseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -3,18 +3,22 @@ package com.example.epamtraining.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.GravityCompat
+import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import android.view.MenuItem
+import androidx.core.view.GravityCompat
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.LoginActivity.Companion.startAuth
 import com.example.epamtraining.contracts.MainContract
+import com.example.epamtraining.customViews.HeaderView
+import com.example.epamtraining.models.User
 import com.example.epamtraining.network.FirebaseAuth
+import com.example.epamtraining.network.FirebaseDatabase
 import com.example.epamtraining.presenters.MainPresenter
 import com.example.epamtraining.repositories.MainRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -31,6 +35,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         initDrawer()
 
         mainPresenter.checkCurrentUserToken()
+    }
+
+    override fun initHeaderView() {
+        val headerView = mainNavigationView
+                .getHeaderView(0)
+                .findViewById<HeaderView>(R.id.main_header_view)
+
+        thread {
+            val user: User? = FirebaseDatabase.getUserInfo()
+            runOnUiThread {
+                headerView.initViews(user?.name.toString())
+            }
+        }
     }
 
     override fun initProfile() {

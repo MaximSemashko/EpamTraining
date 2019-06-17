@@ -16,6 +16,7 @@ interface MainContract {
         fun initProfile()
         fun detachMainActivity()
         fun onBackPressed()
+        fun initHeaderView()
         fun onOptionsItemSelected(item: MenuItem): Boolean
     }
 

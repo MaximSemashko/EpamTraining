@@ -13,6 +13,7 @@ class TrainingsAdapter(context: Context?) : RecyclerView.Adapter<TrainingsAdapte
 
     private val exercisesList = ArrayList<Exercises>()
     private val layoutInflater = LayoutInflater.from(context)
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): TrainingsViewHolder {
         return TrainingsViewHolder(layoutInflater.inflate(R.layout.training_item, viewGroup, false))
     }

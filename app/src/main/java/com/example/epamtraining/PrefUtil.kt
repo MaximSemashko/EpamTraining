@@ -66,8 +66,8 @@ class PrefUtil {
             }
         }
 
-        private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "com.example.epamtraining.activities.previous_timer_length_seconds"
-        private const val TIMER_STATE_ID = "com.example.epamtraining.activities.timer_state"
-        private const val SECONDS_REMAINING_ID = "com.example.epamtraining.activities.seconds_remaining"
+        private const val PREVIOUS_TIMER_LENGTH_SECONDS_ID = "com.example.epamtraining.previous_timer_length_seconds"
+        private const val TIMER_STATE_ID = "com.example.epamtraining.timer_state"
+        private const val SECONDS_REMAINING_ID = "com.example.activities.seconds_remaining"
     }
 }

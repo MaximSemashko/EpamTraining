@@ -23,6 +23,7 @@ class MainPresenter(val context: Context,
             LoginActivity.startAuth(packageContext = context)
         } else {
             view.initProfile()
+            view.initHeaderView()
         }
     }
 
