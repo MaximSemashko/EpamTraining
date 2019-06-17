@@ -3,9 +3,9 @@ package com.example.epamtraining.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBar
-import android.support.v7.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.LoginActivity.Companion.startAuth
@@ -40,11 +40,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun initDrawer() {
         mainNavigationView.setNavigationItemSelectedListener { menuItem ->
-            menuItem.setChecked(true)
+            menuItem.isChecked = true
             drawerLayout.closeDrawers()
             mainPresenter.selectDrawerItem(menuItem)
             true
         }
+    }
+
+    override fun detachMainActivity() {
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -60,11 +64,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.closeDrawer(GravityCompat.START) else super.onBackPressed()
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) drawerLayout.closeDrawer(GravityCompat.START) else drawerLayout.openDrawer(GravityCompat.START)
     }
 
     override fun logout() {
         removeAllFragments()
+        finish()
         FirebaseAuth.signOut()
         startAuth(this@MainActivity)
     }
@@ -72,6 +77,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun initToolbar() {
         setSupportActionBar(mainToolbar)
         val actionbar: ActionBar? = supportActionBar
+
         actionbar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_menu)
@@ -80,10 +86,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun removeAllFragments() {
         val fragmentManager = supportFragmentManager
+
         while (fragmentManager.backStackEntryCount > 0) {
             fragmentManager.popBackStackImmediate()
         }
-
     }
 
     companion object {

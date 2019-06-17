@@ -1,87 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?><!--TODO NEW-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/exercise_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Training"
-        android:textColor="@color/colorBlack"
-        android:textSize="32sp" />
-
-    <TextView
-        android:id="@+id/exercise_name_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/exercise_view"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:paddingTop="4dp"
-        android:text="Name"
-        android:textColor="@color/colorBlack"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/exerciseNameText"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/exercise_view"
-        android:layout_toRightOf="@+id/exercise_name_view"
-        android:hint="Exercise"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/sets_name_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/exerciseNameText"
-        android:layout_marginLeft="8dp"
-        android:paddingTop="4dp"
-        android:text="Sets"
-        android:textColor="@color/colorBlack"
-        android:textSize="24sp" />
-
-    <EditText
-        android:id="@+id/exerciseSetsText"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/exerciseNameText"
-        android:layout_toRightOf="@+id/exercise_name_view"
-        android:hint="Sets"
-        android:textSize="18sp" />
-
-    <ImageButton
-        android:id="@+id/addExerciseButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
-        android:background="@color/colorWhite"
-        app:srcCompat="@drawable/ic_add" />
-
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/exercisesRecyclerView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/trainingsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/exerciseSetsText"
-        android:layout_marginTop="0dp"
-        tools:listitem="@layout/exercise_item" />
+        android:visibility="gone"
+        tools:listitem="@layout/training_item" />
 
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="8dp"
-        android:text="submit"
-        android:textSize="24sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/trainingsTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="@color/colorWhite" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/trainingsViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

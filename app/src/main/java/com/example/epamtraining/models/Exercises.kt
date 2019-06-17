@@ -1,8 +1,16 @@
 package com.example.epamtraining.models
 
-import java.util.*
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-class Exercises(val id: UUID,
-                val name: String,
-                val repeats: Int,
-                var calories: Double)
+@Parcelize
+data class Exercises(
+        @SerializedName("id")
+        val id: String?,
+        @SerializedName("name")
+        val name: String?,
+        @SerializedName("repeats")
+        val repeats: Int?,
+        @SerializedName("calories")
+        var calories: Double?) : Parcelable

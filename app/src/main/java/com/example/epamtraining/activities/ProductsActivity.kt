@@ -3,15 +3,14 @@ package com.example.epamtraining.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.epamtraining.Constants.Companion.PRODUCTS_URL
 import com.example.epamtraining.R
 import com.example.epamtraining.adapters.ProductsAdapter
-import com.example.epamtraining.callbacks.ItemTouchCallback
+import com.example.epamtraining.callbacks.ProductTouchCallback
 import com.example.epamtraining.contracts.ProductsContract
 import com.example.epamtraining.dialogs.ProductsDialogFragment
 import com.example.epamtraining.models.Products
@@ -19,16 +18,12 @@ import com.example.epamtraining.network.FirebaseDatabase
 import com.example.epamtraining.presenters.ProductsPresenter
 import com.example.epamtraining.repositories.ProductsRepository
 import kotlinx.android.synthetic.main.activity_products.*
-import kotlin.concurrent.thread
 
 
 class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductDialogListener, ProductsContract.View {
 
-    private val PRODUCTS_KEY = "key"
-
+    private lateinit var url: String
     private lateinit var productsAdapter: ProductsAdapter
-
-    private var products = ArrayList<Products>()
     private val productsRepository = ProductsRepository()
     private val productsPresenter = ProductsPresenter(this, productsRepository)
 
@@ -41,26 +36,21 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_products)
 
+        getUrl()
+
         initRecycler()
 
+        showProgress()
 
-        if (savedInstanceState == null) {
-            showProgress()
-            thread {
-                products = FirebaseDatabase.getProducts(PRODUCTS_URL) as ArrayList<Products>
-                runOnUiThread {
-                    productsAdapter.updateItems(products)
-                    hideProgress()
-                }
-            }
-        } else {
-            productsAdapter.updateItems(savedInstanceState.getParcelableArrayList(PRODUCTS_KEY))
-            hideProgress()
-        }
+        productsPresenter.initList()
 
         productsFab.setOnClickListener {
             productsPresenter.onFabWasClicked()
         }
+    }
+
+    override fun getUrl() {
+        url = intent.getStringExtra(NUTRITION_URL)
     }
 
     override fun startDialog() {
@@ -68,30 +58,24 @@ class ProductsActivity : AppCompatActivity(), ProductsDialogFragment.AddProductD
         productsDialogFragment.show(supportFragmentManager, productsDialogFragment.tag)
     }
 
-    override fun updateList(items: ArrayList<Products>) {
+    override fun updateList(products: ArrayList<Products>) {
         runOnUiThread {
-            productsAdapter.updateItems(items)
+            productsAdapter.updateItems(products)
             hideProgress()
         }
     }
 
     override fun initRecycler() {
-        productsAdapter = ProductsAdapter(this@ProductsActivity)
-        val itemTouchHelper = ItemTouchHelper(ItemTouchCallback(productsAdapter))
+        productsAdapter = ProductsAdapter(this@ProductsActivity, url)
+        val itemTouchHelper = ItemTouchHelper(ProductTouchCallback(productsAdapter))
 
         productsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = productsAdapter
             itemTouchHelper.attachToRecyclerView(this)
 
-            addItemDecoration((DividerItemDecoration(this@ProductsActivity, DividerItemDecoration.VERTICAL)))
+            addItemDecoration((androidx.recyclerview.widget.DividerItemDecoration(this@ProductsActivity, androidx.recyclerview.widget.DividerItemDecoration.VERTICAL)))
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putParcelableArrayList(PRODUCTS_KEY, products)
-
-        super.onSaveInstanceState(outState)
     }
 
     override fun hideProgress() {

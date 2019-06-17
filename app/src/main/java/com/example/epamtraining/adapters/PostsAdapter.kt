@@ -1,7 +1,7 @@
 package com.example.epamtraining.adapters
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import com.example.epamtraining.imageLoader.MemoryCache
 import java.util.*
 
 
-class PostsAdapter(context: Context?, private val items: ArrayList<String>) : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
+class PostsAdapter(context: Context?, private val items: ArrayList<String>) : androidx.recyclerview.widget.RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -31,7 +31,7 @@ class PostsAdapter(context: Context?, private val items: ArrayList<String>) : Re
         return items.size
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         val imageView = view.findViewById(R.id.postImageView) as ImageView
     }
 }

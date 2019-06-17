@@ -1,23 +1,21 @@
 package com.example.epamtraining.adapters
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.example.epamtraining.R
-import com.example.epamtraining.interfaces.ItemTouchHelperAdapter
+import com.example.epamtraining.interfaces.ProductTouchHelperAdapter
 import com.example.epamtraining.models.Products
-import com.example.epamtraining.network.FirebaseAuth.localId
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.product_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ItemTouchHelperAdapter {
+class ProductsAdapter(context: Context, private var url: String) : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>(), ProductTouchHelperAdapter {
 
     private val productsList = ArrayList<Products>()
-    private val url = "https://ksport-8842a.firebaseio.com/users/$localId/Breakfast.json"
     private val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ProductsViewHolder {
@@ -57,8 +55,8 @@ class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.P
         notifyItemMoved(fromPosition, toPosition)
     }
 
-    override fun addUserBreakfast(position: Int) {
-        val product = productsList.get(position)
+    override fun addUserMeal(position: Int) {
+        val product = productsList[position]
         FirebaseDatabase.postToRealtimeDatabase(product, url = url)
         productsList.removeAt(position)
         notifyItemRemoved(position)
@@ -66,8 +64,8 @@ class ProductsAdapter(context: Context) : RecyclerView.Adapter<ProductsAdapter.P
 
     class ProductsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(products: Products) {
-            itemView.productNameTextView.text = products.name
-            itemView.productsCaloriesTextView.text = products.calories.toString()
+            itemView.workoutNameTextView.text = products.name
+            itemView.numberOfRepeatsTextView.text = products.calories.toString()
         }
     }
 }

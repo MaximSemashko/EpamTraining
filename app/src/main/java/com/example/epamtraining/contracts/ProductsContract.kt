@@ -1,6 +1,5 @@
 package com.example.epamtraining.contracts
 
-import android.os.Bundle
 import com.example.epamtraining.models.Products
 
 interface ProductsContract {
@@ -10,16 +9,16 @@ interface ProductsContract {
     }
 
     interface View {
+        fun getUrl()
         fun initRecycler()
         fun startDialog()
         fun showProgress()
         fun hideProgress()
-        fun onSaveInstanceState(outState: Bundle?)
         fun updateList(products: ArrayList<Products>)
     }
 
     interface Presenter {
         fun onFabWasClicked()
-        fun checkSavedInstanceState(savedInstanceState: Bundle?, key: String)
+        fun initList()
     }
 }

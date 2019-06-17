@@ -1,24 +1,22 @@
 package com.example.epamtraining.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.epamtraining.R
 import com.example.epamtraining.activities.ProductsActivity
-import com.example.epamtraining.adapters.BreakfastAdapter
+import com.example.epamtraining.adapters.IngestionAdapter
 import com.example.epamtraining.models.Products
-import com.example.epamtraining.network.FirebaseAuth
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_ingestion.*
 import kotlin.concurrent.thread
 
-class BaseNutritionFragment : Fragment() {
+class IngestionFragment : androidx.fragment.app.Fragment() {
 
     private var products: List<Products> = ArrayList()
-    private var url = "https://ksport-8842a.firebaseio.com/users/${FirebaseAuth.localId}/Breakfast.json"
+    private lateinit var url: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -28,19 +26,20 @@ class BaseNutritionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val productsAdapter = BreakfastAdapter(activity)
 
-        ingestionRecyclerView.apply {
+        val ingestionAdapter = IngestionAdapter(activity)
+        workoutRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = productsAdapter
-
+            adapter = ingestionAdapter
         }
+
         showProgress()
         thread {
-            products = FirebaseDatabase.getProducts(url)
+            products = FirebaseDatabase.getItems(url)
 
             activity?.runOnUiThread {
-                productsAdapter.updateItems(products)
+                ingestionAdapter.updateItems(products)
+                totalCaloriesTextView.text = ingestionAdapter.getMealCalories().toString()
                 hideProgress()
             }
         }
@@ -53,15 +52,16 @@ class BaseNutritionFragment : Fragment() {
 
             setOnRefreshListener {
                 thread {
-                    products = FirebaseDatabase.getProducts(url)
+                    products = FirebaseDatabase.getItems(url)
 
                     activity?.runOnUiThread {
-                        productsAdapter.updateItems(products)
+                        ingestionAdapter.updateItems(products)
+                        totalCaloriesTextView.text = ingestionAdapter.getMealCalories().toString()
                         isRefreshing = false
                     }
                 }
                 activity?.runOnUiThread {
-                    productsAdapter.updateItems(products)
+                    ingestionAdapter.updateItems(products)
 
                 }
             }
@@ -77,14 +77,14 @@ class BaseNutritionFragment : Fragment() {
     }
 
     fun hideProgress() {
-        if (breakfastProgressBar.visibility != View.GONE) {
-            breakfastProgressBar.visibility = View.GONE
+        if (workoutProgressBar.visibility != View.GONE) {
+            workoutProgressBar.visibility = View.GONE
         }
     }
 
     fun showProgress() {
-        if (breakfastProgressBar.visibility != View.VISIBLE) {
-            breakfastProgressBar.visibility = View.VISIBLE
+        if (workoutProgressBar.visibility != View.VISIBLE) {
+            workoutProgressBar.visibility = View.VISIBLE
         }
     }
 }

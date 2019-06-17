@@ -22,8 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        tools:text="Maxim"
-        android:textColor="@color/colorBlack"
-        android:textSize="18sp" />
+        android:textColor="@color/colorWhite"
+        android:textSize="32sp"
+        tools:text="Maxim" />
 
 </merge>

@@ -4,10 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.example.epamtraining.R;
 
@@ -30,8 +31,8 @@ public class DiagramView extends View {
     public DiagramView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        neededPaint.setColor(getResources().getColor(R.color.colorPrimary));
-        burnedPaint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+        neededPaint.setColor(getResources().getColor(R.color.colorGrey));
+        burnedPaint.setColor(getResources().getColor(R.color.colorGreyDark));
 
         if (isInEditMode()) {
             caloriesNeeded = 3000;
