@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
                 usersAgeTextView.text = "${user.age.toString()} years"
                 usersHeights.text = "${user.height.toString()} sm"
                 usersWeights.text = "${user.weight.toString()} kg"
+                caloriesNeededTextView.text = calculateCalories(user)
 
                 if (user.sex.toString() == "Male") {
                     usersGenderImageView.setImageResource(R.drawable.male)
@@ -48,7 +49,6 @@ class ProfileFragment : Fragment() {
                 }
 
                 activity?.runOnUiThread {
-                    caloriesNeededTextView.text = calculateCalories(user)
                     calculateBodyMassIndex(user.height, user.weight)
                     caloriesDiagramView.update(MAX_BMI, userBMI)
                 }

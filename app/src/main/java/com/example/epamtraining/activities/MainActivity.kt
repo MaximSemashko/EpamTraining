@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 .findViewById<HeaderView>(R.id.main_header_view)
 
         thread {
-            val user: User? = FirebaseDatabase.getUserInfo()
+            val user: User = FirebaseDatabase.getUserInfo()
             runOnUiThread {
-                headerView.initViews(user?.name.toString())
+                headerView.initViews(user.name.toString())
             }
         }
     }
