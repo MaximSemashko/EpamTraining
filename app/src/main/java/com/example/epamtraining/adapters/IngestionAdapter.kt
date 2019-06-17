@@ -12,15 +12,6 @@ import com.example.epamtraining.models.Products
 import com.example.epamtraining.network.FirebaseDatabase
 import kotlinx.android.synthetic.main.product_item.view.*
 
-/*TODO
-* 1) remove method
-* 2) fix incorrect behavior of viewholder items
-* 3) clean project
-* 4) remove unneccessary code (if i dont do this)
-* 5) How to get url of product? Maybe i can take id?
-* 6) Go to kotlin extensions!!!
-* TODO*/
-
 class IngestionAdapter(context: Context?) : RecyclerView.Adapter<IngestionAdapter.ViewHolder>() {
 
     private val productsList = ArrayList<Products>()

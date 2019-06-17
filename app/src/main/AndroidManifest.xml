@@ -14,14 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.WorkoutDetailPageActivity"></activity>
-        <activity android:name=".activities.ProductsActivity"></activity>
+        <activity android:name=".activities.TimerActivity">
+        </activity>
+        <activity android:name=".activities.WorkoutDetailPageActivity" />
+        <activity android:name=".activities.ProductsActivity" />
         <activity
             android:name=".activities.RegistrationActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
         <activity
             android:name=".activities.LoginActivity"
-            android:noHistory="true"></activity>
+            android:noHistory="true" />
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait">

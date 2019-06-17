@@ -24,6 +24,10 @@ class WorkoutDetailPageActivity : AppCompatActivity() {
         Log.i("TAG", "Training $training")
 
         initViews(training)
+
+        startTrainingButton.setOnClickListener {
+            TimerActivity.startTimer(context = it.context, time = workoutDurationTextView.text.toString())
+        }
     }
 
     private fun initViews(training: Trainings?) {
